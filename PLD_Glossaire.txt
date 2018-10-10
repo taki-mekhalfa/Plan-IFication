@@ -1,6 +1,6 @@
 noeud : représentation d'une intersection, elle possède un ID et des coordonnées
 
-troncon : représentation d'une portion de route, identifiée par un point de départ et d'arrivée (correspondant à des noeuds), le nom de la route, et la distance.
+troncon : représentation d'une portion de route, identifiée par un point de départ et d'arrivée (correspondant à des ID de noeuds), le nom de la route, et la distance.
 
 chemin : ensemble ordonné de tronçons et de noeuds reliant un noeud de départ et d'arrivée, il possède une distance associée.
 
