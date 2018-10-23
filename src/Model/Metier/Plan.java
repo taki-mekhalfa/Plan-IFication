@@ -3,16 +3,17 @@ package Model.Metier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 
-public class Plan {
+public class Plan{
 
-    private final Map<String, List<Trancon>> plan;
+    private final Map<String, List<Troncon>> plan;
 
-    public Plan(Map<String, List<Trancon>> plan) {
+    public Plan(Map<String, List<Troncon>> plan) {
         this.plan = plan;
     }
 
-    public List<Trancon> getSuccesseurs(String idNoeud) {
+    public List<Troncon> getSuccesseurs(String idNoeud) {
         return plan.get(idNoeud);
     }
 
@@ -21,9 +22,9 @@ public class Plan {
     }
 
     public double getDistance(String idSource, String idDestination){
-        List<Trancon> trancons = plan.get(idSource);
-        for (Trancon trancon: trancons){
-            if (trancon.getDestination().equals(idDestination)) return trancon.longueur;
+        List<Troncon> troncons = plan.get(idSource);
+        for (Troncon troncon: troncons){
+            if (troncon.getDestination().equals(idDestination)) return troncon.longueur;
         }
 
         return Double.POSITIVE_INFINITY;
@@ -36,13 +37,13 @@ public class Plan {
                 '}';
     }
 
-    public static class Trancon {
+    public static class Troncon {
         private final String idOrigine;
         private final String idDestination;
         private final double longueur;
         private final String nomDeLaRue;
 
-        public Trancon(String idOrigine, String idDestination, double longueur, String nomDeLaRue) {
+        public Troncon(String idOrigine, String idDestination, double longueur, String nomDeLaRue) {
             this.idOrigine = idOrigine;
             this.idDestination = idDestination;
             this.longueur = longueur;
@@ -63,7 +64,7 @@ public class Plan {
 
         @Override
         public String toString() {
-            return "Trancon{" +
+            return "Troncon{" +
                     "idOrigine='" + idOrigine + '\'' +
                     ", idDestination='" + idDestination + '\'' +
                     ", longueur=" + longueur +

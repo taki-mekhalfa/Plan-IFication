@@ -1,16 +1,19 @@
 package Model;
 
-import View.JavaFXExample //;
-import javafx.application.Application;
+import java.io.File;
+import java.util.List;
+
+import Model.Metier.Tournee;
 
 public class Main {
     public static void main(String[] args) {
 
         Planification planification = new Planification();
-        planification.chargerPlan("./XMLFiles/petitPlan.xml");
-        planification.chargerDemandesDeLivraisons("./XMLFiles/dl-petit-6.xml");
+        planification.chargerPlan(new File("C:/Users/cflorant/fichiersXML2018/moyenPlan.xml"));
+        planification.chargerDemandesDeLivraisons(new File ("C:/Users/cflorant/fichiersXML2018/dl-moyen-12.xml"));
         planification.calculerTournees(3);
         List<Tournee> tournees = planification.getTournees();
-
+        
+        System.out.print(tournees);
     }
 }
