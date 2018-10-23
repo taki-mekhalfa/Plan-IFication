@@ -32,7 +32,7 @@ public abstract class TemplateTSP implements TSP {
 
         meilleureSolution = new ArrayList<>(meilleureSolution);
         Temps tempsCumule = topDepart;
-        Livraison livraisonPrecedente = meilleureSolution.get(0);
+        Livraison livraisonPrecedente = listeLivraisons.get(0);
 
         for (int i = 1; i < meilleureSolution.size(); i++) {
             Livraison livraisonCourant = meilleureSolution.get(i);
@@ -44,6 +44,7 @@ public abstract class TemplateTSP implements TSP {
             livraisonPrecedente = livraisonCourant;
         }
 
+        listeChemins.add(plusCourtsChemins.get(livraisonPrecedente).get(listeLivraisons.get(0)));
         return new Tournee(listeChemins, heuresDeLivraison);
     }
 

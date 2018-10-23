@@ -16,10 +16,10 @@ import java.util.List;
 public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelper {
 
     @Override
-    public DemandeLivraisons getDemandeLivraisons(String cheminFichier) {
+    public DemandeLivraisons getDemandeLivraisons(File fichierXML) {
         DemandeLivraisons demandeLivraisons = null;
         try {
-            Document document = readXMLFile(cheminFichier);
+            Document document = readXMLFile(fichierXML);
             demandeLivraisons = extraireDemande(document);
         } catch (DocumentException exp) {
             System.out.println(exp.getMessage());
@@ -27,10 +27,9 @@ public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelp
         return demandeLivraisons;
     }
 
-    private Document readXMLFile(String cheminFichier) throws DocumentException {
-        File file = new File(cheminFichier);
+    private Document readXMLFile(File fichierXML) throws DocumentException {
         SAXReader saxReader = new SAXReader();
-        return saxReader.read(file);
+        return saxReader.read(fichierXML);
     }
 
     private DemandeLivraisons extraireDemande(Document document) {

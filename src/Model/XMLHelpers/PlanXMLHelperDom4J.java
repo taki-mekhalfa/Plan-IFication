@@ -12,11 +12,11 @@ import java.util.*;
 public class PlanXMLHelperDom4J implements PlanXMLHelper {
 
     @Override
-    public Plan getPlan(String cheminFichierXML) {
+    public Plan getPlan(File fichierXML) {
 
         Map<String, List<Plan.Trancon>> plan = null;
         try {
-            Document document = readXMLFile(cheminFichierXML);
+            Document document = readXMLFile(fichierXML);
             plan = extrairePlan(document);
         } catch (DocumentException exp) {
             System.out.println(exp.getMessage());
@@ -25,10 +25,9 @@ public class PlanXMLHelperDom4J implements PlanXMLHelper {
         return new Plan(plan);
     }
 
-    private Document readXMLFile(String cheminFichier) throws DocumentException {
-        File xmlFile = new File(cheminFichier);
+    private Document readXMLFile(File fichierXML ) throws DocumentException {
         SAXReader saxReader = new SAXReader();
-        return saxReader.read(xmlFile);
+        return saxReader.read(fichierXML);
     }
 
     private Map<String, List<Plan.Trancon>> extrairePlan(Document document) {

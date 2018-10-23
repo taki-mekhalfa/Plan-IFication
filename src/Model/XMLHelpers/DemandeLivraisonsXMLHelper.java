@@ -2,6 +2,8 @@ package Model.XMLHelpers;
 
 import Model.Metier.DemandeLivraisons;
 
+import java.io.File;
+
 public interface DemandeLivraisonsXMLHelper {
-    public DemandeLivraisons getDemandeLivraisons(String cheminFichier);
+    DemandeLivraisons getDemandeLivraisons(File fichierXML);
 }

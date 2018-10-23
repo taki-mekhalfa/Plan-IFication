@@ -2,6 +2,8 @@ package Model.XMLHelpers;
 
 import Model.Metier.Plan;
 
+import java.io.File;
+
 public interface PlanXMLHelper {
-    public Plan getPlan(String cheminFichier);
+    public Plan getPlan(File fichierXML);
 }

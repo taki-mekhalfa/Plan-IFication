@@ -6,7 +6,7 @@ import Model.Metier.Plan;
 
 import java.util.*;
 
-public class Djikstra implements PlusCourtsChemins {
+public class Djikstra implements PCC {
 
     private String idSource;
     private Set<String> nonEvalues;
@@ -45,6 +45,7 @@ public class Djikstra implements PlusCourtsChemins {
                 Livraison livraison = it.next();
                 if (livraison.getNoeud().equals(lePlusProche)) {
                     MetaDonne metaDonne = metaDonnes.get(lePlusProche);
+                    metaDonne.predecesseurs.add(livraison.getNoeud());
                     Chemin chemin = new Chemin(metaDonne.predecesseurs, metaDonne.distance);
                     resultat.put(livraison, chemin);
                     it.remove();
