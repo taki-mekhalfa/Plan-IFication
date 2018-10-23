@@ -1,6 +1,6 @@
 package Model;
 
-import View.JavaFXExample;
+import View.JavaFXExample //;
 import javafx.application.Application;
 
 public class Main {
