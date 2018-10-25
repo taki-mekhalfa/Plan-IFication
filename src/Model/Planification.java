@@ -11,7 +11,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Observable;
 
-public class Planification extends Observable{
+public class Planification extends Observable {
     private Plan plan;
     private DemandeLivraisons demandeLivraisons;
     private Calculateur calculateur;
@@ -20,20 +20,17 @@ public class Planification extends Observable{
     public void chargerPlan(File fichier) {
         plan = new PlanXMLHelperDom4J().getPlan(fichier);
         calculateur = new Calculateur(plan);
-        setChanged();
-        notifyObservers("plan");
+        notifierAbonnes("plan");
     }
 
     public void chargerDemandesDeLivraisons(File fichierXML) {
         demandeLivraisons = new DemandeLivraisonsXMLHelperDom4J().getDemandeLivraisons(fichierXML);
-        setChanged();
-        notifyObservers("demandeLivraisons");
+        notifierAbonnes("livraisons");
     }
 
     public void calculerTournees(int nombreLivreurs) {
         tournees = calculateur.getTournees(demandeLivraisons, nombreLivreurs);
-        setChanged();
-        notifyObservers("tourneesCalculees");
+        notifierAbonnes("tournees");
     }
 
     public Plan getPlan() {
@@ -46,5 +43,11 @@ public class Planification extends Observable{
 
     public List<Tournee> getTournees() {
         return tournees;
+    }
+
+
+    private void notifierAbonnes(String quoi){
+        setChanged();
+        notifyObservers(quoi);
     }
 }

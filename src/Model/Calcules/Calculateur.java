@@ -23,7 +23,7 @@ public class Calculateur {
         //                \:/
         //                | |
 
-        List<List<Livraison>> clusters = new KMeansClusterer().getClusters(demandeLivraisons.getPointsDeLivraisons(), nombreLivreurs, CLUSTERING_MAX_ITER);
+        List<List<Livraison>> clusters = new KMeansClusterer().getClusters(demandeLivraisons.getEntrepot(),demandeLivraisons.getPointsDeLivraisons(), nombreLivreurs, CLUSTERING_MAX_ITER);
         List<Tournee> lesTournees = new LinkedList<>();
 
         for (List<Livraison> cluster : clusters) {

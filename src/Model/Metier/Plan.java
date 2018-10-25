@@ -3,17 +3,16 @@ package Model.Metier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 
-public class Plan{
+public class Plan {
 
-    private final Map<String, List<Troncon>> plan;
+    private final Map<String, List<Trancon>> plan;
 
-    public Plan(Map<String, List<Troncon>> plan) {
+    public Plan(Map<String, List<Trancon>> plan) {
         this.plan = plan;
     }
 
-    public List<Troncon> getSuccesseurs(String idNoeud) {
+    public List<Trancon> getSuccesseurs(String idNoeud) {
         return plan.get(idNoeud);
     }
 
@@ -22,9 +21,9 @@ public class Plan{
     }
 
     public double getDistance(String idSource, String idDestination){
-        List<Troncon> troncons = plan.get(idSource);
-        for (Troncon troncon: troncons){
-            if (troncon.getDestination().equals(idDestination)) return troncon.longueur;
+        List<Trancon> trancons = plan.get(idSource);
+        for (Trancon trancon: trancons){
+            if (trancon.getDestination().equals(idDestination)) return trancon.longueur;
         }
 
         return Double.POSITIVE_INFINITY;
@@ -37,13 +36,13 @@ public class Plan{
                 '}';
     }
 
-    public static class Troncon {
+    public static class Trancon {
         private final String idOrigine;
         private final String idDestination;
         private final double longueur;
         private final String nomDeLaRue;
 
-        public Troncon(String idOrigine, String idDestination, double longueur, String nomDeLaRue) {
+        public Trancon(String idOrigine, String idDestination, double longueur, String nomDeLaRue) {
             this.idOrigine = idOrigine;
             this.idDestination = idDestination;
             this.longueur = longueur;
@@ -64,7 +63,7 @@ public class Plan{
 
         @Override
         public String toString() {
-            return "Troncon{" +
+            return "Trancon{" +
                     "idOrigine='" + idOrigine + '\'' +
                     ", idDestination='" + idDestination + '\'' +
                     ", longueur=" + longueur +

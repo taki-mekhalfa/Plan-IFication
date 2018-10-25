@@ -17,7 +17,7 @@ public class KMeansClusterer implements Clusterer {
     private int maxiter;
 
     @Override
-    public List<List<Livraison>> getClusters(List<Livraison> livraisons, int nombreClusters, int maxiter) {
+    public List<List<Livraison>> getClusters(String entrpot,List<Livraison> livraisons, int nombreClusters, int maxiter) {
         this.livraisons = livraisons;
         this.nombreClusters = nombreClusters;
         this.maxiter = maxiter;

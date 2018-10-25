@@ -14,7 +14,7 @@ public class PlanXMLHelperDom4J implements PlanXMLHelper {
     @Override
     public Plan getPlan(File fichierXML) {
 
-        Map<String, List<Plan.Troncon>> plan = null;
+        Map<String, List<Plan.Trancon>> plan = null;
         try {
             Document document = readXMLFile(fichierXML);
             plan = extrairePlan(document);
@@ -30,9 +30,9 @@ public class PlanXMLHelperDom4J implements PlanXMLHelper {
         return saxReader.read(fichierXML);
     }
 
-    private Map<String, List<Plan.Troncon>> extrairePlan(Document document) {
+    private Map<String, List<Plan.Trancon>> extrairePlan(Document document) {
         Element reseau = document.getRootElement();
-        Map<String, List<Plan.Troncon>> plan = new HashMap<>();
+        Map<String, List<Plan.Trancon>> plan = new HashMap<>();
 
         // Extraire les noeuds:
         for (Iterator<Element> noeudsIterator = reseau.elementIterator("noeud"); noeudsIterator.hasNext(); ) {
@@ -44,18 +44,18 @@ public class PlanXMLHelperDom4J implements PlanXMLHelper {
             plan.putIfAbsent(id, new LinkedList<>());
         }
 
-        //Extraire les troncon:
+        //Extraire les trancon:
 
-        for (Iterator<Element> tronconIterator = reseau.elementIterator("troncon"); tronconIterator.hasNext(); ) {
-            Element tronconElement = tronconIterator.next();
-            String idDestination = tronconElement.attributeValue("destination");
-            double longueur = Double.parseDouble(tronconElement.attributeValue("longueur"));
-            String idOrigine = tronconElement.attributeValue("origine");
-            String nomDeLaRue = tronconElement.attributeValue("nomRue");
-            Plan.Troncon troncon = new Plan.Troncon(idOrigine, idDestination, longueur, nomDeLaRue);
+        for (Iterator<Element> tranconIterator = reseau.elementIterator("troncon"); tranconIterator.hasNext(); ) {
+            Element tranconElement = tranconIterator.next();
+            String idDestination = tranconElement.attributeValue("destination");
+            double longueur = Double.parseDouble(tranconElement.attributeValue("longueur"));
+            String idOrigine = tranconElement.attributeValue("origine");
+            String nomDeLaRue = tranconElement.attributeValue("nomRue");
+            Plan.Trancon trancon = new Plan.Trancon(idOrigine, idDestination, longueur, nomDeLaRue);
 
-            //Ajouter le troncon au noeud d'origine
-            plan.get(idOrigine).add(troncon);
+            //Ajouter le trancon au noeud d'origine
+            plan.get(idOrigine).add(trancon);
 
         }
 
