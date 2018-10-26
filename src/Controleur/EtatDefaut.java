@@ -1,6 +1,9 @@
-package Controleur;
+package controleur;
 
 import java.io.File;
+
+import Model.Metier.Livraison;
+import Model.Metier.Tournee;
 
 public class EtatDefaut implements Etat{
 
@@ -20,4 +23,32 @@ public class EtatDefaut implements Etat{
 	public void boutonCalculerTournees(int nombreLivreurs){
 		
 	}
+    @Override
+    public void selectionnerPointLivraison(Livraison livraison){
+    	
+    }
+    @Override
+	public void deselectionnerPointLivraison(){
+		
+	}
+    @Override
+	public void boutonAjouterPointLivraison(Tournee tournee, Livraison livraison){
+		
+	}
+    @Override
+	public void boutonSupprimerPointLivraison(Tournee tournee, Livraison livraison){
+		
+	}
+    @Override
+	public void boutonChangerPointLivraison(Tournee tournee, Livraison livraison){
+		
+	}
+    @Override
+	public void validerOperation(){
+		
+	}
+    @Override
+    public void annulerOperation(){
+    	
+    }
 }
