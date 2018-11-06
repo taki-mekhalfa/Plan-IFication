@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Calculateur {
-    private static int CLUSTERING_MAX_ITER = 64;
-    private static int TEMPS_LIMITE = 0;
     private Plan plan;
 
 
@@ -23,7 +21,8 @@ public class Calculateur {
         //                \:/
         //                | |
 
-        List<List<Livraison>> clusters = new KMeansClusterer().getClusters(demandeLivraisons.getEntrepot(),demandeLivraisons.getPointsDeLivraisons(), nombreLivreurs, CLUSTERING_MAX_ITER);
+        int CLUSTERING_MAX_ITER = 64;
+        List<List<Livraison>> clusters = new PetalClustring().getClusters(demandeLivraisons.getEntrepot(),demandeLivraisons.getPointsDeLivraisons(), nombreLivreurs, CLUSTERING_MAX_ITER);
         List<Tournee> lesTournees = new LinkedList<>();
 
         for (List<Livraison> cluster : clusters) {
@@ -36,6 +35,7 @@ public class Calculateur {
                 grapheCompletPlusCourtsChemins.put(livraison,plusCourtsChemins);
             }
 
+            int TEMPS_LIMITE = 0;
             Tournee tournee = new TSPDeBase().getTournee(cluster, grapheCompletPlusCourtsChemins, TEMPS_LIMITE, demandeLivraisons.getHeureDeDepart());
 
             lesTournees.add(tournee);

@@ -18,6 +18,11 @@ public class InterfaceGUI extends Application {
     private Button boutonChargerPlan;
     private Button boutonChargerDemandeLivraison;
     private Button boutonCaluculerTournees;
+    private Button boutonSuprimmerLivraison;
+    private Button boutonValider;
+    private Button boutonAnnuler;
+    private Button boutonAjouterLivraison;
+    private Button boutonDeplacerLivraison;
     private ToolBar menuBar;
     private Stage primaryStage;
 
@@ -29,8 +34,10 @@ public class InterfaceGUI extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         Planification planification = new Planification();
-        Controleur.planification = planification;
         VueGraphique vueGraphique = new VueGraphique(planification);
+        Controleur.planification = planification;
+        Controleur.interfaceGUI = this;
+        Controleur.vueGraphique = vueGraphique;
         BorderPane borderPane = new BorderPane();
         createMenuBar();
 
@@ -46,9 +53,15 @@ public class InterfaceGUI extends Application {
         boutonChargerPlan = new Button("Charger un plan");
         boutonChargerDemandeLivraison = new Button("Charger livraisons");
         boutonCaluculerTournees = new Button("Calculer tournees");
+        boutonSuprimmerLivraison = new Button("Supprimer Livraison");
+        boutonValider = new Button("Valider");
+        boutonAnnuler = new Button("Annuler");
+        boutonAjouterLivraison = new Button("Ajouter Livraison");
+        boutonDeplacerLivraison = new Button("Deplacer Livraison");
 
-
-        menuBar = new ToolBar(boutonChargerPlan, boutonChargerDemandeLivraison, boutonCaluculerTournees);
+        menuBar = new ToolBar(boutonChargerPlan, boutonChargerDemandeLivraison, boutonCaluculerTournees,
+                boutonAjouterLivraison,
+                boutonSuprimmerLivraison, boutonDeplacerLivraison, boutonValider, boutonAnnuler);
 
         boutonChargerPlan.setOnAction(event -> {
             File fichierXML = choisirFichier();
@@ -64,11 +77,20 @@ public class InterfaceGUI extends Application {
             }
         });
 
-        boutonCaluculerTournees.setOnAction(event -> {
+        boutonCaluculerTournees.setOnAction(event -> Controleur.boutonCalculerTournees(3));
+        boutonSuprimmerLivraison.setOnAction(event -> Controleur.boutonSuprimmerLivraison());
+        boutonValider.setOnAction(event -> Controleur.boutonValider());
+        boutonAnnuler.setOnAction(event -> Controleur.boutonAnnuler());
+        boutonAjouterLivraison.setOnAction(event -> Controleur.boutonAjouterLivraison());
+        boutonDeplacerLivraison.setOnAction(event -> Controleur.boutonDeplacerLivraison());
 
-            Controleur.boutonCalculerTournees(3);
-
-        });
+        boutonChargerDemandeLivraison.setDisable(true);
+        boutonCaluculerTournees.setDisable(true);
+        boutonSuprimmerLivraison.setDisable(true);
+        boutonValider.setDisable(true);
+        boutonAnnuler.setDisable(true);
+        boutonAjouterLivraison.setDisable(true);
+        boutonDeplacerLivraison.setDisable(true);
 
     }
 
@@ -77,6 +99,63 @@ public class InterfaceGUI extends Application {
         return fileChooser.showOpenDialog(primaryStage);
     }
 
+    public void activerBoutonChargerPlan() {
+        boutonChargerPlan.setDisable(false);
+    }
 
+    public void activerBoutonChargerDemandeLivraison() {
+        boutonChargerDemandeLivraison.setDisable(false);
+    }
 
+    public void activerBoutonCaluculerTournees() {
+        boutonCaluculerTournees.setDisable(false);
+    }
+
+    public void activerBoutonSuprimmerLivraison() {
+        boutonSuprimmerLivraison.setDisable(false);
+    }
+
+    public void activerBoutonAjouterLivraison() {
+        boutonAjouterLivraison.setDisable(false);
+    }
+
+    public void activerBoutonAnnuler() {
+        boutonAnnuler.setDisable(false);
+    }
+
+    public void activerBoutonValider() {
+        boutonValider.setDisable(false);
+    }
+
+    public void activerBoutonDeplacerLivraison(){boutonDeplacerLivraison.setDisable(false);}
+
+    public void desactiverBoutonCaluculerTournees() {
+        boutonCaluculerTournees.setDisable(true);
+    }
+
+    public void desactiverBoutonChargerDemandeLivraison() {
+        boutonChargerDemandeLivraison.setDisable(true);
+    }
+
+    public void desactiverBoutonChargerPlan() {
+        boutonChargerPlan.setDisable(true);
+    }
+
+    public void desactiverBoutonSuprimmerLivraison() {
+        boutonSuprimmerLivraison.setDisable(true);
+    }
+
+    public void desactiverBoutonValider() {
+        boutonValider.setDisable(true);
+    }
+
+    public void desactiverBoutonAnnuler() {
+        boutonAnnuler.setDisable(true);
+    }
+
+    public void desactiverBoutonAjouterLivraison() {
+        boutonAjouterLivraison.setDisable(true);
+    }
+
+    public void desactiverBoutonDeplacerLivraison() {boutonDeplacerLivraison.setDisable(true);}
 }

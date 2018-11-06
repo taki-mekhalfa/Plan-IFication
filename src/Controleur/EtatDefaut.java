@@ -1,54 +1,80 @@
-package controleur;
+package Controleur;
+
+import Model.Metier.Livraison;
 
 import java.io.File;
 
-import Model.Metier.Livraison;
-import Model.Metier.Tournee;
-
-public class EtatDefaut implements Etat{
+public class EtatDefaut implements Etat {
 
     @Override
-	public void boutonChargerPlan(File fichierXML){
-		
-	}
-    @Override
-	public void definirNombreLivreur(int nbLivreurs){
-		
-	}
-    @Override
-	public void boutonChargerDemandeLivraison(File fichierXML){
-		
-	}
-    @Override
-	public void boutonCalculerTournees(int nombreLivreurs){
-		
-	}
-    @Override
-    public void selectionnerPointLivraison(Livraison livraison){
-    	
+    public void init() {
+
     }
+
     @Override
-	public void deselectionnerPointLivraison(){
-		
-	}
-    @Override
-	public void boutonAjouterPointLivraison(Tournee tournee, Livraison livraison){
-		
-	}
-    @Override
-	public void boutonSupprimerPointLivraison(Tournee tournee, Livraison livraison){
-		
-	}
-    @Override
-	public void boutonChangerPointLivraison(Tournee tournee, Livraison livraison){
-		
-	}
-    @Override
-	public void validerOperation(){
-		
-	}
-    @Override
-    public void annulerOperation(){
-    	
+    public void boutonChargerPlan(File fichierXML) {
+
     }
+
+    @Override
+    public void definirNombreLivreur(int nbLivreurs) {
+
+    }
+
+    @Override
+    public void boutonChargerDemandeLivraison(File fichierXML) {
+
+    }
+
+    @Override
+    public void boutonCalculerTournees(int nombreLivreurs) {
+
+    }
+
+    @Override
+    public void boutonSuprimmerLivraison() {
+
+    }
+
+    @Override
+    public void boutonDeplacerLivraison() {
+
+    }
+
+    @Override
+    public boolean livraisonSelectionne(Livraison livraison) {
+        return false;
+    }
+
+    @Override
+    public void boutonValider() {
+
+    }
+
+    @Override
+    public void boutonAnnuler() {
+
+    }
+
+    @Override
+    public void boutonAjouterLivraison() {
+
+    }
+
+    @Override
+    public void livraisonDeselectionnee(Livraison livraison) {
+
+    }
+
+    @Override
+    public boolean noeudSelectionne(String idNoeud) {
+        return false;
+    }
+
+    @Override
+    public void noeudDeselectionne(String idNoeud) {
+
+    }
+
+
 }

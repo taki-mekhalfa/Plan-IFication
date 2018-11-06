@@ -1,33 +1,66 @@
-package controleur;
+package Controleur;
 
 import java.io.File;
 
-import Model.Metier.Livraison;
-import Model.Metier.Tournee;
+public class EtatTourneesCalculees extends EtatDefaut {
 
-public class EtatTourneesCalculees extends EtatDefaut{
-	@Override
-	public void boutonChargerPlan(File fichier){
-		Controleur.planification.chargerPlan(fichier);
-		Controleur.setEtatCourant(Controleur.etatPlanCharge);
-	}
-	@Override
-	public void definirNombreLivreur(int nbLivreurs){
-		Controleur.setEtatCourant(Controleur.etatPlanEtDemandeLivraisonCharges);
-	}
-	@Override
-	public void boutonChargerDemandeLivraison(File fichierXML){
-		Controleur.planification.chargerDemandesDeLivraisons(fichierXML);
-		Controleur.setEtatCourant(Controleur.etatPlanEtDemandeLivraisonCharges);
-	}
-	
-	@Override
-    public void selectionnerPointLivraison(Livraison livraison){
-		Controleur.setEtatCourant(Controleur.etatPointLivraisonSelectionne);
-    }
     @Override
-	public void boutonAjouterPointLivraison(Tournee tournee, Livraison livraison){
-    	Controleur.setEtatCourant(Controleur.etatAjouterPointLivraison);
-	}
-	
+    public void init(){
+        Controleur.interfaceGUI.activerBoutonChargerPlan();
+        Controleur.interfaceGUI.activerBoutonChargerDemandeLivraison();
+        Controleur.interfaceGUI.desactiverBoutonCaluculerTournees();
+        Controleur.interfaceGUI.activerBoutonAjouterLivraison();
+        Controleur.interfaceGUI.activerBoutonSuprimmerLivraison();
+        Controleur.interfaceGUI.activerBoutonDeplacerLivraison();
+        Controleur.interfaceGUI.desactiverBoutonValider();
+        Controleur.interfaceGUI.desactiverBoutonAnnuler();
+    }
+
+    @Override
+    public void boutonChargerPlan(File fichier) {
+        Controleur.planification.chargerPlan(fichier);
+        Controleur.interfaceGUI.desactiverBoutonAjouterLivraison();
+        Controleur.interfaceGUI.desactiverBoutonDeplacerLivraison();
+        Controleur.interfaceGUI.desactiverBoutonSuprimmerLivraison();
+        Controleur.setEtatCourant(Controleur.etatPlanCharge);
+    }
+
+    @Override
+    public void boutonChargerDemandeLivraison(File fichierXML) {
+        Controleur.planification.chargerDemandesDeLivraisons(fichierXML);
+        Controleur.interfaceGUI.desactiverBoutonAjouterLivraison();
+        Controleur.interfaceGUI.desactiverBoutonDeplacerLivraison();
+        Controleur.interfaceGUI.desactiverBoutonSuprimmerLivraison();
+        Controleur.setEtatCourant(Controleur.etatPlanEtDemandeLivraisonCharges);
+    }
+
+    @Override
+    public void boutonSuprimmerLivraison() {
+        Controleur.interfaceGUI.desactiverBoutonChargerPlan();
+        Controleur.interfaceGUI.desactiverBoutonChargerDemandeLivraison();
+        Controleur.interfaceGUI.desactiverBoutonAjouterLivraison();
+        Controleur.interfaceGUI.desactiverBoutonDeplacerLivraison();
+        Controleur.interfaceGUI.desactiverBoutonSuprimmerLivraison();
+        Controleur.setEtatCourant(Controleur.etatSupressionLivraison);
+    }
+
+    @Override
+    public void boutonAjouterLivraison() {
+        Controleur.interfaceGUI.desactiverBoutonChargerPlan();
+        Controleur.interfaceGUI.desactiverBoutonChargerDemandeLivraison();
+        Controleur.interfaceGUI.desactiverBoutonAjouterLivraison();
+        Controleur.interfaceGUI.desactiverBoutonDeplacerLivraison();
+        Controleur.interfaceGUI.desactiverBoutonSuprimmerLivraison();
+        Controleur.setEtatCourant(Controleur.etatAjoutLivraison);
+    }
+
+    @Override
+    public void boutonDeplacerLivraison(){
+        Controleur.interfaceGUI.desactiverBoutonChargerPlan();
+        Controleur.interfaceGUI.desactiverBoutonChargerDemandeLivraison();
+        Controleur.interfaceGUI.desactiverBoutonAjouterLivraison();
+        Controleur.interfaceGUI.desactiverBoutonDeplacerLivraison();
+        Controleur.interfaceGUI.desactiverBoutonSuprimmerLivraison();
+        Controleur.setEtatCourant(Controleur.etatDeplacementLivraison);
+    }
 }
