@@ -63,4 +63,14 @@ public class EtatTourneesCalculees extends EtatDefaut {
         Controleur.interfaceGUI.desactiverBoutonSuprimmerLivraison();
         Controleur.setEtatCourant(Controleur.etatDeplacementLivraison);
     }
+    
+    @Override
+    public void undo(ListeCommandes l){
+    	l.undo();
+    }
+    
+    @Override
+    public void redo(ListeCommandes l){
+    	l.redo();
+    }
 }

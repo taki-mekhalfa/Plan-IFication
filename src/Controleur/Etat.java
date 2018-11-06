@@ -34,5 +34,9 @@ public interface Etat {
     boolean noeudSelectionne(String idNoeud);
 
     void noeudDeselectionne(String idNoeud);
+    
+    void undo(ListeCommandes l);
+    
+    void redo(ListeCommandes l);
 }
 

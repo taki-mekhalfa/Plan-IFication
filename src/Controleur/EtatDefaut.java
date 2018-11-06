@@ -75,6 +75,14 @@ public class EtatDefaut implements Etat {
     public void noeudDeselectionne(String idNoeud) {
 
     }
-
-
+    
+    @Override
+    public void undo(ListeCommandes l){
+    	
+    }
+    
+    @Override
+    public void redo(ListeCommandes l){
+    	
+    }
 }

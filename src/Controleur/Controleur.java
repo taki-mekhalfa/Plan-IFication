@@ -16,11 +16,13 @@ public class Controleur {
     static final EtatSupressionLivraison etatSupressionLivraison = new EtatSupressionLivraison();
     static final EtatAjoutLivraison etatAjoutLivraison = new EtatAjoutLivraison();
     static final EtatDeplacementLivraison etatDeplacementLivraison = new EtatDeplacementLivraison();
-    private static Etat etatCourant = etatInit;
+    private static Etat etatCourant = (Etat) etatInit;
 
     public static Planification planification;
     public static InterfaceGUI interfaceGUI;
     public static VueGraphique vueGraphique;
+    
+    private static ListeCommandes listeCommandes;
 	
 	public static void boutonChargerPlan(File fichierXML){
 
@@ -70,6 +72,11 @@ public class Controleur {
     public static void livraisonDeselectionnee(Livraison livraison) {
 	    etatCourant.livraisonDeselectionnee(livraison);
     }
-
+    public static void undo(){
+    	etatCourant.undo(listeCommandes);
+    }
+    public static void redo(){
+    	etatCourant.redo(listeCommandes);
+    }
 }
 
