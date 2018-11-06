@@ -106,6 +106,9 @@ public class Planification extends Observable {
         return tournees;
     }
 
+    public void setTournees(List<Tournee> t) {
+        tournees = t;
+    }
 
     private void notifierAbonnes(String quoi) {
         setChanged();
