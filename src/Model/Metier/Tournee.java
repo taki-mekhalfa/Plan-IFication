@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 public class Tournee {
-    private final List<Chemin> chemins;
+    private List<Chemin> chemins;
 
 
-    private final Map<Livraison, Temps> heuresDeLivraison;
+    private Map<Livraison, Temps> heuresDeLivraison;
 
 
     public Tournee(List<Chemin> chemins, Map<Livraison, Temps> heuresDeLivraison) {
@@ -73,9 +73,17 @@ public class Tournee {
     public List<Chemin> getChemins() {
         return chemins;
     }
+    
+    public void setChemins(List<Chemin> c) {
+        chemins = c;
+    }
 
     public Map<Livraison, Temps> getHeuresDeLivraison() {
         return heuresDeLivraison;
+    }
+    
+    public void setHeuresDeLivraison(Map<Livraison, Temps> h) {
+    	heuresDeLivraison = h;
     }
 
     public void supprimerLivraison(Livraison livraison, Plan plan) {
