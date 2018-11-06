@@ -49,10 +49,11 @@ public class Planification extends Observable {
         notifierAbonnes("tournees");
     }
 
-    public void ajouterPointDeLivraison(String idPointLivraison, int duree, Livraison livraison1, Livraison livraison2){
+    public Livraison ajouterPointDeLivraison(String idPointLivraison, int duree, Livraison livraison1, Livraison livraison2){
+        Livraison livraison = null;
         for (Tournee tournee: tournees){
             if (tournee.consecutives(livraison1,livraison2)){
-                Livraison livraison = new Livraison(idPointLivraison,duree);
+                livraison = new Livraison(idPointLivraison,duree);
                 demandeLivraisons.getPointsDeLivraisons().add(livraison);
                 tournee.ajouterLivraison(livraison, livraison1,livraison2,plan);
                 break;
@@ -60,6 +61,7 @@ public class Planification extends Observable {
         }
         notifierAbonnes("livraisons");
         notifierAbonnes("tournees");
+        return livraison;
     }
 
     public void deplacerLivraison(Livraison livraisonADeplacer, Livraison livraison1, Livraison livraison2){
@@ -92,6 +94,12 @@ public class Planification extends Observable {
         }
         notifierAbonnes("livraisons");
         notifierAbonnes("tournees");
+    }
+    
+    public void MAJAffichage(){
+    	notifierAbonnes("livraisons");
+        notifierAbonnes("tournees");
+        
     }
 
     public Plan getPlan() {
