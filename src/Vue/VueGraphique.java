@@ -123,7 +123,7 @@ public class VueGraphique extends Vue {
                 }
             }
         }
-
+        
     }
 
     private double trX(double longitude) {

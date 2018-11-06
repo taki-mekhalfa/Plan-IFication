@@ -23,6 +23,8 @@ public class InterfaceGUI extends Application {
     private Button boutonAnnuler;
     private Button boutonAjouterLivraison;
     private Button boutonDeplacerLivraison;
+    private Button boutonUndo;
+    private Button boutonRedo;
     private ToolBar menuBar;
     private Stage primaryStage;
 
@@ -44,7 +46,7 @@ public class InterfaceGUI extends Application {
         borderPane.setTop(menuBar);
         borderPane.setCenter(vueGraphique);
 
-        Scene scene = new Scene(borderPane, 800, 600);
+        Scene scene = new Scene(borderPane, 1000, 700);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -58,10 +60,12 @@ public class InterfaceGUI extends Application {
         boutonAnnuler = new Button("Annuler");
         boutonAjouterLivraison = new Button("Ajouter Livraison");
         boutonDeplacerLivraison = new Button("Deplacer Livraison");
+        boutonUndo = new Button("Undo");
+        boutonRedo = new Button("Redo");
 
         menuBar = new ToolBar(boutonChargerPlan, boutonChargerDemandeLivraison, boutonCaluculerTournees,
                 boutonAjouterLivraison,
-                boutonSuprimmerLivraison, boutonDeplacerLivraison, boutonValider, boutonAnnuler);
+                boutonSuprimmerLivraison, boutonDeplacerLivraison, boutonValider, boutonAnnuler, boutonUndo, boutonRedo);
 
         boutonChargerPlan.setOnAction(event -> {
             File fichierXML = choisirFichier();
@@ -83,6 +87,8 @@ public class InterfaceGUI extends Application {
         boutonAnnuler.setOnAction(event -> Controleur.boutonAnnuler());
         boutonAjouterLivraison.setOnAction(event -> Controleur.boutonAjouterLivraison());
         boutonDeplacerLivraison.setOnAction(event -> Controleur.boutonDeplacerLivraison());
+        boutonUndo.setOnAction(event -> Controleur.undo());
+        boutonRedo.setOnAction(event -> Controleur.redo());
 
         boutonChargerDemandeLivraison.setDisable(true);
         boutonCaluculerTournees.setDisable(true);
