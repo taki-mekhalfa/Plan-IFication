@@ -47,7 +47,7 @@ public class EtatDefaut implements Etat {
     }
 
     @Override
-    public void boutonValider() {
+    public void boutonValider(ListeCommandes listeCommandes) {
 
     }
 

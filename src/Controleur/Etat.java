@@ -23,7 +23,7 @@ public interface Etat {
 
     void boutonDeplacerLivraison();
 
-    void boutonValider();
+    void boutonValider(ListeCommandes listeCommandes);
 
     void boutonAnnuler();
 

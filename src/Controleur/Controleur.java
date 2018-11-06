@@ -22,7 +22,7 @@ public class Controleur {
     public static InterfaceGUI interfaceGUI;
     public static VueGraphique vueGraphique;
     
-    private static ListeCommandes listeCommandes;
+    private static ListeCommandes listeCommandes = new ListeCommandes();
 	
 	public static void boutonChargerPlan(File fichierXML){
 
@@ -50,7 +50,7 @@ public class Controleur {
 	    etatCourant.boutonSuprimmerLivraison();
     }
     public static void boutonValider(){
-	    etatCourant.boutonValider();
+	    etatCourant.boutonValider(listeCommandes);
     }
     public static void boutonAnnuler() {
 	    etatCourant.boutonAnnuler();

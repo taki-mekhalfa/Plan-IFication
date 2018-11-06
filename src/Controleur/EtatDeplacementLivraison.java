@@ -54,9 +54,12 @@ public class EtatDeplacementLivraison extends EtatDefaut {
     }
 
     @Override
-    public void boutonValider() {
-        Controleur.planification.deplacerLivraison(livraisonADeplacer, livraison1, livraison2);
-        Controleur.vueGraphique.annulerModification();
+    public void boutonValider(ListeCommandes listeCommandes) {
+    	CommandeDeplacement com = new CommandeDeplacement(Controleur.planification.getTournees(), livraisonADeplacer, livraison1);
+    	listeCommandes.add(com);
+    	Controleur.planification.deplacerLivraison(livraisonADeplacer, livraison1, livraison2);
+    	Controleur.vueGraphique.annulerModification();
+        com.sauvegardesApres();
         Controleur.setEtatCourant(Controleur.etatTourneesCalculees);
     }
 
