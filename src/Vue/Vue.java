@@ -1,6 +1,5 @@
 package Vue;
 
-import Controleur.Controleur;
 import Model.Metier.DemandeLivraisons;
 import Model.Metier.Plan;
 import Model.Metier.Tournee;
@@ -50,5 +49,6 @@ public abstract class Vue extends Parent implements Observer {
     abstract void dessinerDemandeDeLivraisons();
 
     abstract void dessinerTournees();
+
 }
 
