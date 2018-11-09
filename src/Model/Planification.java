@@ -33,10 +33,14 @@ public class Planification extends Observable {
         System.out.println(tourneeList.get(0));
     }*/
 
-    public void chargerPlan(File fichier) {
+    public boolean chargerPlan(File fichier) {
         plan = new PlanXMLHelperDom4J().getPlan(fichier);
-        calculateur = new Calculateur(plan);
-        notifierAbonnes("plan");
+        if (plan != null){
+        	calculateur = new Calculateur(plan);
+        	notifierAbonnes("plan");
+        	return true;
+        }
+        return false;
     }
 
     public void chargerDemandesDeLivraisons(File fichierXML) {
@@ -97,9 +101,19 @@ public class Planification extends Observable {
     }
     
     public void MAJAffichage(){
+    	notifierAbonnes("plan");
     	notifierAbonnes("livraisons");
         notifierAbonnes("tournees");
-        
+    }
+    
+    public void supprimerPlan(){
+    	supprimerDemandesLivraisons();
+    	plan = null;
+    }
+    
+    public void supprimerDemandesLivraisons(){
+    	tournees = null;
+    	demandeLivraisons = null;
     }
 
     public Plan getPlan() {

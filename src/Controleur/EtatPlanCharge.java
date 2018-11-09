@@ -12,8 +12,14 @@ public class EtatPlanCharge extends EtatDefaut{
 
 	@Override
 	public void boutonChargerPlan(File fichier){
-		Controleur.planification.chargerPlan(fichier);
-		Controleur.setEtatCourant(Controleur.etatPlanCharge);
+		if (Controleur.planification.chargerPlan(fichier)){
+			Controleur.setEtatCourant(Controleur.etatPlanCharge);
+		}
+		else{
+			Controleur.planification.supprimerPlan();
+			Controleur.planification.MAJAffichage();
+			Controleur.setEtatCourant(Controleur.etatInit);
+		}
 	}
 
 	@Override

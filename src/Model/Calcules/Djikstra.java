@@ -34,8 +34,8 @@ public class Djikstra implements PCC {
     private void evaluer() {
         while (!pointsDestination.isEmpty()) {
             String lePlusProche = getPlusProche();
-            for (Plan.Trancon trancon : plan.getSuccesseurs(lePlusProche)) {
-                String successeur = trancon.getDestination();
+            for (Plan.Troncon troncon : plan.getSuccesseurs(lePlusProche)) {
+                String successeur = troncon.getDestination();
                 if (!evalues.contains(successeur)) traiter(lePlusProche, successeur);
             }
 
@@ -64,11 +64,11 @@ public class Djikstra implements PCC {
             metaDonnes.put(successeur, new MetaDonne());
         }
 
-        double longueurTrancon = plan.getDistance(source, successeur);
+        double longueurTroncon = plan.getDistance(source, successeur);
         MetaDonne metaDonneSuccesseur = metaDonnes.get(successeur);
         MetaDonne metaDonneSource = metaDonnes.get(source);
-        if (longueurTrancon + metaDonneSource.distance < metaDonneSuccesseur.distance) {
-            metaDonneSuccesseur.distance = metaDonneSource.distance + longueurTrancon;
+        if (longueurTroncon + metaDonneSource.distance < metaDonneSuccesseur.distance) {
+            metaDonneSuccesseur.distance = metaDonneSource.distance + longueurTroncon;
             metaDonneSuccesseur.predecesseurs = new LinkedList<>(metaDonneSource.predecesseurs);
             metaDonneSuccesseur.predecesseurs.add(source);
         }

@@ -8,7 +8,7 @@ public class EtatTourneesCalculees extends EtatDefaut {
     public void init(){
         Controleur.interfaceGUI.activerBoutonChargerPlan();
         Controleur.interfaceGUI.activerBoutonChargerDemandeLivraison();
-        Controleur.interfaceGUI.desactiverBoutonCaluculerTournees();
+        Controleur.interfaceGUI.desactiverBoutonCalculerTournees();
         Controleur.interfaceGUI.activerBoutonAjouterLivraison();
         Controleur.interfaceGUI.activerBoutonSuprimmerLivraison();
         Controleur.interfaceGUI.activerBoutonDeplacerLivraison();
@@ -18,15 +18,23 @@ public class EtatTourneesCalculees extends EtatDefaut {
 
     @Override
     public void boutonChargerPlan(File fichier) {
-        Controleur.planification.chargerPlan(fichier);
-        Controleur.interfaceGUI.desactiverBoutonAjouterLivraison();
-        Controleur.interfaceGUI.desactiverBoutonDeplacerLivraison();
-        Controleur.interfaceGUI.desactiverBoutonSuprimmerLivraison();
-        Controleur.interfaceGUI.desactiverBoutonUndo();
-        Controleur.interfaceGUI.desactiverBoutonRedo();
-        Controleur.listeCommandes.init();
-
-        Controleur.setEtatCourant(Controleur.etatPlanCharge);
+        if (Controleur.planification.chargerPlan(fichier)){
+        	Controleur.interfaceGUI.desactiverBoutonAjouterLivraison();
+	        Controleur.interfaceGUI.desactiverBoutonDeplacerLivraison();
+	        Controleur.interfaceGUI.desactiverBoutonSuprimmerLivraison();
+	        Controleur.interfaceGUI.desactiverBoutonUndo();
+	        Controleur.interfaceGUI.desactiverBoutonRedo();
+	        Controleur.listeCommandes.init();
+	
+	        Controleur.setEtatCourant(Controleur.etatPlanCharge);
+        }
+        
+        else{
+        	Controleur.planification.supprimerPlan();
+			Controleur.planification.MAJAffichage();
+        	Controleur.setEtatCourant(Controleur.etatInit);
+        }
+        
     }
 
     @Override
@@ -83,7 +91,7 @@ public class EtatTourneesCalculees extends EtatDefaut {
 
     @Override
     public void saisieNombreLivreurs(){
-        Controleur.interfaceGUI.activerBoutonCaluculerTournees();
+        Controleur.interfaceGUI.activerBoutonCalculerTournees();
     }
 
     @Override

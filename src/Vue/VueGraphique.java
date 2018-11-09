@@ -62,73 +62,76 @@ public class VueGraphique extends Vue {
 
     @Override
     void dessinerPlan() {
-        tourneesGroup.getChildren().clear();
+    	tourneesGroup.getChildren().clear();
         livraisonsGroup.getChildren().clear();
         planGroup.getChildren().clear();
-        calculerCoins();
-
-        for (String idNoeud : plan.getNoeuds()) {
-            Noeud n1 = NoeudFactory.getNoeudParId(idNoeud);
-            CercleIntersection cercleIntersection = new CercleIntersection(trX(n1.getLongitude()), trY(n1.getLatitude()), 8, idNoeud);
-            planGroup.getChildren().add(cercleIntersection);
-            for (Plan.Trancon trancon : plan.getSuccesseurs(idNoeud)) {
-                Noeud n2 = NoeudFactory.getNoeudParId(trancon.getDestination());
-                LineModifiee line = new LineModifiee(trX(n1.getLongitude()), trY(n1.getLatitude()), trX(n2.getLongitude()), trY(n2.getLatitude()), trancon.getNomDeLaRue());
-                planGroup.getChildren().add(line);
-            }
-        }
+    	if (plan != null){
+	        calculerCoins();
+	        for (String idNoeud : plan.getNoeuds()) {
+	            Noeud n1 = NoeudFactory.getNoeudParId(idNoeud);
+	            CercleIntersection cercleIntersection = new CercleIntersection(trX(n1.getLongitude()), trY(n1.getLatitude()), 8, idNoeud);
+	            planGroup.getChildren().add(cercleIntersection);
+	            for (Plan.Troncon troncon : plan.getSuccesseurs(idNoeud)) {
+	                Noeud n2 = NoeudFactory.getNoeudParId(troncon.getDestination());
+	                LineModifiee line = new LineModifiee(trX(n1.getLongitude()), trY(n1.getLatitude()), trX(n2.getLongitude()), trY(n2.getLatitude()), troncon.getNomDeLaRue());
+	                planGroup.getChildren().add(line);
+	            }
+	        }
+    	}
     }
 
     @Override
     void dessinerDemandeDeLivraisons() {
-        livraisonsGroup.getChildren().clear();
-        tourneesGroup.getChildren().clear();
-
-        Noeud entrepot = NoeudFactory.getNoeudParId(demandeLivraisons.getEntrepot());
-
-        CercleLivraison cercleLivraisonEntrepot = new CercleLivraison(trX(entrepot.getLongitude()), trY(entrepot.getLatitude()), 6,new Livraison(entrepot.getId(),0));
-        cercleLivraisonEntrepot.setDefaultColor(Color.RED);
-        livraisonsGroup.getChildren().add(cercleLivraisonEntrepot);
-
-        for (Livraison livraison : demandeLivraisons.getPointsDeLivraisons()) {
-            Noeud pointLivr = NoeudFactory.getNoeudParId(livraison.getNoeud());
-            CercleLivraison cercleLivraison = new CercleLivraison(trX(pointLivr.getLongitude()), trY(pointLivr.getLatitude()), 8, livraison);
-            cercleLivraison.setCouleur(Color.BLUE);
-            livraisonsGroup.getChildren().add(cercleLivraison);
-        }
-
+    	livraisonsGroup.getChildren().clear();
+	    tourneesGroup.getChildren().clear();
+    	if (demandeLivraisons != null){
+	        Noeud entrepot = NoeudFactory.getNoeudParId(demandeLivraisons.getEntrepot());
+	        CercleLivraison cercleLivraisonEntrepot = new CercleLivraison(trX(entrepot.getLongitude()), trY(entrepot.getLatitude()), 6,new Livraison(entrepot.getId(),0));
+	        cercleLivraisonEntrepot.setDefaultColor(Color.RED);
+	        livraisonsGroup.getChildren().add(cercleLivraisonEntrepot);
+	
+	        for (Livraison livraison : demandeLivraisons.getPointsDeLivraisons()) {
+	            Noeud pointLivr = NoeudFactory.getNoeudParId(livraison.getNoeud());
+	            CercleLivraison cercleLivraison = new CercleLivraison(trX(pointLivr.getLongitude()), trY(pointLivr.getLatitude()), 8, livraison);
+	            cercleLivraison.setCouleur(Color.BLUE);
+	            livraisonsGroup.getChildren().add(cercleLivraison);
+	        }	
+    	}
     }
 
     @Override
     void dessinerTournees() {
-        tourneesGroup.getChildren().clear();
-        for (Tournee tournee : tournees) {
-            Color color = getColor();
-            List<Chemin> chemins = tournee.getChemins();
-            for (Chemin chemin : chemins) {
-                Noeud premierNoeud = NoeudFactory.getNoeudParId(chemin.getDepart());
-                LineModifiee line = new LineModifiee();
-                line.setStartX(trX(premierNoeud.getLongitude()));
-                line.setStartY(trY(premierNoeud.getLatitude()));
-                for (String idNoeud : chemin.getChemin().subList(1, chemin.getChemin().size())) {
-                    Noeud noeud = NoeudFactory.getNoeudParId(idNoeud);
-                    line.setEndX(trX(noeud.getLongitude()));
-                    line.setEndY(trY(noeud.getLatitude()));
-                    line.setStroke(color);
-                    line.setStrokeWidth(4);
-                    tourneesGroup.getChildren().add(line);
-                    line = new LineModifiee();
-                    line.setStartX(trX(noeud.getLongitude()));
-                    line.setStartY(trY(noeud.getLatitude()));
-                }
-            }
-        }
-        
+    	if (tournees != null){
+	    	int indexTournee = 0;
+	        tourneesGroup.getChildren().clear();
+	        for (Tournee tournee : tournees) {
+	            Color color = getColor(indexTournee);
+	            List<Chemin> chemins = tournee.getChemins();
+	            for (Chemin chemin : chemins) {
+	                Noeud premierNoeud = NoeudFactory.getNoeudParId(chemin.getDepart());
+	                LineModifiee line = new LineModifiee();
+	                line.setStartX(trX(premierNoeud.getLongitude()));
+	                line.setStartY(trY(premierNoeud.getLatitude()));
+	                for (String idNoeud : chemin.getChemin().subList(1, chemin.getChemin().size())) {
+	                    Noeud noeud = NoeudFactory.getNoeudParId(idNoeud);
+	                    line.setEndX(trX(noeud.getLongitude()));
+	                    line.setEndY(trY(noeud.getLatitude()));
+	                    line.setStroke(color);
+	                    line.setStrokeWidth(4);
+	                    tourneesGroup.getChildren().add(line);
+	                    line = new LineModifiee();
+	                    line.setStartX(trX(noeud.getLongitude()));
+	                    line.setStartY(trY(noeud.getLatitude()));
+	                }
+	            }
+	            indexTournee ++;
+	        }	
+    	}
     }
 
     private double trX(double longitude) {
         //double echeleHor = (WITDH / (maxLongitude - minLongitude));
-        return 16384 * (longitude - minLongitude);
+        return 16384 * (longitude - minLongitude)*0.7;
     }
 
     private double trY(double latitude) {
@@ -161,12 +164,14 @@ public class VueGraphique extends Vue {
         colors.add(Color.CORNFLOWERBLUE);
     }
 
-    private Color getColor() {
-        if (colors.isEmpty()) {
-            Random random = new Random();
-            return Color.color(random.nextInt(100) / 100.0, random.nextInt(100) / 100.0, random.nextInt(100) / 100.0);
-        }
-        return colors.remove(0);
+    private Color getColor(int n) {
+    	if(n<colors.size()){
+    		return colors.get(n);
+    	}
+    	Random random = new Random();
+    	Color newColor = Color.color(random.nextInt(100) / 100.0, random.nextInt(100) / 100.0, random.nextInt(100) / 100.0);
+    	colors.add(newColor);
+    	return newColor;
     }
 
     public void annulerModification() {

@@ -8,12 +8,18 @@ public class EtatPlanEtDemandeLivraisonCharges extends EtatDefaut{
     public void init(){
         Controleur.interfaceGUI.activerBoutonChargerPlan();
         Controleur.interfaceGUI.activerBoutonChargerDemandeLivraison();
-        Controleur.interfaceGUI.activerBoutonCaluculerTournees();
+        Controleur.interfaceGUI.activerBoutonCalculerTournees();
     }
 	@Override
 	public void boutonChargerPlan(File fichier){
-		Controleur.planification.chargerPlan(fichier);
-		Controleur.setEtatCourant(Controleur.etatPlanCharge);
+		if (Controleur.planification.chargerPlan(fichier)){
+			Controleur.setEtatCourant(Controleur.etatPlanCharge);
+		}
+		else{
+			Controleur.planification.supprimerPlan();
+			Controleur.planification.MAJAffichage();
+			Controleur.setEtatCourant(Controleur.etatInit);
+		}
 	}
 
 	@Override

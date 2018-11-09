@@ -20,7 +20,7 @@ public class InterfaceGUI extends Application {
 
     private Button boutonChargerPlan;
     private Button boutonChargerDemandeLivraison;
-    private Button boutonCaluculerTournees;
+    private Button boutonCalculerTournees;
     private Button boutonSuprimmerLivraison;
     private Button boutonValider;
     private Button boutonAnnuler;
@@ -50,7 +50,7 @@ public class InterfaceGUI extends Application {
         borderPane.setTop(menuBar);
         borderPane.setCenter(vueGraphique);
 
-        Scene scene = new Scene(borderPane, 1000, 700);
+        Scene scene = new Scene(borderPane, 1100, 700);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -58,7 +58,7 @@ public class InterfaceGUI extends Application {
     private void createMenuBar() {
         boutonChargerPlan = new Button("Charger un plan");
         boutonChargerDemandeLivraison = new Button("Charger livraisons");
-        boutonCaluculerTournees = new Button("Calculer tournees");
+        boutonCalculerTournees = new Button("Calculer tournees");
         boutonSuprimmerLivraison = new Button("Supprimer Livraison");
         boutonValider = new Button("Valider");
         boutonAnnuler = new Button("Annuler");
@@ -78,7 +78,7 @@ public class InterfaceGUI extends Application {
 
         });
 
-        menuBar = new ToolBar(boutonChargerPlan, boutonChargerDemandeLivraison, boutonCaluculerTournees,
+        menuBar = new ToolBar(boutonChargerPlan, boutonChargerDemandeLivraison, boutonCalculerTournees,
                 saisieLivreurs,boutonAjouterLivraison,
                 boutonSuprimmerLivraison, boutonDeplacerLivraison, boutonValider, boutonAnnuler, boutonUndo, boutonRedo);
 
@@ -96,7 +96,7 @@ public class InterfaceGUI extends Application {
             }
         });
 
-        boutonCaluculerTournees.setOnAction(event -> {
+        boutonCalculerTournees.setOnAction(event -> {
             int nb;
             if(saisieLivreurs.getText().equals("")){
                 nb = 3;
@@ -117,7 +117,7 @@ public class InterfaceGUI extends Application {
 
 
         boutonChargerDemandeLivraison.setDisable(true);
-        boutonCaluculerTournees.setDisable(true);
+        boutonCalculerTournees.setDisable(true);
         boutonSuprimmerLivraison.setDisable(true);
         boutonValider.setDisable(true);
         boutonAnnuler.setDisable(true);
@@ -141,8 +141,8 @@ public class InterfaceGUI extends Application {
         boutonChargerDemandeLivraison.setDisable(false);
     }
 
-    public void activerBoutonCaluculerTournees() {
-        boutonCaluculerTournees.setDisable(false);
+    public void activerBoutonCalculerTournees() {
+        boutonCalculerTournees.setDisable(false);
     }
 
     public void activerBoutonSuprimmerLivraison() {
@@ -167,8 +167,8 @@ public class InterfaceGUI extends Application {
 
     public void activerBoutonDeplacerLivraison(){boutonDeplacerLivraison.setDisable(false);}
 
-    public void desactiverBoutonCaluculerTournees() {
-        boutonCaluculerTournees.setDisable(true);
+    public void desactiverBoutonCalculerTournees() {
+        boutonCalculerTournees.setDisable(true);
     }
 
     public void desactiverBoutonChargerDemandeLivraison() {
