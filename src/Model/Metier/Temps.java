@@ -1,12 +1,18 @@
 package Model.Metier;
 
+import javafx.beans.property.SimpleStringProperty;
+
 public class Temps {
+    private final SimpleStringProperty horraire;
     private int heures, minutes, secondes;
+    private int value;
 
     public Temps(int heures, int minutes, int secondes) {
         this.heures = heures;
         this.minutes = minutes;
         this.secondes = secondes;
+        horraire = this.PropertytoString();
+        value = heures * 3600 + minutes * 60 + secondes;
     }
 
     public static Temps addConvert(Temps debut, double secondesAajouter) {
@@ -32,8 +38,20 @@ public class Temps {
         return secondes;
     }
 
+    public int getValue() {
+        return value;
+    }
+
+    public SimpleStringProperty getHorraireProperty() {
+        return horraire;
+    }
+
     @Override
     public String toString() {
         return heures + ":" + minutes + ":" + secondes;
+    }
+
+    public SimpleStringProperty PropertytoString() {
+        return new SimpleStringProperty(toString());
     }
 }

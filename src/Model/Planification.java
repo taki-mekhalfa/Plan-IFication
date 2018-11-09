@@ -21,18 +21,6 @@ public class Planification extends Observable {
     private Calculateur calculateur;
     private List<Tournee> tournees;
 
-    /*public static void main(String[] args){
-        Planification planification =new Planification();
-        planification.chargerPlan(new File("./moyenPlan.xml"));
-        planification.chargerDemandesDeLivraisons(new File("dl-moyen-9.xml"));
-        planification.calculerTournees(3);
-        List<Tournee> tourneeList = planification.getTournees();
-        List<Livraison> livraisons = new LinkedList<>(tourneeList.get(0).getHeuresDeLivraison().keySet());
-        System.out.println(tourneeList.get(0));
-        planification.supprimerPointDeLivraison(tourneeList.get(0),livraisons.get(0));
-        System.out.println(tourneeList.get(0));
-    }*/
-
     public boolean chargerPlan(File fichier) {
         plan = new PlanXMLHelperDom4J().getPlan(fichier);
         if (plan != null){
@@ -143,5 +131,12 @@ public class Planification extends Observable {
         }
 
         return false;
+    }
+
+    public String getNomDeLaRue(String idOrigine, String idDestination) {
+        List<Plan.Troncon> tronconList = plan.getSuccesseurs(idOrigine);
+        for (Plan.Troncon troncon : tronconList)
+            if (troncon.getDestination().equals(idDestination)) return troncon.getNomDeLaRue();
+        return "Pas Du Nom";
     }
 }

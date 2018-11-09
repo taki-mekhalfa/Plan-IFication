@@ -1,6 +1,6 @@
 package Controleur;
 
 public interface Commande {
-	public void redoCommande();
-	public void undoCommande();
+	void redoCommande();
+	void undoCommande();
 }

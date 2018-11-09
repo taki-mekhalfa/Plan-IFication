@@ -41,6 +41,7 @@ public class InterfaceGUI extends Application {
         this.primaryStage = primaryStage;
         Planification planification = new Planification();
         VueGraphique vueGraphique = new VueGraphique(planification);
+        VueTextuelle vueTextuelle = new VueTextuelle(planification,vueGraphique);
         Controleur.planification = planification;
         Controleur.interfaceGUI = this;
         Controleur.vueGraphique = vueGraphique;
@@ -49,6 +50,7 @@ public class InterfaceGUI extends Application {
 
         borderPane.setTop(menuBar);
         borderPane.setCenter(vueGraphique);
+        borderPane.setRight(vueTextuelle);
 
         Scene scene = new Scene(borderPane, 1100, 700);
         primaryStage.setScene(scene);

@@ -73,7 +73,7 @@ public class Tournee {
     public List<Chemin> getChemins() {
         return chemins;
     }
-    
+
     public void setChemins(List<Chemin> c) {
         chemins = c;
     }
@@ -81,7 +81,7 @@ public class Tournee {
     public Map<Livraison, Temps> getHeuresDeLivraison() {
         return heuresDeLivraison;
     }
-    
+
     public void setHeuresDeLivraison(Map<Livraison, Temps> h) {
     	heuresDeLivraison = h;
     }

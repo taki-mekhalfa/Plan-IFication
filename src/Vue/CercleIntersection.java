@@ -9,7 +9,7 @@ public class CercleIntersection extends Circle {
     private String idNoeud;
     private boolean selectionne = false;
     private EventHandler<MouseEvent> eventHandlerMouseEntered = event -> {
-        setFill(Color.GRAY);
+        setFill(Color.color(9/256.0,132/256.0,227/256.0,1));
         event.consume();
     };
 
