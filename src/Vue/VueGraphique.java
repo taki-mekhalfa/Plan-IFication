@@ -41,7 +41,7 @@ public class VueGraphique extends Vue {
         BorderPane ecran = new BorderPane();
         ScrollPane screen= new ScrollPane(); 
         
-         //screen.setPrefSize(100, 50);
+        screen.setPrefSize(600, 400);
         Slider slider = new Slider(1,2,1);
         //Constructeur : Vmin, Vmax, Vinit
         //slider.toFront();
@@ -55,12 +55,7 @@ public class VueGraphique extends Vue {
        maxX = rootGroup.maxWidth(rootGroup.getTranslateY());
        minX = rootGroup.minWidth(rootGroup.getTranslateY());
        
-       /*
-       System.out.println("HauteurMax "+rootGroup.maxHeight(rootGroup.getTranslateX()));
-       System.out.println("HauteurMin "+rootGroup.minHeight(rootGroup.getTranslateX()));
-       System.out.println("LargeurMax"+rootGroup.maxWidth(rootGroup.getTranslateY()));
-       System.out.println("LargeurMin "+rootGroup.minWidth(rootGroup.getTranslateY()));
-       */
+      
         /**Dragg**/
       screen.setOnKeyPressed(event->{
     	  System.out.println("maxLatitudeY"+maxLatitude+"  "+trY(maxLatitude));
