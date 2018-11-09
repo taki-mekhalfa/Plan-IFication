@@ -21,8 +21,6 @@ public class Controleur {
     public static Planification planification;
     public static InterfaceGUI interfaceGUI;
     public static VueGraphique vueGraphique;
-    
-    public static ListeCommandes listeCommandes = new ListeCommandes();
 	
 	public static void boutonChargerPlan(File fichierXML){
 
@@ -37,7 +35,7 @@ public class Controleur {
 		etatCourant.boutonChargerDemandeLivraison(fichierXML);
 	}
 	
-	public static void boutonCalculerTournees(int nombreLivreurs){
+	public static void boutonCalculerTournees(int nombreLivreurs ){
 		etatCourant.boutonCalculerTournees(nombreLivreurs);
 	}
 	
@@ -50,7 +48,7 @@ public class Controleur {
 	    etatCourant.boutonSuprimmerLivraison();
     }
     public static void boutonValider(){
-	    etatCourant.boutonValider(listeCommandes);
+	    etatCourant.boutonValider();
     }
     public static void boutonAnnuler() {
 	    etatCourant.boutonAnnuler();
@@ -72,14 +70,10 @@ public class Controleur {
     public static void livraisonDeselectionnee(Livraison livraison) {
 	    etatCourant.livraisonDeselectionnee(livraison);
     }
-    public static void undo(){
-    	etatCourant.undo(listeCommandes);
-    }
-    public static void redo(){
-    	etatCourant.redo(listeCommandes);
-    }
+    
     public static void saisieNombreLivreurs(){
-	    etatCourant.saisieNombreLivreurs();
-    };
+    	etatCourant.saisieNombreLivreurs();
+    }
+
 }
 

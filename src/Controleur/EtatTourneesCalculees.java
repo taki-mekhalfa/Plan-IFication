@@ -22,10 +22,6 @@ public class EtatTourneesCalculees extends EtatDefaut {
         Controleur.interfaceGUI.desactiverBoutonAjouterLivraison();
         Controleur.interfaceGUI.desactiverBoutonDeplacerLivraison();
         Controleur.interfaceGUI.desactiverBoutonSuprimmerLivraison();
-        Controleur.interfaceGUI.desactiverBoutonUndo();
-        Controleur.interfaceGUI.desactiverBoutonRedo();
-        Controleur.listeCommandes.init();
-
         Controleur.setEtatCourant(Controleur.etatPlanCharge);
     }
 
@@ -35,9 +31,6 @@ public class EtatTourneesCalculees extends EtatDefaut {
         Controleur.interfaceGUI.desactiverBoutonAjouterLivraison();
         Controleur.interfaceGUI.desactiverBoutonDeplacerLivraison();
         Controleur.interfaceGUI.desactiverBoutonSuprimmerLivraison();
-        Controleur.interfaceGUI.desactiverBoutonUndo();
-        Controleur.interfaceGUI.desactiverBoutonRedo();
-        Controleur.listeCommandes.init();
         Controleur.setEtatCourant(Controleur.etatPlanEtDemandeLivraisonCharges);
     }
 
@@ -72,24 +65,13 @@ public class EtatTourneesCalculees extends EtatDefaut {
     }
     
     @Override
-    public void undo(ListeCommandes l){
-    	l.undo();
-    }
+	public void boutonCalculerTournees(int nombreLivreurs){
+		Controleur.planification.calculerTournees(nombreLivreurs);
+		Controleur.setEtatCourant(Controleur.etatTourneesCalculees);
+	}
     
     @Override
-    public void redo(ListeCommandes l){
-    	l.redo();
-    }
-
-    @Override
     public void saisieNombreLivreurs(){
-        Controleur.interfaceGUI.activerBoutonCaluculerTournees();
-    }
-
-    @Override
-    public void boutonCalculerTournees(int nombreLivreurs){
-        Controleur.planification.calculerTournees(nombreLivreurs);
-        Controleur.listeCommandes.init();
-        Controleur.setEtatCourant(Controleur.etatTourneesCalculees);
+    	Controleur.interfaceGUI.activerBoutonCaluculerTournees();
     }
 }

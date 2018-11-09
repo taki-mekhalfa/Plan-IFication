@@ -23,7 +23,7 @@ public interface Etat {
 
     void boutonDeplacerLivraison();
 
-    void boutonValider(ListeCommandes listeCommandes);
+    void boutonValider();
 
     void boutonAnnuler();
 
@@ -35,10 +35,6 @@ public interface Etat {
 
     void noeudDeselectionne(String idNoeud);
     
-    void undo(ListeCommandes l);
-    
-    void redo(ListeCommandes l);
-
     void saisieNombreLivreurs();
 }
 

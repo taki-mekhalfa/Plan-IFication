@@ -47,7 +47,7 @@ public class EtatDefaut implements Etat {
     }
 
     @Override
-    public void boutonValider(ListeCommandes listeCommandes) {
+    public void boutonValider() {
 
     }
 
@@ -77,17 +77,9 @@ public class EtatDefaut implements Etat {
     }
     
     @Override
-    public void undo(ListeCommandes l){
+    public void saisieNombreLivreurs(){
     	
     }
     
-    @Override
-    public void redo(ListeCommandes l){
-    	
-    }
 
-    @Override
-    public void saisieNombreLivreurs() {
-
-    }
 }

@@ -3,7 +3,12 @@ package Vue;
 import Controleur.Controleur;
 import Model.Metier.*;
 import Model.Planification;
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -23,9 +28,88 @@ public class VueGraphique extends Vue {
     private List<CercleLivraison> cerclesLivraisonsSelectionnes = new LinkedList<>();
     private CercleIntersection cercleIntersection;
 
+    /**Drag**/
+    private double offX=100;
+    private double offY=100;
+    private double maxX;
+    private double minX;
+    private double maxY;
+    private double minY;
+    
     public VueGraphique(Planification planification) {
         super(planification);
-        this.getChildren().add(rootGroup);
+        BorderPane ecran = new BorderPane();
+        ScrollPane screen= new ScrollPane(); 
+        
+         //screen.setPrefSize(100, 50);
+        Slider slider = new Slider(1,2,1);
+        //Constructeur : Vmin, Vmax, Vinit
+        //slider.toFront();
+        
+        rootGroup.scaleXProperty().bind(slider.valueProperty());
+        rootGroup.scaleYProperty().bind(slider.valueProperty());
+       
+       
+       maxY = rootGroup.maxHeight(rootGroup.getTranslateX());
+       minY = rootGroup.minHeight(rootGroup.getTranslateX());
+       maxX = rootGroup.maxWidth(rootGroup.getTranslateY());
+       minX = rootGroup.minWidth(rootGroup.getTranslateY());
+       
+       /*
+       System.out.println("HauteurMax "+rootGroup.maxHeight(rootGroup.getTranslateX()));
+       System.out.println("HauteurMin "+rootGroup.minHeight(rootGroup.getTranslateX()));
+       System.out.println("LargeurMax"+rootGroup.maxWidth(rootGroup.getTranslateY()));
+       System.out.println("LargeurMin "+rootGroup.minWidth(rootGroup.getTranslateY()));
+       */
+        /**Dragg**/
+      screen.setOnKeyPressed(event->{
+    	  System.out.println("maxLatitudeY"+maxLatitude+"  "+trY(maxLatitude));
+    	  System.out.println("minLatitudeY"+minLatitude+ " "+trY(minLatitude));
+    	  System.out.println("maxLongitudeX"+maxLongitude+"  "+trX(maxLongitude));
+    	  System.out.println("minLongitudeX"+minLongitude+ " "+trX(minLongitude));
+        //ecran.setOnKeyPressed(event->{
+        	System.out.println("Key Pressed = "+event.getCode());
+        	switch(event.getCode()){
+    		case LEFT :
+    			System.out.println(rootGroup.getTranslateX());
+    			if(rootGroup.getTranslateX()>=trX(maxLongitude)/2){break;}
+    			rootGroup.setTranslateX((rootGroup.getTranslateX()+offX));
+    			System.out.println("TranslateX ="+rootGroup.getTranslateX());
+    			break;
+    		case RIGHT :
+    			System.out.println(rootGroup.getTranslateX());
+    			if(rootGroup.getTranslateX()<=(trX(maxLongitude))/(-2)){break;}
+    			rootGroup.setTranslateX((rootGroup.getTranslateX()-offX));
+    			System.out.println("TranslateX ="+rootGroup.getTranslateX());
+    			break;
+    		case UP :
+    			System.out.println(rootGroup.getTranslateY());
+    			if(rootGroup.getTranslateY()>(trY(minLatitude)/(2))){break;}
+    			rootGroup.setTranslateY((rootGroup.getTranslateY()+offY));
+    			System.out.println("TranslateY ="+rootGroup.getTranslateY());
+    			break;
+    		case DOWN :
+    			System.out.println(rootGroup.getTranslateY());
+    			if(rootGroup.getTranslateY()<(trY(minLatitude)/(-2))){break;}
+    			rootGroup.setTranslateY((rootGroup.getTranslateY()-offY));
+    			System.out.println("TranslateY ="+rootGroup.getTranslateY());
+    			break;
+        	}
+        });
+       
+        /****/
+
+        
+        ecran.setBottom(slider);
+        //screen.setFitToWidth(true);
+        //screen.setFitToHeight(true);
+      screen.setHbarPolicy(ScrollBarPolicy.NEVER);
+      screen.setVbarPolicy(ScrollBarPolicy.NEVER);
+      screen.setPannable(true);
+        screen.setContent(rootGroup);
+        ecran.setCenter(screen);
+        //ecran.setCenter(rootGroup);
+        this.getChildren().add(ecran);
         initCouleurs();
         planGroup = new Group();
         livraisonsGroup = new Group();
@@ -123,7 +207,7 @@ public class VueGraphique extends Vue {
                 }
             }
         }
-        
+
     }
 
     private double trX(double longitude) {
