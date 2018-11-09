@@ -22,17 +22,18 @@ public abstract class TemplateTSP implements TSP {
 
         List<Livraison> nonVus = new LinkedList<>(this.listeLivraisons);
         List<Livraison> vus = new LinkedList<>();
-        vus.add(listeLivraisons.get(0));
+        Livraison livraisonEntrepot = listeLivraisons.get(0);
+        vus.add(livraisonEntrepot);
         nonVus.remove(0);
-        branchAndBound(listeLivraisons.get(0), nonVus, vus, 0, plusCourtsChemins, System.currentTimeMillis(), tempsLimite);
+        branchAndBound(livraisonEntrepot, nonVus, vus, 0, plusCourtsChemins, System.currentTimeMillis(), tempsLimite);
 
-        //---------(°.°)-----------------------------------------------------
+        //------------------------------------------------------------------
         List<Chemin> listeChemins = new LinkedList<>();
         Map<Livraison, Temps> heuresDeLivraison = new HashMap<>();
 
         meilleureSolution = new ArrayList<>(meilleureSolution);
         Temps tempsCumule = topDepart;
-        Livraison livraisonPrecedente = listeLivraisons.get(0);
+        Livraison livraisonPrecedente = livraisonEntrepot;
 
         for (int i = 1; i < meilleureSolution.size(); i++) {
             Livraison livraisonCourant = meilleureSolution.get(i);
@@ -44,7 +45,8 @@ public abstract class TemplateTSP implements TSP {
             livraisonPrecedente = livraisonCourant;
         }
 
-        listeChemins.add(plusCourtsChemins.get(livraisonPrecedente).get(listeLivraisons.get(0)));
+        listeChemins.add(plusCourtsChemins.get(livraisonPrecedente).get(livraisonEntrepot));
+        heuresDeLivraison.put(livraisonEntrepot,topDepart);
         return new Tournee(listeChemins, heuresDeLivraison);
     }
 
@@ -58,7 +60,7 @@ public abstract class TemplateTSP implements TSP {
     protected abstract Iterator<Livraison> iterator(Livraison livraisonCourante, List<Livraison> nonVus, Map<Livraison, Map<Livraison, Chemin>> plusCourtsChemins);
 
 
-    void branchAndBound(Livraison livraisonCourante, List<Livraison> nonVus, List<Livraison> vus, double coutVus, Map<Livraison, Map<Livraison, Chemin>> cout, long tpsDebut, int tpsLimite) {
+    private void branchAndBound(Livraison livraisonCourante, List<Livraison> nonVus, List<Livraison> vus, double coutVus, Map<Livraison, Map<Livraison, Chemin>> cout, long tpsDebut, int tpsLimite) {
         if (nonVus.size() == 0) { // tous les sommets ont ete visites
             coutVus += cout.get(livraisonCourante).get(listeLivraisons.get(0)).getCout() / 4.17;
             if (coutVus < coutMeilleureSolution) { // on a trouve une solution meilleure que meilleureSolution

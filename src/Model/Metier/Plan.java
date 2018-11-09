@@ -20,9 +20,17 @@ public class Plan {
         return new ArrayList<>(plan.keySet());
     }
 
-    public double getDistance(String idSource, String idDestination){
+    public String getNomDeLaRue(String idSource, String idDes){
+        for (Trancon trancon : plan.get(idSource)){
+            if (trancon.getDestination().equals(idDes)) return trancon.nomDeLaRue;
+        }
+
+        return "Pas du Nom";
+    }
+
+    public double getDistance(String idSource, String idDestination) {
         List<Trancon> trancons = plan.get(idSource);
-        for (Trancon trancon: trancons){
+        for (Trancon trancon : trancons) {
             if (trancon.getDestination().equals(idDestination)) return trancon.longueur;
         }
 
@@ -59,6 +67,10 @@ public class Plan {
 
         public String getDestination() {
             return idDestination;
+        }
+
+        public String getNomDeLaRue() {
+            return nomDeLaRue;
         }
 
         @Override

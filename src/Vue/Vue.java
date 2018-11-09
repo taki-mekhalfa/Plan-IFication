@@ -1,6 +1,5 @@
 package Vue;
 
-import Controleur.Controleur;
 import Model.Metier.DemandeLivraisons;
 import Model.Metier.Plan;
 import Model.Metier.Tournee;
@@ -22,7 +21,11 @@ public abstract class Vue extends Parent implements Observer {
         this.planification = planification;
         planification.addObserver(this);
     }
-
+    
+    public DemandeLivraisons getDemandeLivraisons(){
+    	return demandeLivraisons;
+    }
+    
     @Override
     public void update(Observable o, Object arg) {
         String quoi = (String) arg;
@@ -50,5 +53,6 @@ public abstract class Vue extends Parent implements Observer {
     abstract void dessinerDemandeDeLivraisons();
 
     abstract void dessinerTournees();
+
 }
 

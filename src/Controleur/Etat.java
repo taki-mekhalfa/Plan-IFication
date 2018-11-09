@@ -1,20 +1,44 @@
-package controleur;
+package Controleur;
+
+import Model.Metier.Livraison;
 
 import java.io.File;
 
-import Model.Metier.Livraison;
-import Model.Metier.Tournee;
-
 public interface Etat {
-	public void boutonChargerPlan(File fichierXML);
-	public void definirNombreLivreur(int nbLivreurs);
-	public void boutonChargerDemandeLivraison(File fichierXML);
-	public void boutonCalculerTournees(int nbLivreurs);
-	public void selectionnerPointLivraison(Livraison livraison);
-	public void deselectionnerPointLivraison();
-	public void boutonAjouterPointLivraison(Tournee tournee, Livraison livraison);
-	public void boutonSupprimerPointLivraison(Tournee tournee, Livraison livraison);
-	public void boutonChangerPointLivraison(Tournee tournee, Livraison livraison);
-	public void validerOperation();
-	public void annulerOperation();
+
+    void init();
+
+
+    void boutonChargerPlan(File fichierXML);
+
+    void definirNombreLivreur(int nbLivreurs);
+
+    void boutonChargerDemandeLivraison(File fichierXML);
+
+    void boutonCalculerTournees(int nbLivreurs);
+
+    void boutonAjouterLivraison();
+
+    void boutonSuprimmerLivraison();
+
+    void boutonDeplacerLivraison();
+
+    void boutonValider(ListeCommandes listeCommandes);
+
+    void boutonAnnuler();
+
+    boolean livraisonSelectionne(Livraison livraison);
+
+    void livraisonDeselectionnee(Livraison livraison);
+
+    boolean noeudSelectionne(String idNoeud);
+
+    void noeudDeselectionne(String idNoeud);
+    
+    void undo(ListeCommandes l);
+    
+    void redo(ListeCommandes l);
+
+    void saisieNombreLivreurs();
 }
+

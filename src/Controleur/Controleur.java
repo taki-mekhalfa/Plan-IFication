@@ -1,7 +1,9 @@
-package controleur;
-import Model.Planification;
+package Controleur;
+
 import Model.Metier.Livraison;
-import Model.Metier.Tournee;
+import Model.Planification;
+import Vue.InterfaceGUI;
+import Vue.VueGraphique;
 
 import java.io.File;
 
@@ -11,16 +13,19 @@ public class Controleur {
     static final EtatPlanCharge etatPlanCharge = new EtatPlanCharge();
     static final EtatPlanEtDemandeLivraisonCharges etatPlanEtDemandeLivraisonCharges = new EtatPlanEtDemandeLivraisonCharges();
     static final EtatTourneesCalculees etatTourneesCalculees = new EtatTourneesCalculees();
-    static final EtatPointLivraisonSelectionne etatPointLivraisonSelectionne = new EtatPointLivraisonSelectionne();
-    static final EtatAjouterPointLivraison etatAjouterPointLivraison = new EtatAjouterPointLivraison();
-    static final EtatSupprimerPointLivraison etatSupprimerPointLivraison = new EtatSupprimerPointLivraison();
-    static final EtatChangerPointLivraison etatChangerPointLivraison = new EtatChangerPointLivraison();
-    
+    static final EtatSupressionLivraison etatSupressionLivraison = new EtatSupressionLivraison();
+    static final EtatAjoutLivraison etatAjoutLivraison = new EtatAjoutLivraison();
+    static final EtatDeplacementLivraison etatDeplacementLivraison = new EtatDeplacementLivraison();
     private static Etat etatCourant = etatInit;
 
     public static Planification planification;
+    public static InterfaceGUI interfaceGUI;
+    public static VueGraphique vueGraphique;
+    
+    public static ListeCommandes listeCommandes = new ListeCommandes();
 	
 	public static void boutonChargerPlan(File fichierXML){
+
 		etatCourant.boutonChargerPlan(fichierXML);
 	}
 	
@@ -36,36 +41,45 @@ public class Controleur {
 		etatCourant.boutonCalculerTournees(nombreLivreurs);
 	}
 	
-	public static void selectionnerPointLivraison(Livraison livraison){
-		etatCourant.selectionnerPointLivraison(livraison);
-    }
-    
-	public static void deselectionnerPointLivraison(){
-		etatCourant.deselectionnerPointLivraison();
-	}
-    
-	public static void boutonAjouterPointLivraison(Tournee tournee, Livraison livraison){
-		etatCourant.boutonAjouterPointLivraison(tournee, livraison);
-	}
-    
-	public static void boutonSupprimerPointLivraison(Tournee tournee, Livraison livraison){
-		etatCourant.boutonSupprimerPointLivraison(tournee, livraison);
-	}
-    
-	public static void boutonChangerPointLivraison(Tournee tournee, Livraison livraison){
-		etatCourant.boutonChangerPointLivraison(tournee, livraison);
-	}
-	
-	public void validerOperation(){
-		etatCourant.validerOperation();
-	}
-	
-	public void annulerOperation(){
-		etatCourant.annulerOperation();
-    }
-	
-	protected static void setEtatCourant(Etat nouvelEtat){
+	static void setEtatCourant(Etat nouvelEtat){
 		etatCourant = nouvelEtat;
+		etatCourant.init();
 	}
-	
+
+    public static void boutonSuprimmerLivraison(){
+	    etatCourant.boutonSuprimmerLivraison();
+    }
+    public static void boutonValider(){
+	    etatCourant.boutonValider(listeCommandes);
+    }
+    public static void boutonAnnuler() {
+	    etatCourant.boutonAnnuler();
+    }
+    public static void boutonAjouterLivraison() {
+        etatCourant.boutonAjouterLivraison();
+    }
+    public static void boutonDeplacerLivraison() {etatCourant.boutonDeplacerLivraison();}
+
+    public static boolean livraisonSelectionne(Livraison livraison){
+	    return etatCourant.livraisonSelectionne(livraison);
+    }
+    public static boolean noeudSelectionne(String idNoeud){
+        return etatCourant.noeudSelectionne(idNoeud);
+    }
+    public static void noeudDeselectionne(String idNoeud){
+        etatCourant.noeudDeselectionne(idNoeud);
+    }
+    public static void livraisonDeselectionnee(Livraison livraison) {
+	    etatCourant.livraisonDeselectionnee(livraison);
+    }
+    public static void undo(){
+    	etatCourant.undo(listeCommandes);
+    }
+    public static void redo(){
+    	etatCourant.redo(listeCommandes);
+    }
+    public static void saisieNombreLivreurs(){
+	    etatCourant.saisieNombreLivreurs();
+    };
 }
+
