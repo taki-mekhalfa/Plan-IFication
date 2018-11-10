@@ -91,29 +91,25 @@ public class VueTextuelle extends Vue {
 
         int i = 1;
         for (Tournee tournee : tournees) {
-
             Map<Livraison, Temps> distribution = tournee.getHeuresDeLivraison();
-            Set<Entry<Livraison, Temps>> setDis = distribution.entrySet();
-            Iterator<Entry<Livraison, Temps>> it = setDis.iterator();
-
+            SortedSet<Livraison> livraisonsOrdonnees = new TreeSet<>((o1, o2) -> distribution.get(o1).compareTo(distribution.get(o2)));
+            livraisonsOrdonnees.addAll(distribution.keySet());
             livraisonCol.setCellValueFactory(cellData -> cellData.getValue().getNoeudProperty());
             horraireCol.setCellValueFactory(cellData -> cellData.getValue().getHeureDeLivraisonProperty());
+
             Livraison livreur = new Livraison("Livreur :" + i, 0);
             dataTournee.add(livreur);
             i++;
 
-            while (it.hasNext()) {
-                Entry<Livraison, Temps> e = it.next();
-                if (e.getKey().getNoeud().equals(demandeLivraisons.getEntrepot()))
-                {
-                	Livraison lv = new Livraison ("Entrepot",0);
-                	lv.setHorraireProperty(e.getValue().getHorraireProperty());
-                	dataTournee.add(lv);
+            for (Livraison livraison : livraisonsOrdonnees){
+                if (livraison.getNoeud().equals(demandeLivraisons.getEntrepot())){
+                    Livraison lv = new Livraison ("Entrepot",0);
+                    lv.setHorraireProperty(distribution.get(livraison).getHorraireProperty());
+                    dataTournee.add(lv);
                 }
-                else {
-                	Livraison livraison = e.getKey();
-                	livraison.setHorraireProperty(e.getValue().getHorraireProperty());
-                	dataTournee.add(livraison);
+                else{
+                    livraison.setHorraireProperty(distribution.get(livraison).getHorraireProperty());
+                    dataTournee.add(livraison);
                 }
             }
         }
