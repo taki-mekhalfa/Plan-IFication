@@ -2,7 +2,7 @@ package Model.Metier;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class Temps {
+public class Temps implements Comparable{
     private final SimpleStringProperty horraire;
     private int heures, minutes, secondes;
     private int value;
@@ -53,5 +53,13 @@ public class Temps {
 
     public SimpleStringProperty PropertytoString() {
         return new SimpleStringProperty(toString());
+    }
+    
+    @Override
+    public int compareTo(Object o) {
+        Temps temps = (Temps) o;
+        if (heures != temps.heures) return heures - temps.heures;
+        if (minutes != temps.minutes) return minutes - temps.minutes;
+        return secondes - temps.secondes;
     }
 }
