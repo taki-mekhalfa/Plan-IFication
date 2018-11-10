@@ -34,7 +34,7 @@ public class VueTextuelle extends Vue {
 
     private TableView<Livraison> tableTournee = new TableView<>();
     private TableColumn<Livraison, String> livraisonCol = new TableColumn<>("ID Livraison");
-    private TableColumn<Livraison, String> horraireCol;
+    private TableColumn<Livraison, String> horraireCol = new TableColumn<>("Heure de Livraison");;
 
 
     public VueTextuelle(Planification planification, VueGraphique vueGraph) {
@@ -98,23 +98,38 @@ public class VueTextuelle extends Vue {
 
             livraisonCol.setCellValueFactory(cellData -> cellData.getValue().getNoeudProperty());
             horraireCol.setCellValueFactory(cellData -> cellData.getValue().getHeureDeLivraisonProperty());
-            Livraison livreur = new Livraison("Liveur :" + i, 0);
+            Livraison livreur = new Livraison("Livreur :" + i, 0);
             dataTournee.add(livreur);
             i++;
 
             while (it.hasNext()) {
                 Entry<Livraison, Temps> e = it.next();
-                Livraison livraison = e.getKey();
-                livraison.setHorraireProperty(e.getValue().getHorraireProperty());
-                dataTournee.add(livraison);
-                System.out.println(e.getKey() + " : " + e.getValue());
-                ;
+                if (e.getKey().getNoeud().equals(demandeLivraisons.getEntrepot()))
+                {
+                	Livraison lv = new Livraison ("Entrepot",0);
+                	lv.setHorraireProperty(e.getValue().getHorraireProperty());
+                	dataTournee.add(lv);
+                }
+                else {
+                	Livraison livraison = e.getKey();
+                	livraison.setHorraireProperty(e.getValue().getHorraireProperty());
+                	dataTournee.add(livraison);
+                }
             }
         }
 
-        tableTournee.getColumns().setAll(livraisonCol, horraireCol);
+        tableTournee.getColumns().setAll(livraisonCol,horraireCol);
         tableTournee.setItems(dataTournee);
         tourneesGroup.getChildren().add(tableTournee);
+        
+      //Ecoute les clics de souris sur les lignes du tableau pour r�cup�rer l'ID de la livraison
+        tableTournee.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                vueGraph.resetCouleurs();
+                vueGraph.couleurPointFocus(tableTournee.getSelectionModel().getSelectedItem().getNoeud());
+            }
+        });
 
     }
 
