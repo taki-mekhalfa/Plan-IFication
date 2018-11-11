@@ -8,17 +8,21 @@ public class EtatTourneesCalculees extends EtatDefaut {
     public void init(){
         Controleur.interfaceGUI.activerBoutonChargerPlan();
         Controleur.interfaceGUI.activerBoutonChargerDemandeLivraison();
-        Controleur.interfaceGUI.desactiverBoutonCalculerTournees();
+        Controleur.interfaceGUI.activerBoutonCalculerTournees();
+        Controleur.interfaceGUI.activerSaisieLivreurs();
         Controleur.interfaceGUI.activerBoutonAjouterLivraison();
         Controleur.interfaceGUI.activerBoutonSuprimmerLivraison();
         Controleur.interfaceGUI.activerBoutonDeplacerLivraison();
         Controleur.interfaceGUI.desactiverBoutonValider();
         Controleur.interfaceGUI.desactiverBoutonAnnuler();
+        Controleur.interfaceGUI.desactiveSaisieDureeLivraison();
     }
 
     @Override
     public void boutonChargerPlan(File fichier) {
         if (Controleur.planification.chargerPlan(fichier)){
+            Controleur.interfaceGUI.desactiverBoutonCalculerTournees();
+            Controleur.interfaceGUI.desactiverSaisieLivreurs();
         	Controleur.interfaceGUI.desactiverBoutonAjouterLivraison();
 	        Controleur.interfaceGUI.desactiverBoutonDeplacerLivraison();
 	        Controleur.interfaceGUI.desactiverBoutonSuprimmerLivraison();
@@ -51,6 +55,8 @@ public class EtatTourneesCalculees extends EtatDefaut {
 
     @Override
     public void boutonSuprimmerLivraison() {
+        Controleur.interfaceGUI.desactiverBoutonCalculerTournees();
+        Controleur.interfaceGUI.desactiverSaisieLivreurs();
         Controleur.interfaceGUI.desactiverBoutonChargerPlan();
         Controleur.interfaceGUI.desactiverBoutonChargerDemandeLivraison();
         Controleur.interfaceGUI.desactiverBoutonAjouterLivraison();
@@ -61,6 +67,8 @@ public class EtatTourneesCalculees extends EtatDefaut {
 
     @Override
     public void boutonAjouterLivraison() {
+        Controleur.interfaceGUI.desactiverBoutonCalculerTournees();
+        Controleur.interfaceGUI.desactiverSaisieLivreurs();
         Controleur.interfaceGUI.desactiverBoutonChargerPlan();
         Controleur.interfaceGUI.desactiverBoutonChargerDemandeLivraison();
         Controleur.interfaceGUI.desactiverBoutonAjouterLivraison();
@@ -71,6 +79,8 @@ public class EtatTourneesCalculees extends EtatDefaut {
 
     @Override
     public void boutonDeplacerLivraison(){
+        Controleur.interfaceGUI.desactiverBoutonCalculerTournees();
+        Controleur.interfaceGUI.desactiverSaisieLivreurs();
         Controleur.interfaceGUI.desactiverBoutonChargerPlan();
         Controleur.interfaceGUI.desactiverBoutonChargerDemandeLivraison();
         Controleur.interfaceGUI.desactiverBoutonAjouterLivraison();

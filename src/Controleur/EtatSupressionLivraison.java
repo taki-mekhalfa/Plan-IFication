@@ -8,10 +8,9 @@ public class EtatSupressionLivraison extends EtatDefaut {
     private Livraison livraison;
     private Livraison livraisonSuiv;
     private Tournee tournee;
-    
 
     @Override
-    public void init(){
+    public void init() {
         this.livraison = null;
         Controleur.interfaceGUI.activerBoutonAnnuler();
     }
@@ -25,16 +24,17 @@ public class EtatSupressionLivraison extends EtatDefaut {
             return true;
         } else return false;
     }
+
     @Override
-    public void livraisonDeselectionnee(Livraison livraison){
+    public void livraisonDeselectionnee(Livraison livraison) {
         Controleur.interfaceGUI.desactiverBoutonValider();
         this.livraison = null;
     }
 
     @Override
     public void boutonValider(ListeCommandes listeCommandes) {
-    	CommandeSuppression com = new CommandeSuppression(Controleur.planification.getTournees(), livraison);
-    	listeCommandes.add(com);
+        CommandeSuppression com = new CommandeSuppression(Controleur.planification.getTournees(), livraison);
+        listeCommandes.add(com);
         Controleur.planification.supprimerPointDeLivraison(livraison);
         com.sauvegardesApres();
 

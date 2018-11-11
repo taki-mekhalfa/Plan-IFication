@@ -13,7 +13,6 @@ public class ListeCommandes {
 
     public void add(Commande c) {
         commandeEnCours = commandeEnCours + 1;
-        System.out.println(commandeEnCours);
         if (commandeEnCours == 0) Controleur.interfaceGUI.activerBoutonUndo();
         if (commandeEnCours < listeCommandes.size()) {
             listeCommandes.set(commandeEnCours, c);

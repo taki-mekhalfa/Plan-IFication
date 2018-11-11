@@ -21,65 +21,81 @@ public class Controleur {
     public static Planification planification;
     public static InterfaceGUI interfaceGUI;
     public static VueGraphique vueGraphique;
-    
+
     public static ListeCommandes listeCommandes = new ListeCommandes();
-	
-	public static void boutonChargerPlan(File fichierXML){
 
-		etatCourant.boutonChargerPlan(fichierXML);
-	}
-	
-	public static void definirNombreLivreur(int nbLivreurs){
-		etatCourant.definirNombreLivreur(nbLivreurs);
-	}
-	
-	public static void boutonChargerDemandeLivraison(File fichierXML){
-		etatCourant.boutonChargerDemandeLivraison(fichierXML);
-	}
-	
-	public static void boutonCalculerTournees(int nombreLivreurs){
-		etatCourant.boutonCalculerTournees(nombreLivreurs);
-	}
-	
-	static void setEtatCourant(Etat nouvelEtat){
-		etatCourant = nouvelEtat;
-		etatCourant.init();
-	}
+    public static void boutonChargerPlan(File fichierXML) {
 
-    public static void boutonSuprimmerLivraison(){
-	    etatCourant.boutonSuprimmerLivraison();
+        etatCourant.boutonChargerPlan(fichierXML);
     }
-    public static void boutonValider(){
-	    etatCourant.boutonValider(listeCommandes);
+
+    public static void definirNombreLivreur(int nbLivreurs) {
+        etatCourant.definirNombreLivreur(nbLivreurs);
     }
+
+    public static void boutonChargerDemandeLivraison(File fichierXML) {
+        etatCourant.boutonChargerDemandeLivraison(fichierXML);
+    }
+
+    public static void boutonCalculerTournees(int nombreLivreurs) {
+        etatCourant.boutonCalculerTournees(nombreLivreurs);
+    }
+
+    static void setEtatCourant(Etat nouvelEtat) {
+        etatCourant = nouvelEtat;
+        etatCourant.init();
+    }
+
+    public static void boutonSuprimmerLivraison() {
+        etatCourant.boutonSuprimmerLivraison();
+    }
+
+    public static void boutonValider() {
+        etatCourant.boutonValider(listeCommandes);
+    }
+
     public static void boutonAnnuler() {
-	    etatCourant.boutonAnnuler();
+        etatCourant.boutonAnnuler();
     }
+
     public static void boutonAjouterLivraison() {
         etatCourant.boutonAjouterLivraison();
     }
-    public static void boutonDeplacerLivraison() {etatCourant.boutonDeplacerLivraison();}
 
-    public static boolean livraisonSelectionne(Livraison livraison){
-	    return etatCourant.livraisonSelectionne(livraison);
+    public static void boutonDeplacerLivraison() {
+        etatCourant.boutonDeplacerLivraison();
     }
-    public static boolean noeudSelectionne(String idNoeud){
+
+    public static boolean livraisonSelectionne(Livraison livraison) {
+        return etatCourant.livraisonSelectionne(livraison);
+    }
+
+    public static boolean noeudSelectionne(String idNoeud) {
         return etatCourant.noeudSelectionne(idNoeud);
     }
-    public static void noeudDeselectionne(String idNoeud){
+
+    public static void noeudDeselectionne(String idNoeud) {
         etatCourant.noeudDeselectionne(idNoeud);
     }
+
     public static void livraisonDeselectionnee(Livraison livraison) {
-	    etatCourant.livraisonDeselectionnee(livraison);
+        etatCourant.livraisonDeselectionnee(livraison);
     }
-    public static void undo(){
-    	etatCourant.undo(listeCommandes);
+
+    public static void undo() {
+        etatCourant.undo(listeCommandes);
     }
-    public static void redo(){
-    	etatCourant.redo(listeCommandes);
+
+    public static void redo() {
+        etatCourant.redo(listeCommandes);
     }
-    public static void saisieNombreLivreurs(){
-	    etatCourant.saisieNombreLivreurs();
-    };
+
+    public static void saisieNombreLivreurs() {
+        etatCourant.saisieNombreLivreurs();
+    }
+
+    public static void saisieDuree(int duree){
+        etatCourant.saisieDuree(duree);
+    }
 }
 

@@ -90,4 +90,9 @@ public class EtatDefaut implements Etat {
     public void saisieNombreLivreurs() {
 
     }
+
+    @Override
+    public void saisieDuree(int duree) {
+
+    }
 }

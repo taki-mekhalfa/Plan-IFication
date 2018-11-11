@@ -7,8 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -30,6 +28,7 @@ public class InterfaceGUI extends Application {
     private Button boutonRedo;
     private ToolBar menuBar;
     private TextField saisieLivreurs;
+    private TextField saisieDureeLivraison;
     private Stage primaryStage;
 
     public static void main(String[] args) {
@@ -41,7 +40,9 @@ public class InterfaceGUI extends Application {
         this.primaryStage = primaryStage;
         Planification planification = new Planification();
         VueGraphique vueGraphique = new VueGraphique(planification);
-        VueTextuelle vueTextuelle = new VueTextuelle(planification,vueGraphique);
+        VueTextuelle vueTextuelle = new VueTextuelle(planification);
+        vueGraphique.setVueTextuelle(vueTextuelle);
+        vueTextuelle.setVueGraph(vueGraphique);
         Controleur.planification = planification;
         Controleur.interfaceGUI = this;
         Controleur.vueGraphique = vueGraphique;
@@ -51,6 +52,7 @@ public class InterfaceGUI extends Application {
         borderPane.setTop(menuBar);
         borderPane.setCenter(vueGraphique);
         borderPane.setRight(vueTextuelle);
+        borderPane.setCenterShape(true);
 
         Scene scene = new Scene(borderPane, 1100, 700);
         primaryStage.setScene(scene);
@@ -68,20 +70,14 @@ public class InterfaceGUI extends Application {
         boutonDeplacerLivraison = new Button("Deplacer Livraison");
         boutonUndo = new Button("Undo");
         boutonRedo = new Button("Redo");
-
+        saisieDureeLivraison = new TextField();
         saisieLivreurs = new TextField();
-        saisieLivreurs.setPromptText("Nombre de Livreurs : 3");
-        saisieLivreurs.setOnKeyTyped(e -> {
-            char input = e.getCharacter().charAt(0);
-            if (!Character.isDigit(input)) {
-                e.consume();
-            }
-            Controleur.saisieNombreLivreurs();
+        saisieDureeLivraison.setPromptText("Duree livraison: 0");
+        saisieLivreurs.setPromptText("Nombre de Livreurs: 3");
 
-        });
 
         menuBar = new ToolBar(boutonChargerPlan, boutonChargerDemandeLivraison, boutonCalculerTournees,
-                saisieLivreurs,boutonAjouterLivraison,
+                saisieLivreurs, boutonAjouterLivraison, saisieDureeLivraison,
                 boutonSuprimmerLivraison, boutonDeplacerLivraison, boutonValider, boutonAnnuler, boutonUndo, boutonRedo);
 
         boutonChargerPlan.setOnAction(event -> {
@@ -100,24 +96,39 @@ public class InterfaceGUI extends Application {
 
         boutonCalculerTournees.setOnAction(event -> {
             int nb;
-            if(saisieLivreurs.getText().equals("")){
+            if (saisieLivreurs.getText().equals("")) {
                 nb = 3;
-            }else{
+            } else {
                 nb = Integer.parseInt((saisieLivreurs.getText()));
             }
-            System.out.println(nb);
             Controleur.boutonCalculerTournees(nb);
-            //Controleur.boutonCalculerTournees(3)
         });
         boutonSuprimmerLivraison.setOnAction(event -> Controleur.boutonSuprimmerLivraison());
-        boutonValider.setOnAction(event -> Controleur.boutonValider());
+        boutonValider.setOnAction(event -> {
+            int duree = 0;
+            if (!"".equals(saisieDureeLivraison.getText())) duree = Integer.parseInt(saisieDureeLivraison.getText());
+            Controleur.saisieDuree(duree);
+            Controleur.boutonValider();
+        });
         boutonAnnuler.setOnAction(event -> Controleur.boutonAnnuler());
         boutonAjouterLivraison.setOnAction(event -> Controleur.boutonAjouterLivraison());
         boutonDeplacerLivraison.setOnAction(event -> Controleur.boutonDeplacerLivraison());
         boutonUndo.setOnAction(event -> Controleur.undo());
         boutonRedo.setOnAction(event -> Controleur.redo());
+        saisieLivreurs.setOnKeyTyped(e -> {
+            char input = e.getCharacter().charAt(0);
+            if (!Character.isDigit(input)) {
+                e.consume();
+            }
+            Controleur.saisieNombreLivreurs();
 
-
+        });
+        saisieDureeLivraison.setOnKeyTyped(e -> {
+            char input = e.getCharacter().charAt(0);
+            if (!Character.isDigit(input)) {
+                e.consume();
+            }
+        });
         boutonChargerDemandeLivraison.setDisable(true);
         boutonCalculerTournees.setDisable(true);
         boutonSuprimmerLivraison.setDisable(true);
@@ -127,6 +138,8 @@ public class InterfaceGUI extends Application {
         boutonDeplacerLivraison.setDisable(true);
         boutonUndo.setDisable(true);
         boutonRedo.setDisable(true);
+        saisieDureeLivraison.setDisable(true);
+        saisieLivreurs.setDisable(true);
 
     }
 
@@ -163,11 +176,25 @@ public class InterfaceGUI extends Application {
         boutonValider.setDisable(false);
     }
 
-    public void activerBoutonUndo() {boutonUndo.setDisable(false);}
+    public void activerBoutonUndo() {
+        boutonUndo.setDisable(false);
+    }
 
-    public void activerBoutonRedo() {boutonRedo.setDisable(false);}
+    public void activerBoutonRedo() {
+        boutonRedo.setDisable(false);
+    }
 
-    public void activerBoutonDeplacerLivraison(){boutonDeplacerLivraison.setDisable(false);}
+    public void activerSaisieLivreurs() {
+        saisieLivreurs.setDisable(false);
+    }
+
+    public void activeSaisieDureeLivraison() {
+        saisieDureeLivraison.setDisable(false);
+    }
+
+    public void activerBoutonDeplacerLivraison() {
+        boutonDeplacerLivraison.setDisable(false);
+    }
 
     public void desactiverBoutonCalculerTournees() {
         boutonCalculerTournees.setDisable(true);
@@ -197,10 +224,23 @@ public class InterfaceGUI extends Application {
         boutonAjouterLivraison.setDisable(true);
     }
 
-    public void desactiverBoutonDeplacerLivraison() {boutonDeplacerLivraison.setDisable(true);}
+    public void desactiverBoutonDeplacerLivraison() {
+        boutonDeplacerLivraison.setDisable(true);
+    }
 
-    public void desactiverBoutonUndo(){boutonUndo.setDisable(true);}
+    public void desactiverBoutonUndo() {
+        boutonUndo.setDisable(true);
+    }
 
-    public void desactiverBoutonRedo(){boutonRedo.setDisable(true);}
+    public void desactiverBoutonRedo() {
+        boutonRedo.setDisable(true);
+    }
 
+    public void desactiverSaisieLivreurs() {
+        saisieLivreurs.setDisable(true);
+    }
+
+    public void desactiveSaisieDureeLivraison() {
+        saisieDureeLivraison.setDisable(true);
+    }
 }

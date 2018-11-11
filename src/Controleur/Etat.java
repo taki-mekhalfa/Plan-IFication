@@ -40,5 +40,7 @@ public interface Etat {
     void redo(ListeCommandes l);
 
     void saisieNombreLivreurs();
+
+    void saisieDuree(int duree);
 }
 

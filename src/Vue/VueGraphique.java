@@ -3,7 +3,13 @@ package Vue;
 import Controleur.Controleur;
 import Model.Metier.*;
 import Model.Planification;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
 import javafx.scene.Group;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.util.LinkedList;
@@ -12,24 +18,53 @@ import java.util.Random;
 
 
 public class VueGraphique extends Vue {
-    private double minLongitude = Double.POSITIVE_INFINITY, maxLatitude = Double.NEGATIVE_INFINITY;
-    private double maxLongitude = Double.NEGATIVE_INFINITY, minLatitude = Double.POSITIVE_INFINITY;
-    private Group rootGroup = new Group();
+    private double minLongitude;
+    private double maxLongitude;
+    private double minLatitude;
+    private double maxLatitude;
     private Group planGroup;
     private Group tourneesGroup;
     private Group livraisonsGroup;
     private List<Color> colors;
     private List<CercleLivraison> cerclesLivraisonsSelectionnes = new LinkedList<>();
     private CercleIntersection cercleIntersection;
+    private VueTextuelle vueTextuelle;
 
     public VueGraphique(Planification planification) {
         super(planification);
-        this.getChildren().add(rootGroup);
         initCouleurs();
+
+        Group rootGroup = new Group();
+        BorderPane borderPane = new BorderPane();
+        ScrollPane scrollPane = new ScrollPane();
+
         planGroup = new Group();
         livraisonsGroup = new Group();
         tourneesGroup = new Group();
+
         rootGroup.getChildren().addAll(planGroup, tourneesGroup, livraisonsGroup);
+
+        //--------------Danger---------------------------------------------------
+        Slider slider = new Slider();
+        slider.setMin(1);
+        slider.setMax(2);
+        slider.setBlockIncrement(0.05);
+
+        rootGroup.scaleXProperty().bind(slider.valueProperty());
+        rootGroup.scaleYProperty().bind(slider.valueProperty());
+        scrollPane.setContent(new Group(rootGroup));
+        scrollPane.setPrefViewportHeight(600);
+        scrollPane.setPrefViewportWidth(600);
+        scrollPane.setFocusTraversable(false);
+        borderPane.setCenter(scrollPane);
+        borderPane.setBottom(slider);
+        this.getChildren().add(borderPane);
+
+
+
+
+
+        //-------------------------------------------------------------------------
         livraisonsGroup.setOnMouseClicked(event -> {
             CercleLivraison cercleLivraison = (CercleLivraison) event.getTarget();
             if (cercleLivraison.isSelectionne()) {
@@ -54,7 +89,20 @@ public class VueGraphique extends Vue {
                 }
             }
         });
+        planGroup.setOnMouseMoved(event -> {
+            if (event.getTarget() instanceof LineModifiee) {
+                LineModifiee lineModifiee = (LineModifiee) event.getTarget();
+                vueTextuelle.rueSelectionnee(lineModifiee.getNomDeLaRue());
+            }
 
+        });
+        tourneesGroup.setOnMouseMoved(event -> {
+            if (event.getTarget() instanceof LineModifiee) {
+                LineModifiee lineModifiee = (LineModifiee) event.getTarget();
+                vueTextuelle.rueSelectionnee(lineModifiee.getNomDeLaRue());
+            }
+
+        });
     }
 
 
@@ -141,10 +189,10 @@ public class VueGraphique extends Vue {
     }
 
     //Met en Orange le point selectionné
-    void couleurPointFocus(String idNoeud){
-        for (int i = 0; i < livraisonsGroup.getChildren().size(); i++){
+    void couleurPointFocus(String idNoeud) {
+        for (int i = 0; i < livraisonsGroup.getChildren().size(); i++) {
             CercleLivraison cercle = (CercleLivraison) livraisonsGroup.getChildren().get(i);
-            if(cercle.getLivraison().getNoeud().equals(idNoeud)){
+            if (cercle.getLivraison().getNoeud().equals(idNoeud)) {
                 cercle.setCouleur(Color.ORANGE);
                 break;
             }
@@ -152,11 +200,11 @@ public class VueGraphique extends Vue {
     }
 
     //Reset tous les points de livraison en bleu sauf l'entrepot (rouge)
-    void resetCouleurs(){
-        for (int i = 0; i < livraisonsGroup.getChildren().size(); i++){
+    void resetCouleurs() {
+        for (int i = 0; i < livraisonsGroup.getChildren().size(); i++) {
             CercleLivraison cercle = (CercleLivraison) livraisonsGroup.getChildren().get(i);
 
-            if(demandeLivraisons.getEntrepot().equals(cercle.getLivraison().getNoeud()))
+            if (demandeLivraisons.getEntrepot().equals(cercle.getLivraison().getNoeud()))
                 cercle.setCouleur(Color.RED);
 
             else
@@ -166,20 +214,26 @@ public class VueGraphique extends Vue {
     }
 
     private double trX(double longitude) {
-        return 16384 * (longitude - minLongitude);
+        double echelleHor = 600 / (maxLongitude - minLongitude);
+        return echelleHor * (longitude - minLongitude);
     }
 
     private double trY(double latitude) {
-        return 16384 * (maxLatitude - latitude);
+        double echelleVer = 600 / (maxLatitude - minLatitude);
+        return echelleVer * (maxLatitude - latitude);
     }
 
     private void calculerCoins() {
+        minLongitude = Double.POSITIVE_INFINITY;
+        maxLongitude = Double.NEGATIVE_INFINITY;
+        minLatitude = Double.POSITIVE_INFINITY;
+        maxLatitude = Double.NEGATIVE_INFINITY;
         for (String idNoeud : plan.getNoeuds()) {
             Noeud noeud = NoeudFactory.getNoeudParId(idNoeud);
             if (noeud.getLongitude() < minLongitude) minLongitude = noeud.getLongitude();
             if (noeud.getLongitude() > maxLongitude) maxLongitude = noeud.getLongitude();
             if (noeud.getLatitude() < minLatitude) minLatitude = noeud.getLatitude();
-            if (noeud.getLongitude() > maxLatitude) maxLatitude = noeud.getLatitude();
+            if (noeud.getLatitude() > maxLatitude) maxLatitude = noeud.getLatitude();
         }
     }
 
@@ -215,7 +269,9 @@ public class VueGraphique extends Vue {
         cerclesLivraisonsSelectionnes.clear();
     }
 
-
+    public void setVueTextuelle(VueTextuelle vueTextuelle) {
+        this.vueTextuelle = vueTextuelle;
+    }
 }
 
 

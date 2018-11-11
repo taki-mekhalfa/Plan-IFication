@@ -6,13 +6,16 @@ public class EtatAjoutLivraison extends EtatDefaut {
     private Livraison livraison1;
     private Livraison livraison2;
     private String idNoeud;
+    private int duree;
 
     @Override
     public void init() {
         this.livraison1 = null;
         this.livraison2 = null;
         this.idNoeud = null;
+        this.duree = 0;
         Controleur.interfaceGUI.activerBoutonAnnuler();
+        Controleur.interfaceGUI.activeSaisieDureeLivraison();
     }
 
     @Override
@@ -60,7 +63,7 @@ public class EtatAjoutLivraison extends EtatDefaut {
     public void boutonValider(ListeCommandes listeCommandes) {
         CommandeAjout com = new CommandeAjout(Controleur.planification.getTournees(), livraison1);
     	listeCommandes.add(com);
-    	Livraison livAjoute = Controleur.planification.ajouterPointDeLivraison(idNoeud, 500, livraison1, livraison2);
+    	Livraison livAjoute = Controleur.planification.ajouterPointDeLivraison(idNoeud, duree, livraison1, livraison2);
     	Controleur.vueGraphique.annulerModification();
         com.sauvegardesApres(livAjoute);
         Controleur.setEtatCourant(Controleur.etatTourneesCalculees);
@@ -72,4 +75,8 @@ public class EtatAjoutLivraison extends EtatDefaut {
         Controleur.setEtatCourant(Controleur.etatTourneesCalculees);
     }
 
+    @Override
+    public void saisieDuree(int duree){
+        this.duree = duree;
+    }
 }

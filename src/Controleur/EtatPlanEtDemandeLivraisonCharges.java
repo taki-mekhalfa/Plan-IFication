@@ -9,6 +9,7 @@ public class EtatPlanEtDemandeLivraisonCharges extends EtatDefaut{
         Controleur.interfaceGUI.activerBoutonChargerPlan();
         Controleur.interfaceGUI.activerBoutonChargerDemandeLivraison();
         Controleur.interfaceGUI.activerBoutonCalculerTournees();
+        Controleur.interfaceGUI.activerSaisieLivreurs();
     }
 	@Override
 	public void boutonChargerPlan(File fichier){

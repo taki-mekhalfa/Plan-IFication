@@ -21,7 +21,6 @@ public class LineModifiee extends Line {
     private void init() {
         setOnMouseEntered(event -> {
             setStroke(Color.color(9/256.0,132/256.0,227/256.0,1));
-            System.out.println(nomDeLaRue);
         });
 
         setOnMouseExited(event -> {
@@ -36,5 +35,9 @@ public class LineModifiee extends Line {
     public void setDefaultColor(Color color) {
         setStroke(color);
         this.defaultColor = color;
+    }
+
+    public String getNomDeLaRue() {
+        return nomDeLaRue;
     }
 }
