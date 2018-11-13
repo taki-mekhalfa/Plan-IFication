@@ -11,8 +11,6 @@ public class EtatSupressionLivraison extends EtatDefaut {
 
     @Override
     public void init() {
-    	message = "Selectionnez une intersection a supprimer. " + 
-    			'\n' + "Une fois la selection effectuee, cliquez sur Valider ou Annuler.";
         this.livraison = null;
         Controleur.interfaceGUI.activerBoutonAnnuler();
     }

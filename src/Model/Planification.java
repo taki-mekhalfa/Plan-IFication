@@ -15,12 +15,23 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 
+/**
+ * Classe permettant la manipulation des éléments du model.
+ * Elle gère l'appel des méthodes des autres classes afin d'obtenir les résultats voulus par le Controleur.
+ * @author mleral
+ */
 public class Planification extends Observable {
     private Plan plan;
     private DemandeLivraisons demandeLivraisons;
     private Calculateur calculateur;
     private List<Tournee> tournees;
 
+    /**
+     * Méthode pour le chargement du plan.
+     * @see Model.XMLHelpers.PlanXMLHelperDom4J
+     * @param fichier le fichier XML du plan que l'on veut charger
+     * @return boolean correspondant au résultat de l'opération
+     */
     public boolean chargerPlan(File fichier) {
         plan = new PlanXMLHelperDom4J().getPlan(fichier);
         if (plan != null){
@@ -30,31 +41,33 @@ public class Planification extends Observable {
         }
         return false;
     }
-
-    public boolean chargerDemandesDeLivraisons(File fichierXML) {
+    /**
+     * Méthode pour le chargement des demandes de livraisons.
+     * @see Model.XMLHelpers.DemandeLivraisonsXMLHelperDom4J
+     * @param fichierXML contenant les demandes de livraisons que l'on veut charger
+     */
+    public void chargerDemandesDeLivraisons(File fichierXML) {
         demandeLivraisons = new DemandeLivraisonsXMLHelperDom4J().getDemandeLivraisons(fichierXML);
-        if (demandeLivraisons == null){
-        	return false;
-        }
-        
-        if(!plan.getNoeuds().contains(demandeLivraisons.getEntrepot())){
-    		return false;
-    	}
-        for(Livraison l : demandeLivraisons.getPointsDeLivraisons()){
-        	if(!plan.getNoeuds().contains(l.getNoeud())){
-        		return false;
-        	}
-        }
         notifierAbonnes("livraisons");
-    	return true;
-        
     }
-
+    /**
+     * Méthode de calcul des tournées.
+     * @param nombreLivreurs correspondant à la valeur voulue par l'utilisateur.
+     * Elle a une valeur par défaut de 3
+     */
     public void calculerTournees(int nombreLivreurs) {
         tournees = calculateur.getTournees(demandeLivraisons, nombreLivreurs);
         notifierAbonnes("tournees");
     }
 
+    /**
+     * Méthode d'ajout d'un point de livraison.
+     * @param idPointLivraison correspondant à la livraison à ajouter
+     * @param duree correspondant à la durée de la nouvelle livraison
+     * @param livraison1 correspondant à la livraison précédent l'ajout
+     * @param livraison2 correspondant à la livraison suivant l'ajout
+     * @return livraison qui est la livraison que l'on vient d'ajouter à la tournée
+     */
     public Livraison ajouterPointDeLivraison(String idPointLivraison, int duree, Livraison livraison1, Livraison livraison2){
         Livraison livraison = null;
         for (Tournee tournee: tournees){
@@ -70,6 +83,13 @@ public class Planification extends Observable {
         return livraison;
     }
 
+    /**
+     * Méthode de déplacement d'une livraison de sa position originale
+     * vers un nouvelle, située entre deux autres livraisons.
+     * @param livraisonADeplacer correspondant à la livraison dont on veut modifier le placement
+     * @param livraison1 correspondant à la livraison précédant la position-cible
+     * @param livraison2 correspondant à la livraison suivant la position-cible
+     */
     public void deplacerLivraison(Livraison livraisonADeplacer, Livraison livraison1, Livraison livraison2){
         boolean supprimee = false;
         boolean ajoutee = false;
@@ -90,6 +110,10 @@ public class Planification extends Observable {
         notifierAbonnes("tournees");
     }
 
+    /**
+     * Méthode de suppression d'une livraison.
+     * @param livraison corespondant à la livraison à supprimer au cours de l'opération
+     */
     public void supprimerPointDeLivraison(Livraison livraison){
         for (Tournee tournee: tournees){
             if (tournee.contientLivraison(livraison)){
@@ -102,43 +126,80 @@ public class Planification extends Observable {
         notifierAbonnes("tournees");
     }
     
+    /**
+     * Méthode de notification afin de permettre une mise à jour de l'affichage.
+     */
     public void MAJAffichage(){
     	notifierAbonnes("plan");
     	notifierAbonnes("livraisons");
         notifierAbonnes("tournees");
     }
     
+    /**
+     * Méthode de suppression afin de supprimer le plan et les demandes de livraisons associées.
+     */
     public void supprimerPlan(){
     	supprimerDemandesLivraisons();
     	plan = null;
     }
     
+    /**
+     * Méthode de suppression afin de supprimer les demandes de livraisons,
+     * c'est à dire remettre à 0 les tournées et les demandes de livraisons.
+     */
     public void supprimerDemandesLivraisons(){
     	tournees = null;
     	demandeLivraisons = null;
     }
-
+    
+    /**
+     * Méthode d'obtention du plan.
+     * @return plan correspondant au plan en cours de manipulation
+     */
     public Plan getPlan() {
         return plan;
     }
 
+    /**
+     * Méthode d'obtention des demandes de livraisons.
+     * @return demandeLivraisons
+     */
     public DemandeLivraisons getDemandeLivraisons() {
         return demandeLivraisons;
     }
-
+    
+    /**
+     * Méthode d'obtention des tournées.
+     * @return tournees
+     */
     public List<Tournee> getTournees() {
         return tournees;
     }
 
+    /**
+     * Méthode de choix d'une nouvelle liste de tournées.
+     * @param t la nouvelle liste de tournées à considérer
+     */
     public void setTournees(List<Tournee> t) {
         tournees = t;
     }
 
+    /**
+     * Méthode de notification des observeurs.
+     * @param quoi 
+     */
     private void notifierAbonnes(String quoi) {
         setChanged();
         notifyObservers(quoi);
     }
 
+    /**
+     * Méthode de test pour savoir si
+     * deux livraisons sont consécutives.
+     * @param livraison1
+     * @param livraison2
+     * @return boolean correspondant à la réponse voulue
+     */
     public boolean livraisonsConsecutives(Livraison livraison1, Livraison livraison2){
         for (Tournee tournee : tournees){
             if (tournee.consecutives(livraison1,livraison2)) return true;
@@ -147,6 +208,12 @@ public class Planification extends Observable {
         return false;
     }
 
+    /**
+     * Méthode d'obtention du nom de la rue.
+     * @param idOrigine correspondant au noeud dont la rue recherchée part
+     * @param idDestination correspondant au noeud où la rue voulue arrive
+     * @return
+     */
     public String getNomDeLaRue(String idOrigine, String idDestination) {
         List<Plan.Troncon> tronconList = plan.getSuccesseurs(idOrigine);
         for (Plan.Troncon troncon : tronconList)

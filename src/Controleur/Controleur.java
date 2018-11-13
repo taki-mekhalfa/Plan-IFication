@@ -4,7 +4,6 @@ import Model.Metier.Livraison;
 import Model.Planification;
 import Vue.InterfaceGUI;
 import Vue.VueGraphique;
-import Vue.VueTextuelle;
 
 import java.io.File;
 
@@ -22,11 +21,11 @@ public class Controleur {
     public static Planification planification;
     public static InterfaceGUI interfaceGUI;
     public static VueGraphique vueGraphique;
-    public static VueTextuelle vueTextuelle;
 
     public static ListeCommandes listeCommandes = new ListeCommandes();
 
     public static void boutonChargerPlan(File fichierXML) {
+
         etatCourant.boutonChargerPlan(fichierXML);
     }
 
@@ -43,10 +42,8 @@ public class Controleur {
     }
 
     static void setEtatCourant(Etat nouvelEtat) {
-    	vueTextuelle.clearZoneDialogue();
         etatCourant = nouvelEtat;
         etatCourant.init();
-        vueTextuelle.addZoneDialogue(etatCourant.getMessage(), false);
     }
 
     public static void boutonSuprimmerLivraison() {
@@ -99,14 +96,6 @@ public class Controleur {
 
     public static void saisieDuree(int duree){
         etatCourant.saisieDuree(duree);
-    }
-    
-    public static void messageErreurPlanXML(){
-        vueTextuelle.addZoneDialogue("Erreur dans le fichier xml du plan", true);
-    }
-    
-    public static void messageErreurDemandeLivraisonXML(){
-        vueTextuelle.addZoneDialogue("Erreur dans le fichier xml de la demande de livraison", true);
     }
 }
 

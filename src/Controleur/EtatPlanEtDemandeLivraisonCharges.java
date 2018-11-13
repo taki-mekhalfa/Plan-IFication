@@ -6,8 +6,6 @@ public class EtatPlanEtDemandeLivraisonCharges extends EtatDefaut{
 
 	@Override
     public void init(){
-		message = "Cliquez sur le bouton Calculer tournees une fois le nombre de livreurs défini." + 
-    			'\n' + "Par défaut, le nombre de livreurs est égal à 3.";
         Controleur.interfaceGUI.activerBoutonChargerPlan();
         Controleur.interfaceGUI.activerBoutonChargerDemandeLivraison();
         Controleur.interfaceGUI.activerBoutonCalculerTournees();
@@ -22,21 +20,13 @@ public class EtatPlanEtDemandeLivraisonCharges extends EtatDefaut{
 			Controleur.planification.supprimerPlan();
 			Controleur.planification.MAJAffichage();
 			Controleur.setEtatCourant(Controleur.etatInit);
-			Controleur.messageErreurPlanXML();
 		}
 	}
 
 	@Override
 	public void boutonChargerDemandeLivraison(File fichierXML){
-		if (Controleur.planification.chargerDemandesDeLivraisons(fichierXML)){
-			Controleur.setEtatCourant(Controleur.etatPlanEtDemandeLivraisonCharges);
-		}
-		else{
-			Controleur.planification.supprimerDemandesLivraisons();
-			Controleur.planification.MAJAffichage();
-			Controleur.setEtatCourant(Controleur.etatPlanCharge);
-			Controleur.messageErreurDemandeLivraisonXML();
-		}
+		Controleur.planification.chargerDemandesDeLivraisons(fichierXML);
+		Controleur.setEtatCourant(Controleur.etatPlanEtDemandeLivraisonCharges);
 	}
 
 	@Override
