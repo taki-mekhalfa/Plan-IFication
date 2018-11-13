@@ -54,13 +54,13 @@ public class VueTextuelle extends Vue {
         vBox.setPadding(new Insets(10,10,0,0));
         tableTournee.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableDemandeLivraison.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tableDemandeLivraison.setPlaceholder(new Label("Demande de livraisons non chargée"));
+        tableDemandeLivraison.setPlaceholder(new Label("Demande de livraisons non chargee"));
         this.getChildren().add(vBox);
     }
 
     @Override
     void dessinerPlan() {
-        labelNomDeLaRue.setText("......");
+        labelNomDeLaRue.setText("");
         livraisonsGroup.getChildren().clear();
         dataLivraison.clear();
 
@@ -78,23 +78,32 @@ public class VueTextuelle extends Vue {
         livraisonsGroup.getChildren().clear();
         tourneesGroup.getChildren().clear();
         dataLivraison.clear();
+        
+        if (demandeLivraisons != null){
+        	tableDemandeLivraison.setEditable(true);
 
-        tableDemandeLivraison.setEditable(true);
-
-        idCol.setCellValueFactory(cellData -> cellData.getValue().getNoeudProperty());
-        dureeCol.setCellValueFactory(cellData -> cellData.getValue().getDureeProperty().asObject());
-
-
-        dataLivraison.addAll(demandeLivraisons.getPointsDeLivraisons());
-        tableDemandeLivraison.getColumns().setAll(idCol, dureeCol);
-        tableDemandeLivraison.setItems(dataLivraison);
-        livraisonsGroup.getChildren().add(tableDemandeLivraison);
-
-        //Ecoute les clics de souris sur les lignes du tableau pour r�cup�rer l'ID de la livraison
-        tableDemandeLivraison.setOnMouseClicked(event -> {
-            vueGraph.resetCouleurs();
-            vueGraph.couleurPointFocus(tableDemandeLivraison.getSelectionModel().getSelectedItem().getNoeud());
-        });
+	        idCol.setCellValueFactory(cellData -> cellData.getValue().getNoeudProperty());
+	        dureeCol.setCellValueFactory(cellData -> cellData.getValue().getDureeProperty().asObject());
+	
+	
+	        dataLivraison.addAll(demandeLivraisons.getPointsDeLivraisons());
+	        tableDemandeLivraison.getColumns().setAll(idCol, dureeCol);
+	        tableDemandeLivraison.setItems(dataLivraison);
+	        livraisonsGroup.getChildren().add(tableDemandeLivraison);
+	
+	        //Ecoute les clics de souris sur les lignes du tableau pour r�cup�rer l'ID de la livraison
+	        tableDemandeLivraison.setOnMouseClicked(event -> {
+	            vueGraph.resetCouleurs();
+	            try{
+	            	vueGraph.couleurPointFocus(tableDemandeLivraison.getSelectionModel().getSelectedItem().getNoeud());
+	            }
+	            catch(NullPointerException e){
+	            	
+	            }
+	            
+	        });
+        }
+        
     }
 
     @Override
@@ -103,48 +112,50 @@ public class VueTextuelle extends Vue {
         livraisonsGroup.getChildren().clear();
         tourneesGroup.getChildren().clear();
         dataTournee.clear();
-        tableTournee.setEditable(true);
+        
+        if (tournees != null){
+        	tableTournee.setEditable(true);
 
-        int i = 1;
-        for (Tournee tournee : tournees) {
-
-            Map<Livraison, Temps> distribution = tournee.getHeuresDeLivraison();
-            SortedSet<Livraison> livraisonsOrdonnees = new TreeSet<>((o1, o2) -> distribution.get(o1).compareTo(distribution.get(o2)));
-            livraisonsOrdonnees.addAll(distribution.keySet());
-
-            livraisonCol.setCellValueFactory(cellData -> cellData.getValue().getNoeudProperty());
-            horraireCol.setCellValueFactory(cellData -> cellData.getValue().getHeureDeLivraisonProperty());
-
-            Livraison livreur = new Livraison("Livreur :" + i, 0);
-            dataTournee.add(livreur);
-            i++;
-
-            for (Livraison livraison : livraisonsOrdonnees) {
-                if (livraison.getNoeud().equals(demandeLivraisons.getEntrepot())) {
-                    Livraison lv = new Livraison("Entrepot", 0);
-                    lv.setHorraireProperty(distribution.get(livraison).getHorraireProperty());
-                    dataTournee.add(lv);
-                } else {
-                    livraison.setHorraireProperty(distribution.get(livraison).getHorraireProperty());
-                    dataTournee.add(livraison);
-                }
-            }
-
+	        int i = 1;
+	        for (Tournee tournee : tournees) {
+	
+	            Map<Livraison, Temps> distribution = tournee.getHeuresDeLivraison();
+	            SortedSet<Livraison> livraisonsOrdonnees = new TreeSet<>((o1, o2) -> distribution.get(o1).compareTo(distribution.get(o2)));
+	            livraisonsOrdonnees.addAll(distribution.keySet());
+	
+	            livraisonCol.setCellValueFactory(cellData -> cellData.getValue().getNoeudProperty());
+	            horraireCol.setCellValueFactory(cellData -> cellData.getValue().getHeureDeLivraisonProperty());
+	
+	            Livraison livreur = new Livraison("Livreur :" + i, 0);
+	            dataTournee.add(livreur);
+	            i++;
+	
+	            for (Livraison livraison : livraisonsOrdonnees) {
+	                if (livraison.getNoeud().equals(demandeLivraisons.getEntrepot())) {
+	                    Livraison lv = new Livraison("Entrepot", 0);
+	                    lv.setHorraireProperty(distribution.get(livraison).getHorraireProperty());
+	                    dataTournee.add(lv);
+	                } else {
+	                    livraison.setHorraireProperty(distribution.get(livraison).getHorraireProperty());
+	                    dataTournee.add(livraison);
+	                }
+	            }
+	
+	        }
+	
+	        tableTournee.getColumns().setAll(livraisonCol, horraireCol);
+	        tableTournee.setItems(dataTournee);
+	        tourneesGroup.getChildren().add(tableTournee);
+	
+	        //Ecoute les clics de souris sur les lignes du tableau pour récupérer l'ID de la livraison
+	        tableTournee.setOnMouseClicked(new EventHandler<MouseEvent>() {
+	            @Override
+	            public void handle(MouseEvent event) {
+	                vueGraph.resetCouleurs();
+	                vueGraph.couleurPointFocus(tableTournee.getSelectionModel().getSelectedItem().getNoeud());
+	            }
+	        });
         }
-
-        tableTournee.getColumns().setAll(livraisonCol, horraireCol);
-        tableTournee.setItems(dataTournee);
-        tourneesGroup.getChildren().add(tableTournee);
-
-        //Ecoute les clics de souris sur les lignes du tableau pour récupérer l'ID de la livraison
-        tableTournee.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                vueGraph.resetCouleurs();
-                vueGraph.couleurPointFocus(tableTournee.getSelectionModel().getSelectedItem().getNoeud());
-            }
-        });
-
     }
 
     public void setVueGraph(VueGraphique vueGraph) {

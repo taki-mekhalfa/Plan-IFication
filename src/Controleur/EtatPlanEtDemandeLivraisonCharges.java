@@ -25,8 +25,14 @@ public class EtatPlanEtDemandeLivraisonCharges extends EtatDefaut{
 
 	@Override
 	public void boutonChargerDemandeLivraison(File fichierXML){
-		Controleur.planification.chargerDemandesDeLivraisons(fichierXML);
-		Controleur.setEtatCourant(Controleur.etatPlanEtDemandeLivraisonCharges);
+		if (Controleur.planification.chargerDemandesDeLivraisons(fichierXML)){
+			Controleur.setEtatCourant(Controleur.etatPlanEtDemandeLivraisonCharges);
+		}
+		else{
+			Controleur.planification.supprimerDemandesLivraisons();
+			Controleur.planification.MAJAffichage();
+			Controleur.setEtatCourant(Controleur.etatPlanCharge);
+		}
 	}
 
 	@Override

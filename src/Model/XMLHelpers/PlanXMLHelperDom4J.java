@@ -34,6 +34,9 @@ public class PlanXMLHelperDom4J implements PlanXMLHelper {
     //... Si un id de noeud est présent 2 fois dans le fichier, seul le premier rencontré est gardé en mémoire, il n'y a pas d'erreur d'indiquée.
     private Map<String, List<Plan.Troncon>> extrairePlan(Document document) throws DocumentException {
         Element reseau = document.getRootElement();
+        if(reseau.getQualifiedName()!= "reseau"){
+        	throw new DocumentException("Erreur dans le fichier xml du plan");
+        }
         Map<String, List<Plan.Troncon>> plan = new HashMap<>();
 
         // Extraire les noeuds:
