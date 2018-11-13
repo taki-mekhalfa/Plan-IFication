@@ -41,7 +41,7 @@ public class Planification extends Observable {
     		return false;
     	}
         for(Livraison l : demandeLivraisons.getPointsDeLivraisons()){
-        	if(!plan.getNoeuds().contains(l)){
+        	if(!plan.getNoeuds().contains(l.getNoeud())){
         		return false;
         	}
         }
