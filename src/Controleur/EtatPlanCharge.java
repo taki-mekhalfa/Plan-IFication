@@ -6,6 +6,9 @@ public class EtatPlanCharge extends EtatDefaut{
 
     @Override
     public void init(){
+    	message = "Cliquez sur le bouton Charger livraisons pour charger le fichier xml" + 
+    			'\n' + "de demande de livraison." + 
+    			'\n' + "Vous pouvez également définir le nombre de livreurs.";
         Controleur.interfaceGUI.activerBoutonChargerPlan();
         Controleur.interfaceGUI.activerBoutonChargerDemandeLivraison();
         Controleur.interfaceGUI.desactiverBoutonCalculerTournees();
@@ -23,6 +26,7 @@ public class EtatPlanCharge extends EtatDefaut{
 			Controleur.planification.supprimerPlan();
 			Controleur.planification.MAJAffichage();
 			Controleur.setEtatCourant(Controleur.etatInit);
+			Controleur.messageErreurPlanXML();
 		}
 	}
 
@@ -30,6 +34,9 @@ public class EtatPlanCharge extends EtatDefaut{
 	public void boutonChargerDemandeLivraison(File fichierXML){
 		if (Controleur.planification.chargerDemandesDeLivraisons(fichierXML)){
 			Controleur.setEtatCourant(Controleur.etatPlanEtDemandeLivraisonCharges);
+		}
+		else{
+			Controleur.messageErreurDemandeLivraisonXML();
 		}
 	}
 }

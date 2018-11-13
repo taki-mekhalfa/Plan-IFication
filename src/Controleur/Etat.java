@@ -5,10 +5,11 @@ import Model.Metier.Livraison;
 import java.io.File;
 
 public interface Etat {
-
+	
     void init();
 
-
+    String getMessage();
+    
     void boutonChargerPlan(File fichierXML);
 
     void definirNombreLivreur(int nbLivreurs);

@@ -5,6 +5,7 @@ import Model.Planification;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
@@ -30,6 +31,7 @@ public class InterfaceGUI extends Application {
     private TextField saisieLivreurs;
     private TextField saisieDureeLivraison;
     private Stage primaryStage;
+    
 
     public static void main(String[] args) {
         launch(args);
@@ -46,8 +48,11 @@ public class InterfaceGUI extends Application {
         Controleur.planification = planification;
         Controleur.interfaceGUI = this;
         Controleur.vueGraphique = vueGraphique;
+        Controleur.vueTextuelle = vueTextuelle;
         BorderPane borderPane = new BorderPane();
         createMenuBar();
+        
+        
 
         borderPane.setTop(menuBar);
         borderPane.setCenter(vueGraphique);
@@ -139,7 +144,7 @@ public class InterfaceGUI extends Application {
         boutonUndo.setDisable(true);
         boutonRedo.setDisable(true);
         saisieDureeLivraison.setDisable(true);
-        saisieLivreurs.setDisable(true);
+        saisieLivreurs.setDisable(false);
 
     }
 

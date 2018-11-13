@@ -12,9 +12,13 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextFlow;
 
 import java.util.Map;
 import java.util.SortedSet;
@@ -28,7 +32,7 @@ public class VueTextuelle extends Vue {
     private Label labelNomDeLaRue;
     private ObservableList<Livraison> dataLivraison = FXCollections.observableArrayList();
     private ObservableList<Livraison> dataTournee = FXCollections.observableArrayList();
-
+    
     private TableView<Livraison> tableDemandeLivraison = new TableView<>();
     private TableColumn<Livraison, String> idCol = new TableColumn<>("ID Livraison");
     private TableColumn<Livraison, Integer> dureeCol = new TableColumn<>("Duree");
@@ -37,7 +41,8 @@ public class VueTextuelle extends Vue {
     private TableColumn<Livraison, String> livraisonCol = new TableColumn<>("ID Livraison");
     private TableColumn<Livraison, String> horraireCol = new TableColumn<>("Heure de Livraison");
 
-
+    private TextFlow zoneDialogue = new TextFlow(new Text("Cliquez sur le bonton Charger un plan pour charger le fichier xml de plan." + '\n' + "Vous pouvez également définir le nombre de livreurs."));
+    
     public VueTextuelle(Planification planification) {
 
         super(planification);
@@ -48,8 +53,9 @@ public class VueTextuelle extends Vue {
         labelNomDeLaRue.setTextAlignment(TextAlignment.LEFT);
         labelNomDeLaRue.setMaxWidth(200);
         VBox vBox = new VBox();
-
-        vBox.getChildren().addAll(labelNomDeLaRue,tourneesGroup, livraisonsGroup);
+        
+        zoneDialogue.setMaxWidth(400);
+        vBox.getChildren().addAll(labelNomDeLaRue,tourneesGroup, livraisonsGroup, zoneDialogue);
         vBox.setSpacing(10);
         vBox.setPadding(new Insets(10,10,0,0));
         tableTournee.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -57,6 +63,7 @@ public class VueTextuelle extends Vue {
         tableDemandeLivraison.setPlaceholder(new Label("Demande de livraisons non chargee"));
         this.getChildren().add(vBox);
     }
+    
 
     @Override
     void dessinerPlan() {
@@ -103,7 +110,6 @@ public class VueTextuelle extends Vue {
 	            
 	        });
         }
-        
     }
 
     @Override
@@ -156,6 +162,18 @@ public class VueTextuelle extends Vue {
 	            }
 	        });
         }
+    }
+    
+    public void addZoneDialogue(String newText, boolean error){
+    	Text text = new Text(newText+'\n');
+    	if (error){
+    		text.setFill(Color.RED);
+    	}
+    	zoneDialogue.getChildren().addAll(text);
+    }
+    
+    public void clearZoneDialogue(){
+    	zoneDialogue.getChildren().clear(); 
     }
 
     public void setVueGraph(VueGraphique vueGraph) {
