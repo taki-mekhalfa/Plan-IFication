@@ -31,23 +31,9 @@ public class Planification extends Observable {
         return false;
     }
 
-    public boolean chargerDemandesDeLivraisons(File fichierXML) {
+    public void chargerDemandesDeLivraisons(File fichierXML) {
         demandeLivraisons = new DemandeLivraisonsXMLHelperDom4J().getDemandeLivraisons(fichierXML);
-        if (demandeLivraisons == null){
-        	return false;
-        }
-        
-        if(!plan.getNoeuds().contains(demandeLivraisons.getEntrepot())){
-    		return false;
-    	}
-        for(Livraison l : demandeLivraisons.getPointsDeLivraisons()){
-        	if(!plan.getNoeuds().contains(l.getNoeud())){
-        		return false;
-        	}
-        }
         notifierAbonnes("livraisons");
-    	return true;
-        
     }
 
     public void calculerTournees(int nombreLivreurs) {
