@@ -9,17 +9,8 @@ import org.dom4j.io.SAXReader;
 import java.io.File;
 import java.util.*;
 
-/**
- * Classe permettant la gestion des fichiers XML liés au plan.
- * @author mleral
- * @see Model.XMLHelper.PlanXMLHelper
- */
 public class PlanXMLHelperDom4J implements PlanXMLHelper {
 
-	/**
-	 * Méthode d'obtention du plan à partir du fichier XML.
-	 * @return plan correspondant au plan obtenu à partir du fichier XML
-	 */
     @Override
     public Plan getPlan(File fichierXML) {
 
@@ -35,27 +26,17 @@ public class PlanXMLHelperDom4J implements PlanXMLHelper {
         return new Plan(plan);
     }
 
-    /**
-     * Méthode de lecture du fichier XML
-     * @param fichierXML correspondant à l'élément à faire lire par la méthode
-     * @return Document correspondant au fichier XML lus
-     * @throws DocumentException
-     */
-    private Document readXMLFile(File fichierXML ) throws DocumentException {
-
+    private Document readXMLFile(File fichierXML) throws DocumentException {
         SAXReader saxReader = new SAXReader();
         return saxReader.read(fichierXML);
     }
     
-    /**
-     * Méthode d'extraction du plan à partir du document
-     * Si un id de noeud est présent 2 fois dans le fichier, seul le premier rencontré est gardé en mémoire, il n'y a pas d'erreur d'indiquée.
-     * @param document correspondant à l'élément tiré du XML et contenant les éléments du plan
-     * @return plan correspondant à la structure de donnée une fois analysée et prête à être utilisée
-     * @throws DocumentException
-     */
+    //... Si un id de noeud est pr�sent 2 fois dans le fichier, seul le premier rencontr� est gard� en m�moire, il n'y a pas d'erreur d'indiqu�e.
     private Map<String, List<Plan.Troncon>> extrairePlan(Document document) throws DocumentException {
         Element reseau = document.getRootElement();
+        if(reseau.getQualifiedName()!= "reseau"){
+        	throw new DocumentException("Erreur dans le fichier xml du plan");
+        }
         Map<String, List<Plan.Troncon>> plan = new HashMap<>();
 
         // Extraire les noeuds:

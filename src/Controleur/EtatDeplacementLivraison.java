@@ -10,6 +10,9 @@ public class EtatDeplacementLivraison extends EtatDefaut {
 
     @Override
     public void init(){
+    	message = "Selectionnez une intersection a deplacer ainsi que les points de livraison" + 
+    			'\n' + "precedant et suivant dans la nouvelle tournee." + 
+    			'\n' + "Une fois la selection effectuee, cliquez sur Valider ou Annuler.";
         livraisonADeplacer = null;
         livraison1 = null;
         livraison2 = null;

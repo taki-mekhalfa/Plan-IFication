@@ -11,7 +11,8 @@ public abstract class TemplateTSP implements TSP {
     private List<Livraison> meilleureSolution;
     private double coutMeilleureSolution;
     private List<Livraison> listeLivraisons;
-    private int tempsLimite ;
+    private int tempsLimite;
+
     @Override
     public Tournee getTournee(List<Livraison> listeLivraisons, Map<Livraison, Map<Livraison, Chemin>> plusCourtsChemins, int tempsLimite, Temps topDepart) {
 
@@ -60,12 +61,7 @@ public abstract class TemplateTSP implements TSP {
 
 
     private void branchAndBound(Livraison livraisonCourante, List<Livraison> nonVus, List<Livraison> vus, double coutVus, Map<Livraison, Map<Livraison, Chemin>> cout, long tpsDebut, int tpsLimite) {
-    	System.out.println(System.currentTimeMillis()-tpsDebut);
-    	if (System.currentTimeMillis() - tpsDebut > tpsLimite){    		
-    		System.out.println("Temps Ecoulé");
-    		return;
-		 }
-    	if (nonVus.size() == 0) { // tous les sommets ont ete visites
+        if (nonVus.size() == 0) { // tous les sommets ont ete visites
             coutVus += cout.get(livraisonCourante).get(listeLivraisons.get(0)).getCout() / 4.17;
             if (coutVus < coutMeilleureSolution) { // on a trouve une solution meilleure que meilleureSolution
                 meilleureSolution = new LinkedList<>(vus);
