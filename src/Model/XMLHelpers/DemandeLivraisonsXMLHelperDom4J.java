@@ -93,8 +93,8 @@ public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelp
         	int h = Integer.parseInt(heureDepart[0]);
         	int m = Integer.parseInt(heureDepart[1]);
         	int s = Integer.parseInt(heureDepart[2]);
-        	if(h > 23 || h < 0 || m > 59 || m <0 || s > 59|| s < 0 )
-        	heureDep = new Temps(h, m, s);
+        	if(!(h > 23 || h < 0 || m > 59 || m <0 || s > 59|| s < 0))
+        		heureDep = new Temps(h, m, s);
         }
         catch (NumberFormatException e){
         	throw new DocumentException("Erreur dans le fichier xml de la demande de livraison");

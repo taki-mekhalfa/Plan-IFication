@@ -67,8 +67,10 @@ public class VueTextuelle extends Vue {
 
     @Override
     void dessinerPlan() {
+    	
         labelNomDeLaRue.setText("");
         livraisonsGroup.getChildren().clear();
+        tourneesGroup.getChildren().clear();
         dataLivraison.clear();
 
         tableDemandeLivraison.setEditable(true);
@@ -81,11 +83,9 @@ public class VueTextuelle extends Vue {
 
     @Override
     void dessinerDemandeDeLivraisons() {
-
-        livraisonsGroup.getChildren().clear();
-        tourneesGroup.getChildren().clear();
-        dataLivraison.clear();
-        
+    	livraisonsGroup.getChildren().clear();
+    	tourneesGroup.getChildren().clear();
+    	dataLivraison.clear();
         if (demandeLivraisons != null){
         	tableDemandeLivraison.setEditable(true);
 
@@ -114,11 +114,9 @@ public class VueTextuelle extends Vue {
 
     @Override
     void dessinerTournees() {
-
-        livraisonsGroup.getChildren().clear();
+    	livraisonsGroup.getChildren().clear();
         tourneesGroup.getChildren().clear();
         dataTournee.clear();
-        
         if (tournees != null){
         	tableTournee.setEditable(true);
 
@@ -131,22 +129,24 @@ public class VueTextuelle extends Vue {
 	
 	            livraisonCol.setCellValueFactory(cellData -> cellData.getValue().getNoeudProperty());
 	            horraireCol.setCellValueFactory(cellData -> cellData.getValue().getHeureDeLivraisonProperty());
-	
-	            Livraison livreur = new Livraison("Livreur :" + i, 0);
-	            dataTournee.add(livreur);
-	            i++;
-	
-	            for (Livraison livraison : livraisonsOrdonnees) {
-	                if (livraison.getNoeud().equals(demandeLivraisons.getEntrepot())) {
-	                    Livraison lv = new Livraison("Entrepot", 0);
-	                    lv.setHorraireProperty(distribution.get(livraison).getHorraireProperty());
-	                    dataTournee.add(lv);
-	                } else {
-	                    livraison.setHorraireProperty(distribution.get(livraison).getHorraireProperty());
-	                    dataTournee.add(livraison);
-	                }
-	            }
-	
+	            
+	            
+	            if(tournee.getHeuresDeLivraison().size()!=1){
+	            	Livraison livreur = new Livraison("Livreur :" + i, 0);
+	            	dataTournee.add(livreur);
+		            i++;
+		
+		            for (Livraison livraison : livraisonsOrdonnees) {
+		                if (livraison.getNoeud().equals(demandeLivraisons.getEntrepot())) {
+		                    Livraison lv = new Livraison("Entrepot", 0);
+		                    lv.setHorraireProperty(distribution.get(livraison).getHorraireProperty());
+		                    dataTournee.add(lv);
+		                } else {
+		                    livraison.setHorraireProperty(distribution.get(livraison).getHorraireProperty());
+		                    dataTournee.add(livraison);
+		                }
+		            }
+	            } 
 	        }
 	
 	        tableTournee.getColumns().setAll(livraisonCol, horraireCol);

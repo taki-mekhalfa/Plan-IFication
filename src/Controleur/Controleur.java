@@ -108,5 +108,21 @@ public class Controleur {
     public static void messageErreurDemandeLivraisonXML(){
         vueTextuelle.addZoneDialogue("Erreur dans le fichier xml de la demande de livraison", true);
     }
+    
+    public static void messageErreurSuppressionEntrepot(){
+        vueTextuelle.addZoneDialogue("Vous ne pouvez pas supprimer l'entrepot.", true);
+    }
+    
+    public static void messageErreurDeplacementEntrepot(){
+        vueTextuelle.addZoneDialogue("Vous ne pouvez pas deplacer l'entrepot.", true);
+    }
+    
+    public static void messageAlerteNbLivreur(){
+        vueTextuelle.addZoneDialogue("Attention, le nombre de livreurs que vous avez entre est superieur au nombre de points de livraison, il y a donc des livreurs inutilises.", true);
+    }
+    
+    public static void messageAlerteNbLivreurNul(){
+        vueTextuelle.addZoneDialogue("Attention, vous n'avez pas de livreur pour cette demande de livraison", true);
+    }
 }
 

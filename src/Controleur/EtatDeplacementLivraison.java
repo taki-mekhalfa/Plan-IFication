@@ -22,8 +22,15 @@ public class EtatDeplacementLivraison extends EtatDefaut {
     @Override
     public boolean livraisonSelectionne(Livraison livraison) {
         if (livraisonADeplacer == null) {
-            livraisonADeplacer = livraison;
-            return true;
+        	if (!Controleur.planification.isEntrepot(livraison)){
+        		livraisonADeplacer = livraison;
+	            return true;
+        	}
+        	else{
+        		Controleur.messageErreurDeplacementEntrepot();
+        		return false;
+        	}
+	            
         }
 
         if (livraison1 != null && livraison2 != null) return false;

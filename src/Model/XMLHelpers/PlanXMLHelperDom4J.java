@@ -26,7 +26,7 @@ public class PlanXMLHelperDom4J implements PlanXMLHelper {
         return new Plan(plan);
     }
 
-    private Document readXMLFile(File fichierXML ) throws DocumentException {
+    private Document readXMLFile(File fichierXML) throws DocumentException {
         SAXReader saxReader = new SAXReader();
         return saxReader.read(fichierXML);
     }
@@ -73,7 +73,7 @@ public class PlanXMLHelperDom4J implements PlanXMLHelper {
                 longueur = Double.parseDouble(tronconElement.attributeValue("longueur"));
                 idOrigine = tronconElement.attributeValue("origine");
                 nomDeLaRue = tronconElement.attributeValue("nomRue");
-                if(idDestination == null || longueur <-1 || idOrigine == null || nomDeLaRue == null){
+                if(idDestination == null || longueur < 0 || idOrigine == null || nomDeLaRue == null){
                 	throw new DocumentException("Erreur dans le fichier xml du plan");
                 }
                 if(plan.get(idOrigine) == null || plan.get(idDestination)== null){

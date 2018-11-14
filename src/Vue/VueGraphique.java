@@ -126,9 +126,7 @@ public class VueGraphique extends Vue {
                     planGroup.getChildren().add(line);
                 }
             }
-
         }
-
     }
 
     @Override
@@ -244,7 +242,6 @@ public class VueGraphique extends Vue {
         colors.add(Color.AQUA);
         colors.add(Color.YELLOWGREEN);
         colors.add(Color.CRIMSON);
-        colors.add(Color.BLUEVIOLET);
         colors.add(Color.BLUEVIOLET);
         colors.add(Color.SPRINGGREEN);
         colors.add(Color.TOMATO);
