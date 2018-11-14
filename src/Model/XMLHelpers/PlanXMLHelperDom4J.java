@@ -10,15 +10,15 @@ import java.io.File;
 import java.util.*;
 
 /**
- * Classe permettant la gestion des fichiers XML liés au plan.
+ * Classe permettant la gestion des fichiers XML liÃ©s au plan.
  * @author mleral
  * @see Model.XMLHelper.PlanXMLHelper
  */
 public class PlanXMLHelperDom4J implements PlanXMLHelper {
 
 	/**
-	 * Méthode d'obtention du plan à partir du fichier XML.
-	 * @return plan correspondant au plan obtenu à partir du fichier XML
+	 * MÃ©thode d'obtention du plan Ã  partir du fichier XML.
+	 * @return plan correspondant au plan obtenu Ã  partir du fichier XML
 	 */
     @Override
     public Plan getPlan(File fichierXML) {
@@ -34,22 +34,24 @@ public class PlanXMLHelperDom4J implements PlanXMLHelper {
 
         return new Plan(plan);
     }
+
     /**
-     * Méthode de lecture du fichier XML
-     * @param fichierXML correspondant à l'élément à faire lire par la méthode
+     * MÃ©thode de lecture du fichier XML
+     * @param fichierXML correspondant Ã  l'Ã©lÃ©ment Ã  faire lire par la mÃ©thode
      * @return Document correspondant au fichier XML lus
      * @throws DocumentException
      */
     private Document readXMLFile(File fichierXML ) throws DocumentException {
+
         SAXReader saxReader = new SAXReader();
         return saxReader.read(fichierXML);
     }
     
     /**
-     * Méthode d'extraction du plan à partir du document
-     * Si un id de noeud est présent 2 fois dans le fichier, seul le premier rencontré est gardé en mémoire, il n'y a pas d'erreur d'indiquée.
-     * @param document correspondant à l'élément tiré du XML et contenant les éléments du plan
-     * @return plan correspondant à la structure de donnée une fois analysée et prête à être utilisée
+     * MÃ©thode d'extraction du plan Ã  partir du document
+     * Si un id de noeud est prÃ©sent 2 fois dans le fichier, seul le premier rencontrÃ© est gardÃ© en mÃ©moire, il n'y a pas d'erreur d'indiquÃ©e.
+     * @param document correspondant Ã  l'Ã©lÃ©ment tirÃ© du XML et contenant les Ã©lÃ©ments du plan
+     * @return plan correspondant Ã  la structure de donnÃ©e une fois analysÃ©e et prÃªte Ã  Ãªtre utilisÃ©e
      * @throws DocumentException
      */
     private Map<String, List<Plan.Troncon>> extrairePlan(Document document) throws DocumentException {
@@ -90,7 +92,7 @@ public class PlanXMLHelperDom4J implements PlanXMLHelper {
                 longueur = Double.parseDouble(tronconElement.attributeValue("longueur"));
                 idOrigine = tronconElement.attributeValue("origine");
                 nomDeLaRue = tronconElement.attributeValue("nomRue");
-                if(idDestination == null || longueur <-1 || idOrigine == null || nomDeLaRue == null){
+                if(idDestination == null || longueur < 0 || idOrigine == null || nomDeLaRue == null){
                 	throw new DocumentException("Erreur dans le fichier xml du plan");
                 }
                 if(plan.get(idOrigine) == null || plan.get(idDestination)== null){

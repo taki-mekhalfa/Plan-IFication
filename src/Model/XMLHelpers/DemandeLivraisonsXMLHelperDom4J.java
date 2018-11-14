@@ -14,16 +14,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Classe permettant la gestion des fichiers XML liés aux demandes de livraisons.
+ * Classe permettant la gestion des fichiers XML liï¿½s aux demandes de livraisons.
  * @author mleral
  * @see Model.XMLHelper.DemandeLivraisonsXMLHelper
  */
 public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelper {
 
 	/**
-	 * Méthode d'obtention des demandes de livraisons.
+	 * Mï¿½thode d'obtention des demandes de livraisons.
 	 * @param fichierXML correspondant au fichier XML contenant les demandes de livraisons
-	 * @return demandeLivraisons correspondant à la serie de demandes de livraisons analysée
+	 * @return demandeLivraisons correspondant ï¿½ la serie de demandes de livraisons analysï¿½e
 	 */
     @Override
     public DemandeLivraisons getDemandeLivraisons(File fichierXML) {
@@ -38,9 +38,9 @@ public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelp
     }
 
     /**
-     * Méthode de lecture du fichier XML.
-     * @param fichierXML correspondant à un fichier XML à lire
-     * @return document correspondant au fichier XML analysé et passé en ce format
+     * Mï¿½thode de lecture du fichier XML.
+     * @param fichierXML correspondant ï¿½ un fichier XML ï¿½ lire
+     * @return document correspondant au fichier XML analysï¿½ et passï¿½ en ce format
      * @throws DocumentException
      */
     private Document readXMLFile(File fichierXML) throws DocumentException {
@@ -48,11 +48,13 @@ public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelp
         return saxReader.read(fichierXML);
     }
 
+
     /**
-     * Méthode d'extraction des demandes de livraisons à partir du document.
-     * @param document correspondant aux éléments du fichier XML extraits
-     * @return demandeLivraison correspondant au document fournis mais organiser dans le format de données choisis.
+     * Mï¿½thode d'extraction des demandes de livraisons ï¿½ partir du document.
+     * @param document correspondant aux ï¿½lï¿½ments du fichier XML extraits
+     * @return demandeLivraison correspondant au document fournis mais organiser dans le format de donnï¿½es choisis.
      */
+
     private DemandeLivraisons extraireDemande(Document document) {
         Element root = document.getRootElement();
 
@@ -72,10 +74,20 @@ public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelp
             pointsDeLivraisons.add(livraison);
 
         }
-
         // Creer la demande de livraisons:
 
-        Temps heureDep = new Temps(Integer.parseInt(heureDepart[0]), Integer.parseInt(heureDepart[1]), Integer.parseInt(heureDepart[2]));
+        Temps heureDep = new Temps (0,0,0);
+        try{
+        	int h = Integer.parseInt(heureDepart[0]);
+        	int m = Integer.parseInt(heureDepart[1]);
+        	int s = Integer.parseInt(heureDepart[2]);
+        	if(!(h > 23 || h < 0 || m > 59 || m <0 || s > 59|| s < 0))
+        		heureDep = new Temps(h, m, s);
+        }
+        catch (NumberFormatException e){
+        	throw new DocumentException("Erreur dans le fichier xml de la demande de livraison");
+        }
+
         return new DemandeLivraisons(idEntrepot, pointsDeLivraisons, heureDep);
     }
 

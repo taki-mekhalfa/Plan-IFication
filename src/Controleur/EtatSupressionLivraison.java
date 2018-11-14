@@ -18,10 +18,15 @@ public class EtatSupressionLivraison extends EtatDefaut {
     @Override
     public boolean livraisonSelectionne(Livraison livraison) {
         if (this.livraison == null) {
-            this.livraison = livraison;
-            //a
-            Controleur.interfaceGUI.activerBoutonValider();
-            return true;
+        	if (!Controleur.planification.isEntrepot(livraison)){
+        		this.livraison = livraison;
+	            Controleur.interfaceGUI.activerBoutonValider();
+	            return true;
+        	}
+        	else{
+        		Controleur.messageErreurSuppressionEntrepot();
+        		return false;
+        	}
         } else return false;
     }
 
