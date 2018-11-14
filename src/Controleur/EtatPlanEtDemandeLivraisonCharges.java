@@ -6,8 +6,8 @@ public class EtatPlanEtDemandeLivraisonCharges extends EtatDefaut{
 
 	@Override
     public void init(){
-		message = "Cliquez sur le bouton Calculer tournees une fois le nombre de livreurs défini." + 
-    			'\n' + "Par défaut, le nombre de livreurs est égal à 3." + 
+		message = "Cliquez sur le bouton Calculer tournees une fois le nombre de livreurs dÃ©fini." +
+    			'\n' + "Par dÃ©faut, le nombre de livreurs est Ã©gale Ã  3." +
     	    	'\n' + "Attention, si il y a plus de 10 livraisons par livreur, le calcul risque de durer quelques secondes.";
         Controleur.interfaceGUI.activerBoutonChargerPlan();
         Controleur.interfaceGUI.activerBoutonChargerDemandeLivraison();
