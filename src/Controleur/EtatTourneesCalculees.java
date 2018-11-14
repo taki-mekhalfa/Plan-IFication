@@ -46,20 +46,14 @@ public class EtatTourneesCalculees extends EtatDefaut {
 
     @Override
     public void boutonChargerDemandeLivraison(File fichierXML) {
-        if (Controleur.planification.chargerDemandesDeLivraisons(fichierXML)){
-        	Controleur.interfaceGUI.desactiverBoutonAjouterLivraison();
-	        Controleur.interfaceGUI.desactiverBoutonDeplacerLivraison();
-	        Controleur.interfaceGUI.desactiverBoutonSuprimmerLivraison();
-	        Controleur.interfaceGUI.desactiverBoutonUndo();
-	        Controleur.interfaceGUI.desactiverBoutonRedo();
-	        Controleur.listeCommandes.init();
-	        Controleur.setEtatCourant(Controleur.etatPlanEtDemandeLivraisonCharges);
-        }
-        else{
-        	Controleur.planification.supprimerDemandesLivraisons();
-			Controleur.planification.MAJAffichage();
-        	Controleur.setEtatCourant(Controleur.etatPlanCharge);
-        }
+        Controleur.planification.chargerDemandesDeLivraisons(fichierXML);
+        Controleur.interfaceGUI.desactiverBoutonAjouterLivraison();
+        Controleur.interfaceGUI.desactiverBoutonDeplacerLivraison();
+        Controleur.interfaceGUI.desactiverBoutonSuprimmerLivraison();
+        Controleur.interfaceGUI.desactiverBoutonUndo();
+        Controleur.interfaceGUI.desactiverBoutonRedo();
+        Controleur.listeCommandes.init();
+        Controleur.setEtatCourant(Controleur.etatPlanEtDemandeLivraisonCharges);
     }
 
     @Override

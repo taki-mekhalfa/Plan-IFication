@@ -59,7 +59,7 @@ public class InterfaceGUI extends Application {
         borderPane.setRight(vueTextuelle);
         borderPane.setCenterShape(true);
 
-        Scene scene = new Scene(borderPane, 1300, 700);
+        Scene scene = new Scene(borderPane, 1100, 700);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

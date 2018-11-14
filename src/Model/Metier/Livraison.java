@@ -35,7 +35,7 @@ public class Livraison {
     }
 
     public SimpleIntegerProperty getDureeProperty() {
-        return duree;
+        return new SimpleIntegerProperty(duree.get()/60);
     }
 
     public SimpleStringProperty getHeureDeLivraisonProperty() {

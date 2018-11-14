@@ -12,7 +12,6 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.PatternSyntaxException;
 
 public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelper {
 
@@ -24,7 +23,6 @@ public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelp
             demandeLivraisons = extraireDemande(document);
         } catch (DocumentException exp) {
             System.out.println(exp.getMessage());
-            return null;
         }
         return demandeLivraisons;
     }
@@ -34,59 +32,25 @@ public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelp
         return saxReader.read(fichierXML);
     }
 
-    private DemandeLivraisons extraireDemande(Document document) throws DocumentException {
+    private DemandeLivraisons extraireDemande(Document document) {
         Element root = document.getRootElement();
-        if(root.getQualifiedName()!= "demandeDeLivraisons"){
-        	throw new DocumentException("Erreur dans le fichier xml de la demande de livraison");
-        }
+
         // Extraire l'entrepot:
 
         Element entrepotElement = root.elements("entrepot").get(0);
-        
-        String idEntrepot;
-        String[] heureDepart;
-        
-        try{
-	        idEntrepot = entrepotElement.attributeValue("adresse");
-	        heureDepart = entrepotElement.attributeValue("heureDepart").split(":");
-	        if (idEntrepot == null || heureDepart == null){
-	        	throw new DocumentException("Erreur dans le fichier xml de la demande de livraison");
-	        }
-        }
-        catch (NullPointerException e){
-        	throw new DocumentException("Erreur dans le fichier xml de la demande de livraison");
-        } 
-        catch (NumberFormatException e){
-        	throw new DocumentException("Erreur dans le fichier xml de la demande de livraison");
-        }
-        catch (PatternSyntaxException e){
-        	throw new DocumentException("Erreur dans le fichier xml de la demande de livraison");
-        }
-        
+        String idEntrepot = entrepotElement.attributeValue("adresse");
+        String[] heureDepart = entrepotElement.attributeValue("heureDepart").split(":");
 
         //Extraire les points de livraison:
         List<Livraison> pointsDeLivraisons = new LinkedList<>();
         for (Iterator<Element> pointsLivraisonIterator = root.elementIterator("livraison"); pointsLivraisonIterator.hasNext(); ) {
-            Element pointLivraisonElement ;
-            pointLivraisonElement = pointsLivraisonIterator.next();
-            String idNoeud;
-            int duree;
-            
-            try{
-            	idNoeud = pointLivraisonElement.attributeValue("adresse");
-            	duree = Integer.parseInt(pointLivraisonElement.attributeValue("duree"));
-            }
-            catch (NullPointerException e){
-            	throw new DocumentException("Erreur dans le fichier xml du plan");
-            } 
-            catch (NumberFormatException e){
-            	throw new DocumentException("Erreur dans le fichier xml du plan");
-            }
+            Element pointLivraisonElement = pointsLivraisonIterator.next();
+            String idNoeud = pointLivraisonElement.attributeValue("adresse");
+            int duree = Integer.parseInt(pointLivraisonElement.attributeValue("duree"));
             Livraison livraison = new Livraison(idNoeud, duree);
             pointsDeLivraisons.add(livraison);
 
         }
-
         // Creer la demande de livraisons:
         Temps heureDep = new Temps (0,0,0);
         try{
