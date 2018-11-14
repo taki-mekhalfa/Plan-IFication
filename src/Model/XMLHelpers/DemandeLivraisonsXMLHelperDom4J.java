@@ -13,8 +13,18 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Classe permettant la gestion des fichiers XML li�s aux demandes de livraisons.
+ * @author mleral
+ * @see Model.XMLHelper.DemandeLivraisonsXMLHelper
+ */
 public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelper {
 
+	/**
+	 * M�thode d'obtention des demandes de livraisons.
+	 * @param fichierXML correspondant au fichier XML contenant les demandes de livraisons
+	 * @return demandeLivraisons correspondant � la serie de demandes de livraisons analys�e
+	 */
     @Override
     public DemandeLivraisons getDemandeLivraisons(File fichierXML) {
         DemandeLivraisons demandeLivraisons = null;
@@ -27,10 +37,23 @@ public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelp
         return demandeLivraisons;
     }
 
+    /**
+     * M�thode de lecture du fichier XML.
+     * @param fichierXML correspondant � un fichier XML � lire
+     * @return document correspondant au fichier XML analys� et pass� en ce format
+     * @throws DocumentException
+     */
     private Document readXMLFile(File fichierXML) throws DocumentException {
         SAXReader saxReader = new SAXReader();
         return saxReader.read(fichierXML);
     }
+
+
+    /**
+     * M�thode d'extraction des demandes de livraisons � partir du document.
+     * @param document correspondant aux �l�ments du fichier XML extraits
+     * @return demandeLivraison correspondant au document fournis mais organiser dans le format de donn�es choisis.
+     */
 
     private DemandeLivraisons extraireDemande(Document document) {
         Element root = document.getRootElement();
@@ -52,6 +75,7 @@ public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelp
 
         }
         // Creer la demande de livraisons:
+
         Temps heureDep = new Temps (0,0,0);
         try{
         	int h = Integer.parseInt(heureDepart[0]);
@@ -63,6 +87,7 @@ public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelp
         catch (NumberFormatException e){
         	throw new DocumentException("Erreur dans le fichier xml de la demande de livraison");
         }
+
         return new DemandeLivraisons(idEntrepot, pointsDeLivraisons, heureDep);
     }
 

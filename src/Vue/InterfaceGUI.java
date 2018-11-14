@@ -5,7 +5,6 @@ import Model.Planification;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
@@ -31,12 +30,15 @@ public class InterfaceGUI extends Application {
     private TextField saisieLivreurs;
     private TextField saisieDureeLivraison;
     private Stage primaryStage;
-    
 
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * @param  
+     * 
+    */
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -48,11 +50,8 @@ public class InterfaceGUI extends Application {
         Controleur.planification = planification;
         Controleur.interfaceGUI = this;
         Controleur.vueGraphique = vueGraphique;
-        Controleur.vueTextuelle = vueTextuelle;
         BorderPane borderPane = new BorderPane();
         createMenuBar();
-        
-        
 
         borderPane.setTop(menuBar);
         borderPane.setCenter(vueGraphique);
@@ -77,7 +76,7 @@ public class InterfaceGUI extends Application {
         boutonRedo = new Button("Redo");
         saisieDureeLivraison = new TextField();
         saisieLivreurs = new TextField();
-        saisieDureeLivraison.setPromptText("Duree livraison: 0");
+        saisieDureeLivraison.setPromptText("Duree livraison: 0 en min");
         saisieLivreurs.setPromptText("Nombre de Livreurs: 3");
 
 
@@ -112,6 +111,7 @@ public class InterfaceGUI extends Application {
         boutonValider.setOnAction(event -> {
             int duree = 0;
             if (!"".equals(saisieDureeLivraison.getText())) duree = Integer.parseInt(saisieDureeLivraison.getText());
+            duree = duree * 60;
             Controleur.saisieDuree(duree);
             Controleur.boutonValider();
         });
@@ -144,7 +144,7 @@ public class InterfaceGUI extends Application {
         boutonUndo.setDisable(true);
         boutonRedo.setDisable(true);
         saisieDureeLivraison.setDisable(true);
-        saisieLivreurs.setDisable(false);
+        saisieLivreurs.setDisable(true);
 
     }
 

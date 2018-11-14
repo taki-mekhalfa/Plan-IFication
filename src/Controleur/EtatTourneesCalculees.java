@@ -6,9 +6,6 @@ public class EtatTourneesCalculees extends EtatDefaut {
 
     @Override
     public void init(){
-    	message = "Tournees calculees." + 
-    			'\n' + "Vous pouvez modifier le resultat en cliquant sur les boutons" + 
-    			'\n' + "de modification (Ajouter, supprimer et deplacer)";
         Controleur.interfaceGUI.activerBoutonChargerPlan();
         Controleur.interfaceGUI.activerBoutonChargerDemandeLivraison();
         Controleur.interfaceGUI.activerBoutonCalculerTournees();
