@@ -77,7 +77,7 @@ public class Planification extends Observable {
     }
 
     public void supprimerPointDeLivraison(Livraison livraison){
-        for (Tournee tournee: tournees){
+		for (Tournee tournee: tournees){
             if (tournee.contientLivraison(livraison)){
                 tournee.supprimerLivraison(livraison,plan);
                 demandeLivraisons.getPointsDeLivraisons().remove(livraison);
@@ -138,5 +138,9 @@ public class Planification extends Observable {
         for (Plan.Troncon troncon : tronconList)
             if (troncon.getDestination().equals(idDestination)) return troncon.getNomDeLaRue();
         return "Pas Du Nom";
+    }
+    
+    public boolean isEntrepot(Livraison livraison){
+    		return (livraison.getNoeud().equals(demandeLivraisons.getEntrepot()));
     }
 }

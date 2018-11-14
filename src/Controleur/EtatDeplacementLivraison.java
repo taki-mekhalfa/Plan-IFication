@@ -10,6 +10,9 @@ public class EtatDeplacementLivraison extends EtatDefaut {
 
     @Override
     public void init(){
+    	message = "Selectionnez une intersection a deplacer ainsi que les points de livraison" + 
+    			'\n' + "precedant et suivant dans la nouvelle tournee." + 
+    			'\n' + "Une fois la selection effectuee, cliquez sur Valider ou Annuler.";
         livraisonADeplacer = null;
         livraison1 = null;
         livraison2 = null;
@@ -19,8 +22,15 @@ public class EtatDeplacementLivraison extends EtatDefaut {
     @Override
     public boolean livraisonSelectionne(Livraison livraison) {
         if (livraisonADeplacer == null) {
-            livraisonADeplacer = livraison;
-            return true;
+        	if (!Controleur.planification.isEntrepot(livraison)){
+        		livraisonADeplacer = livraison;
+	            return true;
+        	}
+        	else{
+        		Controleur.messageErreurDeplacementEntrepot();
+        		return false;
+        	}
+	            
         }
 
         if (livraison1 != null && livraison2 != null) return false;

@@ -11,6 +11,8 @@ public class EtatSupressionLivraison extends EtatDefaut {
 
     @Override
     public void init() {
+    	message = "Selectionnez une intersection a supprimer. " + 
+    			'\n' + "Une fois la selection effectuee, cliquez sur Valider ou Annuler.";
         this.livraison = null;
         Controleur.interfaceGUI.activerBoutonAnnuler();
     }
@@ -18,10 +20,15 @@ public class EtatSupressionLivraison extends EtatDefaut {
     @Override
     public boolean livraisonSelectionne(Livraison livraison) {
         if (this.livraison == null) {
-            this.livraison = livraison;
-            //a
-            Controleur.interfaceGUI.activerBoutonValider();
-            return true;
+        	if (!Controleur.planification.isEntrepot(livraison)){
+        		this.livraison = livraison;
+	            Controleur.interfaceGUI.activerBoutonValider();
+	            return true;
+        	}
+        	else{
+        		Controleur.messageErreurSuppressionEntrepot();
+        		return false;
+        	}
         } else return false;
     }
 

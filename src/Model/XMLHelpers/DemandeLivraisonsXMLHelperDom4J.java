@@ -51,11 +51,18 @@ public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelp
             pointsDeLivraisons.add(livraison);
 
         }
-
         // Creer la demande de livraisons:
-
-        Temps heureDep = new Temps(Integer.parseInt(heureDepart[0]), Integer.parseInt(heureDepart[1]), Integer.parseInt(heureDepart[2]));
-
+        Temps heureDep = new Temps (0,0,0);
+        try{
+        	int h = Integer.parseInt(heureDepart[0]);
+        	int m = Integer.parseInt(heureDepart[1]);
+        	int s = Integer.parseInt(heureDepart[2]);
+        	if(!(h > 23 || h < 0 || m > 59 || m <0 || s > 59|| s < 0))
+        		heureDep = new Temps(h, m, s);
+        }
+        catch (NumberFormatException e){
+        	throw new DocumentException("Erreur dans le fichier xml de la demande de livraison");
+        }
         return new DemandeLivraisons(idEntrepot, pointsDeLivraisons, heureDep);
     }
 
