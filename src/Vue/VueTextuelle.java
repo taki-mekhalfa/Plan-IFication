@@ -12,13 +12,9 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.scene.text.TextFlow;
 
 import java.util.Map;
 import java.util.SortedSet;
@@ -32,17 +28,20 @@ public class VueTextuelle extends Vue {
     private Label labelNomDeLaRue;
     private ObservableList<Livraison> dataLivraison = FXCollections.observableArrayList();
     private ObservableList<Livraison> dataTournee = FXCollections.observableArrayList();
-    
+
     private TableView<Livraison> tableDemandeLivraison = new TableView<>();
     private TableColumn<Livraison, String> idCol = new TableColumn<>("ID Livraison");
-    private TableColumn<Livraison, Integer> dureeCol = new TableColumn<>("Duree");
+    private TableColumn<Livraison, Integer> dureeCol = new TableColumn<>("Duree (min)");
 
     private TableView<Livraison> tableTournee = new TableView<>();
     private TableColumn<Livraison, String> livraisonCol = new TableColumn<>("ID Livraison");
     private TableColumn<Livraison, String> horraireCol = new TableColumn<>("Heure de Livraison");
 
-    private TextFlow zoneDialogue = new TextFlow(new Text("Cliquez sur le bonton Charger un plan pour charger le fichier xml de plan." + '\n' + "Vous pouvez �galement d�finir le nombre de livreurs."));
-    
+    private TableColumn<Livraison, Integer> dureeLivraisonCol = new TableColumn<>("Duree");
+
+    private TextFlow zoneDialogue = new TextFlow(new Text("Cliquez sur le bonton Charger un plan pour charger le fichier xml de plan." + '\n' + "Vous pouvez également définir le nombre de livreurs.")); 
+
+
     public VueTextuelle(Planification planification) {
 
         super(planification);
@@ -53,29 +52,34 @@ public class VueTextuelle extends Vue {
         labelNomDeLaRue.setTextAlignment(TextAlignment.LEFT);
         labelNomDeLaRue.setMaxWidth(200);
         VBox vBox = new VBox();
-        
-        zoneDialogue.setMaxWidth(400);
-        vBox.getChildren().addAll(labelNomDeLaRue,tourneesGroup, livraisonsGroup, zoneDialogue);
+
+        vBox.getChildren().addAll(labelNomDeLaRue,tourneesGroup, livraisonsGroup);
         vBox.setSpacing(10);
         vBox.setPadding(new Insets(10,10,0,0));
         tableTournee.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableDemandeLivraison.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tableDemandeLivraison.setPlaceholder(new Label("Demande de livraisons non chargee"));
+
+        tableDemandeLivraison.setPlaceholder(new Label("Demande de livraisons non chargée"));
+
+      
         this.getChildren().add(vBox);
     }
-    
 
     @Override
     void dessinerPlan() {
+
     	
         labelNomDeLaRue.setText("");
+
         livraisonsGroup.getChildren().clear();
         tourneesGroup.getChildren().clear();
         dataLivraison.clear();
 
         tableDemandeLivraison.setEditable(true);
         idCol.setCellValueFactory(cellData -> cellData.getValue().getNoeudProperty());
+        idCol.setSortable(false);
         dureeCol.setCellValueFactory(cellData -> cellData.getValue().getDureeProperty().asObject());
+        dureeCol.setSortable(false);
         tableDemandeLivraison.getColumns().setAll(idCol, dureeCol);
         tableDemandeLivraison.setItems(dataLivraison);
         livraisonsGroup.getChildren().add(tableDemandeLivraison);
@@ -83,6 +87,8 @@ public class VueTextuelle extends Vue {
 
     @Override
     void dessinerDemandeDeLivraisons() {
+
+
     	livraisonsGroup.getChildren().clear();
     	tourneesGroup.getChildren().clear();
     	dataLivraison.clear();
@@ -98,7 +104,7 @@ public class VueTextuelle extends Vue {
 	        tableDemandeLivraison.setItems(dataLivraison);
 	        livraisonsGroup.getChildren().add(tableDemandeLivraison);
 	
-	        //Ecoute les clics de souris sur les lignes du tableau pour r�cup�rer l'ID de la livraison
+	        //Ecoute les clics de souris sur les lignes du tableau pour rï¿½cupï¿½rer l'ID de la livraison
 	        tableDemandeLivraison.setOnMouseClicked(event -> {
 	            vueGraph.resetCouleurs();
 	            try{
@@ -110,6 +116,7 @@ public class VueTextuelle extends Vue {
 	            
 	        });
         }
+
     }
 
     @Override
@@ -117,6 +124,9 @@ public class VueTextuelle extends Vue {
     	livraisonsGroup.getChildren().clear();
         tourneesGroup.getChildren().clear();
         dataTournee.clear();
+        livraisonCol.setSortable(false);
+        horraireCol.setSortable(false);
+        dureeLivraisonCol.setSortable(false);
         if (tournees != null){
         	tableTournee.setEditable(true);
 
@@ -153,7 +163,7 @@ public class VueTextuelle extends Vue {
 	        tableTournee.setItems(dataTournee);
 	        tourneesGroup.getChildren().add(tableTournee);
 	
-	        //Ecoute les clics de souris sur les lignes du tableau pour récupérer l'ID de la livraison
+	        //Ecoute les clics de souris sur les lignes du tableau pour rÃ©cupÃ©rer l'ID de la livraison
 	        tableTournee.setOnMouseClicked(new EventHandler<MouseEvent>() {
 	            @Override
 	            public void handle(MouseEvent event) {
@@ -161,7 +171,28 @@ public class VueTextuelle extends Vue {
 	                vueGraph.couleurPointFocus(tableTournee.getSelectionModel().getSelectedItem().getNoeud());
 	            }
 	        });
+
         }
+
+        tableTournee.getColumns().setAll(livraisonCol, horraireCol,dureeLivraisonCol);
+        tableTournee.setItems(dataTournee);
+        tourneesGroup.getChildren().add(tableTournee);
+
+
+        //Ecoute les clics de souris sur les lignes du tableau pour récupérer l'ID de la livraison
+
+     
+        tableTournee.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                vueGraph.resetCouleurs();
+                if(tableTournee.getSelectionModel() != null){
+                    vueGraph.couleurPointFocus(tableTournee.getSelectionModel().getSelectedItem().getNoeud());
+                }
+            }
+        });
+
+
     }
     
     public void addZoneDialogue(String newText, boolean error){
@@ -174,6 +205,7 @@ public class VueTextuelle extends Vue {
     
     public void clearZoneDialogue(){
     	zoneDialogue.getChildren().clear(); 
+
     }
 
     public void setVueGraph(VueGraphique vueGraph) {

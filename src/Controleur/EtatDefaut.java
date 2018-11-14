@@ -5,13 +5,7 @@ import Model.Metier.Livraison;
 import java.io.File;
 
 public class EtatDefaut implements Etat {
-	String message;
-	
-	@Override
-	public String getMessage(){
-		return message;
-	}
-	
+
     @Override
     public void init() {
 

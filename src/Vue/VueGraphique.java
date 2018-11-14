@@ -7,11 +7,16 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -25,10 +30,14 @@ public class VueGraphique extends Vue {
     private Group planGroup;
     private Group tourneesGroup;
     private Group livraisonsGroup;
+    private Group indexGroup;
+
     private List<Color> colors;
     private List<CercleLivraison> cerclesLivraisonsSelectionnes = new LinkedList<>();
     private CercleIntersection cercleIntersection;
     private VueTextuelle vueTextuelle;
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private double ratio = 0.8;
 
     public VueGraphique(Planification planification) {
         super(planification);
@@ -41,8 +50,9 @@ public class VueGraphique extends Vue {
         planGroup = new Group();
         livraisonsGroup = new Group();
         tourneesGroup = new Group();
+        indexGroup = new Group();
 
-        rootGroup.getChildren().addAll(planGroup, tourneesGroup, livraisonsGroup);
+        rootGroup.getChildren().addAll(planGroup, tourneesGroup, livraisonsGroup,indexGroup);
 
         //--------------Danger---------------------------------------------------
         Slider slider = new Slider();
@@ -53,8 +63,12 @@ public class VueGraphique extends Vue {
         rootGroup.scaleXProperty().bind(slider.valueProperty());
         rootGroup.scaleYProperty().bind(slider.valueProperty());
         scrollPane.setContent(new Group(rootGroup));
-        scrollPane.setPrefViewportHeight(600);
-        scrollPane.setPrefViewportWidth(600);
+        //scrollPane.setPrefViewportHeight(600);
+        //scrollPane.setPrefViewportWidth(600);
+        
+        scrollPane.setPrefViewportHeight(screenSize.getHeight()*ratio);
+        scrollPane.setPrefViewportWidth(screenSize.getHeight()*ratio);
+        
         scrollPane.setFocusTraversable(false);
         borderPane.setCenter(scrollPane);
         borderPane.setBottom(slider);
@@ -66,7 +80,7 @@ public class VueGraphique extends Vue {
 
         //-------------------------------------------------------------------------
         livraisonsGroup.setOnMouseClicked(event -> {
-            CercleLivraison cercleLivraison = (CercleLivraison) event.getTarget();
+        	CercleLivraison cercleLivraison = (CercleLivraison)((Node) event.getTarget()).getParent();
             if (cercleLivraison.isSelectionne()) {
                 cerclesLivraisonsSelectionnes.remove(cercleLivraison);
                 Controleur.livraisonDeselectionnee(cercleLivraison.getLivraison());
@@ -139,11 +153,12 @@ public class VueGraphique extends Vue {
             CercleLivraison cercleLivraisonEntrepot = new CercleLivraison(trX(entrepot.getLongitude()), trY(entrepot.getLatitude()), 5, new Livraison(entrepot.getId(), 0));
             cercleLivraisonEntrepot.setDefaultColor(Color.RED);
             livraisonsGroup.getChildren().add(cercleLivraisonEntrepot);
-
+            
             for (Livraison livraison : demandeLivraisons.getPointsDeLivraisons()) {
                 Noeud pointLivr = NoeudFactory.getNoeudParId(livraison.getNoeud());
-                CercleLivraison cercleLivraison = new CercleLivraison(trX(pointLivr.getLongitude()), trY(pointLivr.getLatitude()), 7, livraison);
+                CercleLivraison cercleLivraison = new CercleLivraison(trX(pointLivr.getLongitude()), trY(pointLivr.getLatitude()), 8, livraison);
                 cercleLivraison.setCouleur(Color.BLUE);
+                //cercleLivraison.setAccessibleText(text);
                 livraisonsGroup.getChildren().add(cercleLivraison);
             }
 
@@ -153,14 +168,24 @@ public class VueGraphique extends Vue {
 
     @Override
     void dessinerTournees() {
+    	indexGroup.getChildren().clear();
         tourneesGroup.getChildren().clear();
         if (tournees != null) {
+            
             int indexTournee = 0;
             for (Tournee tournee : tournees) {
                 Color color = getColor(indexTournee);
                 List<Chemin> chemins = tournee.getChemins();
+                int nb = 1;
                 for (Chemin chemin : chemins) {
                     Noeud premierNoeud = NoeudFactory.getNoeudParId(chemin.getDepart());
+                    for(Node node : livraisonsGroup.getChildren()){
+                    	CercleLivraison cercleLivraison= (CercleLivraison) node;
+                    	if(!cercleLivraison.getLivraison().getNoeud().equals(demandeLivraisons.getEntrepot()) && cercleLivraison.getLivraison().getNoeud().equals(premierNoeud.getId())){
+                    		cercleLivraison.setOrdre(nb);
+                            nb++;
+                    	}
+                    }
                     LineModifiee line = new LineModifiee();
                     line.setStartX(trX(premierNoeud.getLongitude()));
                     line.setStartY(trY(premierNoeud.getLatitude()));
@@ -180,7 +205,6 @@ public class VueGraphique extends Vue {
                 }
                 indexTournee = indexTournee + 1;
             }
-
 
         }
 
@@ -212,12 +236,12 @@ public class VueGraphique extends Vue {
     }
 
     private double trX(double longitude) {
-        double echelleHor = 600 / (maxLongitude - minLongitude);
+        double echelleHor = screenSize.getHeight()*ratio / (maxLongitude - minLongitude);
         return echelleHor * (longitude - minLongitude);
     }
 
     private double trY(double latitude) {
-        double echelleVer = 600 / (maxLatitude - minLatitude);
+        double echelleVer = screenSize.getHeight()*ratio / (maxLatitude - minLatitude);
         return echelleVer * (maxLatitude - latitude);
     }
 
