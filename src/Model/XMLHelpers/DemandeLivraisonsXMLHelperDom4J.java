@@ -15,16 +15,16 @@ import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
 /**
- * Classe permettant la gestion des fichiers XML liés aux demandes de livraisons.
- * @author H104
- * @see Model.XMLHelper.DemandeLivraisonsXMLHelper
+ * Classe permettant la gestion des fichiers XML liÃ©s aux demandes de livraisons.
+ * @author H4104
+ * @see Model.XMLHelpers.DemandeLivraisonsXMLHelper
  */
 public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelper {
 
 	/**
-	 * Méthode d'obtention des demandes de livraisons.
+	 * MÃ©thode d'obtention des demandes de livraisons.
 	 * @param fichierXML correspondant au fichier XML contenant les demandes de livraisons
-	 * @return demandeLivraisons correspondant à la serie de demandes de livraisons analysée
+	 * @return demandeLivraisons correspondant Ã  la serie de demandes de livraisons analysÃ©e
 	 */
     @Override
     public DemandeLivraisons getDemandeLivraisons(File fichierXML) {
@@ -40,9 +40,9 @@ public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelp
     }
 
     /**
-     * Méthode de lecture du fichier XML.
-     * @param fichierXML correspondant à un fichier XML à lire
-     * @return document correspondant au fichier XML analysé et passé en ce format
+     * MÃ©thode de lecture du fichier XML.
+     * @param fichierXML correspondant Ã  un fichier XML Ã  lire
+     * @return document correspondant au fichier XML analysÃ© et passÃ© en ce format
      * @throws DocumentException
      */
     private Document readXMLFile(File fichierXML) throws DocumentException {
@@ -51,9 +51,9 @@ public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelp
     }
 
     /**
-     * Méthode d'extraction des demandes de livraisons à partir du document.
-     * @param document correspondant aux éléments du fichier XML extraits
-     * @return demandeLivraison correspondant au document fournis mais organiser dans le format de données choisis.
+     * MÃ©thode d'extraction des demandes de livraisons Ã  partir du document.
+     * @param document correspondant aux Ã©lÃ©ments du fichier XML extraits
+     * @return demandeLivraison correspondant au document fournis mais organiser dans le format de donnÃ©es choisis.
      */
     private DemandeLivraisons extraireDemande(Document document) throws DocumentException {
         Element root = document.getRootElement();
@@ -98,10 +98,10 @@ public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelp
             	duree = Integer.parseInt(pointLivraisonElement.attributeValue("duree"));
             }
             catch (NullPointerException e){
-            	throw new DocumentException("Erreur dans le fichier xml du plan");
+            	throw new DocumentException("Erreur dans le fichier xml de la demande de livraison");
             } 
             catch (NumberFormatException e){
-            	throw new DocumentException("Erreur dans le fichier xml du plan");
+            	throw new DocumentException("Erreur dans le fichier xml de la demande de livraison");
             }
             Livraison livraison = new Livraison(idNoeud, duree);
             pointsDeLivraisons.add(livraison);
