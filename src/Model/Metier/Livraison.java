@@ -15,8 +15,8 @@ public class Livraison {
 
     /**
      * Constructeur de la classe Livraison
-     * @param idNoeud correspondant au noeud indiquant la position de la livraison à effectuer
-     * @param duree correspondant à un entier indiquant la durée nécéssaire pour effectuer la livraison
+     * @param idNoeud correspondant au noeud indiquant la position de la livraison ï¿½ effectuer
+     * @param duree correspondant ï¿½ un entier indiquant la durï¿½e nï¿½cï¿½ssaire pour effectuer la livraison
      * @see Model.Metier.Noeud
      */
     public Livraison(String idNoeud, int duree) {
@@ -34,32 +34,32 @@ public class Livraison {
     }
 
     /**
-     * Méthode d'obtention de l'identifiant du noeud correspondant à la livraison.
-     * @return idNoeud correspondant à cet identifiant
+     * Mï¿½thode d'obtention de l'identifiant du noeud correspondant ï¿½ la livraison.
+     * @return idNoeud correspondant ï¿½ cet identifiant
      */
     public String getNoeud() {
         return idNoeud.get();
     }
 
     /**
-     * Méthode d'obtention de la durée associée à la livraison.
-     * @return duree correspondant à cet entier
+     * Mï¿½thode d'obtention de la durï¿½e associï¿½e ï¿½ la livraison.
+     * @return duree correspondant ï¿½ cet entier
      */
     public int getDuree() {
         return Integer.parseInt(duree.get());
     }
 
     /**
-     * Méthode d'obtention du noeud correspondant à la livraison sous forme de SimpleStringProperty.
-     * @return idNoeud correspondant à cette SimpleStringProperty
+     * Mï¿½thode d'obtention du noeud correspondant ï¿½ la livraison sous forme de SimpleStringProperty.
+     * @return idNoeud correspondant ï¿½ cette SimpleStringProperty
      */
     public SimpleStringProperty getNoeudProperty() {
         return idNoeud;
     }
 
     /**
-     * Méthode d'obtention de la durée associée à cette livraison sous forme de SimpleStringProperty.
-     * @return duree correspondant à cette SimpleStringProperty
+     * Mï¿½thode d'obtention de la durï¿½e associï¿½e ï¿½ cette livraison sous forme de SimpleStringProperty.
+     * @return duree correspondant ï¿½ cette SimpleStringProperty
      */
     public SimpleStringProperty getDureeProperty() {
         if (duree.get().equals("")) return duree;
@@ -67,24 +67,24 @@ public class Livraison {
     }
 
     /**
-     * Méthode d'affectation de la SimpleStringProperty de la durée de cette livraison.
-     * @param d correspondant à la SimpleStringProperty à affecter
+     * Mï¿½thode d'affectation de la SimpleStringProperty de la durï¿½e de cette livraison.
+     * @param d correspondant ï¿½ la SimpleStringProperty ï¿½ affecter
      */
     public void setDureeProperty(SimpleStringProperty d){
         duree = d;
     }
     
     /**
-     * Méthode d'obtention de l'heure de livraison.
-     * @return heureDeLivraison correspondant à cette heure sous la forme d'une SimpleStringProperty
+     * Mï¿½thode d'obtention de l'heure de livraison.
+     * @return heureDeLivraison correspondant ï¿½ cette heure sous la forme d'une SimpleStringProperty
      */
     public SimpleStringProperty getHeureDeLivraisonProperty() {
         return heureDeLivraison;
     }
 
     /**
-    * Méthode d'affectation de la SimpleStringProperty de l'horaire de cette livraison.
-    * @param h correspondant à la SimpleStringProperty à affecter
+    * Mï¿½thode d'affectation de la SimpleStringProperty de l'horaire de cette livraison.
+    * @param h correspondant ï¿½ la SimpleStringProperty ï¿½ affecter
     */
     public void setHorraireProperty(SimpleStringProperty h)
     {
@@ -92,8 +92,8 @@ public class Livraison {
     }
 
     /**
-     * Méthode d'affectation de la SimpleStringProperty du noeud de cette livraison.
-     * @param str correspondant à la SimpleStringProperty à affecter
+     * Mï¿½thode d'affectation de la SimpleStringProperty du noeud de cette livraison.
+     * @param str correspondant ï¿½ la SimpleStringProperty ï¿½ affecter
      */
     public void setNoeud (SimpleStringProperty str)
     {
@@ -101,8 +101,8 @@ public class Livraison {
     }
     
     /**
-     * Méthode de conversion de la livraison en string.
-     * @return Livraison correspondant à l'ensemble des composants de cette livraisons sous forme de string
+     * Mï¿½thode de conversion de la livraison en string.
+     * @return Livraison correspondant ï¿½ l'ensemble des composants de cette livraisons sous forme de string
      */
     @Override
     public String toString() {
@@ -113,23 +113,23 @@ public class Livraison {
     }
 
     /**
-     * Méthode de test pour l'égalité de deux livraisons.
-     * @return boolean correspondant au résultat de ce test
+     * Mï¿½thode de test pour l'ï¿½galitï¿½ de deux livraisons.
+     * @return boolean correspondant au rï¿½sultat de ce test
      */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Livraison livraison = (Livraison) o;
-        return idNoeud.equals(livraison.idNoeud);
+        return idNoeud.get().equals(livraison.idNoeud.get());
     }
 
     /**
-     * Méthode d'obtention du code de hachage.
+     * Mï¿½thode d'obtention du code de hachage.
      * @return hashCode correspondant au code de hachage pour la livraison.
      */
     @Override
     public int hashCode() {
-        return idNoeud.hashCode();
+        return idNoeud.get().hashCode();
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Classe de gestion des tournées pour l'application.
+ * Classe de gestion des tournï¿½es pour l'application.
  * @author H4104
  */
 public class Tournee {
@@ -17,8 +17,8 @@ public class Tournee {
 
     /**
      * Constructeur de la classe Tournee.
-     * @param chemins correspondant à la liste de chemins associée à cette tournée
-     * @param heuresDeLivraison correspondant à une map de livraisons associées à des temps de passage
+     * @param chemins correspondant ï¿½ la liste de chemins associï¿½e ï¿½ cette tournï¿½e
+     * @param heuresDeLivraison correspondant ï¿½ une map de livraisons associï¿½es ï¿½ des temps de passage
      */
     public Tournee(List<Chemin> chemins, Map<Livraison, Temps> heuresDeLivraison) {
         this.chemins = chemins;
@@ -26,11 +26,11 @@ public class Tournee {
     }
 
     /**
-     * Méthode d'ajout de livraison à la tournée.
-     * @param livraison correspondant à la livraison à ajouter à la tournée 
-     * @param livraison1 correspondant à la livraison précédant la livraison que l'on veut ajouter
-     * @param livraison2 correspondant à la livraison précédant la livraison que l'on veut ajouter
-     * @param plan correspondant au plan associé à la tournée en cours
+     * Mï¿½thode d'ajout de livraison ï¿½ la tournï¿½e.
+     * @param livraison correspondant ï¿½ la livraison ï¿½ ajouter ï¿½ la tournï¿½e 
+     * @param livraison1 correspondant ï¿½ la livraison prï¿½cï¿½dant la livraison que l'on veut ajouter
+     * @param livraison2 correspondant ï¿½ la livraison prï¿½cï¿½dant la livraison que l'on veut ajouter
+     * @param plan correspondant au plan associï¿½ ï¿½ la tournï¿½e en cours
      */
     public void ajouterLivraison(Livraison livraison, Livraison livraison1, Livraison livraison2, Plan plan) {
         Livraison livraisonPrecedente,livraisonSuivante;
@@ -69,9 +69,9 @@ public class Tournee {
     }
 
     /**
-     * Méthode de recherche de livraison parmis celle associées à la tournée.
-     * @param chemin correspondant au chemin auquel la livraison que l'on recherche est associée
-     * @return livraison correspondant à cet éléments que l'on cherchait
+     * Mï¿½thode de recherche de livraison parmis celle associï¿½es ï¿½ la tournï¿½e.
+     * @param chemin correspondant au chemin auquel la livraison que l'on recherche est associï¿½e
+     * @return livraison correspondant ï¿½ cet ï¿½lï¿½ments que l'on cherchait
      */
     private Livraison chercherLivraison(Chemin chemin) {
         for (Livraison livraison : heuresDeLivraison.keySet()) {
@@ -83,9 +83,9 @@ public class Tournee {
     }
 
     /**
-     * Méthode de recherche de chemin parmis ceux associées à la tournée.
-     * @param idNoeud correspondant à l'identifiant du noeud auquel le chemin que l'on recherche est associé
-     * @return int correspondant à l'index du chemin que l'on cherchait
+     * Mï¿½thode de recherche de chemin parmis ceux associï¿½es ï¿½ la tournï¿½e.
+     * @param idNoeud correspondant ï¿½ l'identifiant du noeud auquel le chemin que l'on recherche est associï¿½
+     * @return int correspondant ï¿½ l'index du chemin que l'on cherchait
      */
     private int chercherChemin(String idNoeud) {
         Chemin dummyChemin = new Chemin(Collections.singletonList(idNoeud), 0);
@@ -94,41 +94,41 @@ public class Tournee {
     }
 
     /**
-     * Méthode d'obtention de la liste de chemins associée à la tournée.
-     * @param c correspondant à la liste de chemins de la tournée
+     * Mï¿½thode d'obtention de la liste de chemins associï¿½e ï¿½ la tournï¿½e.
+     * @param c correspondant ï¿½ la liste de chemins de la tournï¿½e
      */
     public List<Chemin> getChemins() {
         return chemins;
     }
 
     /**
-     * Méthode d'affectation d'une liste de chemins à la tournée.
-     * @param c correspondant à la liste de chemins à associer
+     * Mï¿½thode d'affectation d'une liste de chemins ï¿½ la tournï¿½e.
+     * @param c correspondant ï¿½ la liste de chemins ï¿½ associer
      */
     public void setChemins(List<Chemin> c) {
         chemins = c;
     }
 
     /**
-     * Méthode d'obtention des heures de livraisons.
-     * @return heuresDeLivraison correspondant à une map de livraisons avec leur heure de passage associée.
+     * Mï¿½thode d'obtention des heures de livraisons.
+     * @return heuresDeLivraison correspondant ï¿½ une map de livraisons avec leur heure de passage associï¿½e.
      */
     public Map<Livraison, Temps> getHeuresDeLivraison() {
         return heuresDeLivraison;
     }
 
     /**
-     * Méthode d'affectation des heures de livraisons de la tournée.
-     * @param h correspondant à une map de livraisons associéees à leur heure de passage
+     * Mï¿½thode d'affectation des heures de livraisons de la tournï¿½e.
+     * @param h correspondant ï¿½ une map de livraisons associï¿½ees ï¿½ leur heure de passage
      */
     public void setHeuresDeLivraison(Map<Livraison, Temps> h) {
     	heuresDeLivraison = h;
     }
 
     /**
-     * Méthode de suppression d'une livraison.
-     * @param livraison correspondant à la livraison à supprimer de la tournée
-     * @param plan correspondant au plan associé à la tournée
+     * Mï¿½thode de suppression d'une livraison.
+     * @param livraison correspondant ï¿½ la livraison ï¿½ supprimer de la tournï¿½e
+     * @param plan correspondant au plan associï¿½ ï¿½ la tournï¿½e
      */
     public void supprimerLivraison(Livraison livraison, Plan plan) {
         int idxLivraison = chercherChemin(livraison.getNoeud());
@@ -153,17 +153,17 @@ public class Tournee {
     }
 
     /**
-     * Méthode de test pour savoir si la tournée contient une certaine livraison.
-     * @param livraison correspondant à l'élement dont on cherche à tester la présence
-     * @return boolean correspondant au résultat de ce test
+     * Mï¿½thode de test pour savoir si la tournï¿½e contient une certaine livraison.
+     * @param livraison correspondant ï¿½ l'ï¿½lement dont on cherche ï¿½ tester la prï¿½sence
+     * @return boolean correspondant au rï¿½sultat de ce test
      */
     public boolean contientLivraison(Livraison livraison){
         return heuresDeLivraison.containsKey(livraison);
     }
 
     /**
-     * Méthode de conversion en string de la tournée.
-     * @return Tournee correspondant à un string contenant les informations relatives à la tournée
+     * Mï¿½thode de conversion en string de la tournï¿½e.
+     * @return Tournee correspondant ï¿½ un string contenant les informations relatives ï¿½ la tournï¿½e
      */
     @Override
     public String toString() {
@@ -174,10 +174,10 @@ public class Tournee {
     }
 
     /**
-     * Méthode de test pour savboir si deux livraisons se suivent. 
-     * @param livraison1 correspondant à la première livraison du test
-     * @param livraison2 correspondant à la seconde livraison du test
-     * @return boolean correspondant au rrésultat de ce test
+     * Mï¿½thode de test pour savboir si deux livraisons se suivent. 
+     * @param livraison1 correspondant ï¿½ la premiï¿½re livraison du test
+     * @param livraison2 correspondant ï¿½ la seconde livraison du test
+     * @return boolean correspondant au rrï¿½sultat de ce test
      */
     public boolean consecutives(Livraison livraison1, Livraison livraison2){
         int idx1 = chercherChemin(livraison1.getNoeud());
