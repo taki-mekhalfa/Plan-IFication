@@ -1,17 +1,13 @@
-package TestUnitaire;
-
-import static org.junit.Assert.*;
+package TestsUnitaires;
 
 import java.io.File;
-import java.util.List;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import Model.Planification;
-import Model.Metier.Chemin;
+import Model.Metier.Temps;
 
-public class TestChemin {
+public class TestTemps {
 	private final static String cheminPlan="./Documents/fichiersXML2018/petitPlan.xml";
 	private final static String cheminDl="./Documents/fichiersXML2018/dl-petit-6.xml";
 	private static Planification planification;
@@ -26,15 +22,15 @@ public class TestChemin {
 		planification.calculerTournees(nombreLivreurs);
 	}
 	@Test
-	public void testChemin() {
-		System.out.println("testChemin:");
-		Chemin cheminATester=planification.getTournees().get(0).getChemins().get(1);
-		System.out.println("arrive:"+cheminATester.getArrivee());
-		System.out.println(cheminATester.toString());
-		List<String> listeChemins=cheminATester.getChemin();
-		assertFalse(listeChemins.equals(null));
-		assertFalse(cheminATester.equals(null));
-		assertTrue(cheminATester.equals(cheminATester));
+	public void testTemps() {
+		System.out.println("testTemps:");
+		Temps t=new Temps(8,0,0);
+		System.out.println("heures:"+t.getHeures()+" minutes:"+t.getMinutes()+" secondes:"+t.getSecondes());
+		System.out.println("heureLivraison:"+t.getHorraireProperty());
+		System.out.println("tout en secondes:"+t.getValue());
+		System.out.println("compare to 11:00:00:"+t.compareTo(new Temps(11,0,0)));
+		System.out.println("compare to 08:02:00:"+t.compareTo(new Temps(8,2,0)));
+		System.out.println("compare to 08:00:03:"+t.compareTo(new Temps(8,0,3)));
 		System.out.println("");
 	}
 }

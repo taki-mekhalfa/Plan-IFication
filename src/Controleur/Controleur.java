@@ -46,7 +46,7 @@ public class Controleur {
     	vueTextuelle.clearZoneDialogue();
         etatCourant = nouvelEtat;
         etatCourant.init();
-        vueTextuelle.addZoneDialogue(etatCourant.getMessage(), false);
+        vueTextuelle.addZoneDialogue(etatCourant.getMessage(), 0);
     }
 
     public static void boutonSuprimmerLivraison() {
@@ -100,29 +100,30 @@ public class Controleur {
     public static void saisieDuree(int duree){
         etatCourant.saisieDuree(duree);
     }
-    
+
+    /**
+     * Message d'erreur pour le fichier XML du plan
+     */
     public static void messageErreurPlanXML(){
-        vueTextuelle.addZoneDialogue("Erreur dans le fichier xml du plan", true);
+        vueTextuelle.addZoneDialogue("Erreur dans le fichier xml du plan", 1);
     }
     
     public static void messageErreurDemandeLivraisonXML(){
-        vueTextuelle.addZoneDialogue("Erreur dans le fichier xml de la demande de livraison", true);
+        vueTextuelle.addZoneDialogue("Erreur dans le fichier xml de la demande de livraison", 1);
     }
     
     public static void messageErreurSuppressionEntrepot(){
-        vueTextuelle.addZoneDialogue("Vous ne pouvez pas supprimer l'entrepot.", true);
+        vueTextuelle.addZoneDialogue("Vous ne pouvez pas supprimer l'entrepot.", 1);
     }
     
     public static void messageErreurDeplacementEntrepot(){
-        vueTextuelle.addZoneDialogue("Vous ne pouvez pas deplacer l'entrepot.", true);
+       vueTextuelle.addZoneDialogue("Vous ne pouvez pas deplacer l'entrepot.", 1);
     }
     
     public static void messageAlerteNbLivreur(){
-        vueTextuelle.addZoneDialogue("Attention, le nombre de livreurs que vous avez entre est superieur au nombre de points de livraison, il y a donc des livreurs inutilises.", true);
-    }
+         vueTextuelle.addZoneDialogue("Attention, le nombre de livreurs que vous avez entre est superieur au nombre de points de livraison, il y a donc des livreurs inutilises.", 2);     }
     
     public static void messageAlerteNbLivreurNul(){
-        vueTextuelle.addZoneDialogue("Attention, vous n'avez pas de livreur pour cette demande de livraison", true);
-    }
+         vueTextuelle.addZoneDialogue("Attention, vous n'avez pas de livreur pour cette demande de livraison", 2);     }
 }
 

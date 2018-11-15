@@ -1,4 +1,4 @@
-package TestUnitaire;
+package TestsUnitaires;
 
 import java.io.File;
 import org.junit.BeforeClass;

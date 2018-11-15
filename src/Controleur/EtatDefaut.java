@@ -4,9 +4,20 @@ import Model.Metier.Livraison;
 
 import java.io.File;
 
+
+/**
+ * Classe EtatDefaut, qui definit les actions à realiser par defaut pour tous les etats qui en heritent
+ * @author H4104
+ * 
+ */
 public class EtatDefaut implements Etat {
 	String message;
 	
+	/**
+	 * Obtention du message de l'etat
+	 * @return le message de l'etat
+	 */
+
 	@Override
 	public String getMessage(){
 		return message;

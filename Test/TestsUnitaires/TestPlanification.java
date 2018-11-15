@@ -1,4 +1,4 @@
-package TestUnitaire;
+package TestsUnitaires;
 
 import static org.junit.Assert.*;
 

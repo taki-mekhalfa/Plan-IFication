@@ -25,7 +25,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
- * Classe de gestion pour l'affichage des informations sous forme écrite.
+ * Classe de gestion pour l'affichage des informations sous forme ï¿½crite.
  * @author H4104
  */
 public class VueTextuelle extends Vue {
@@ -50,8 +50,9 @@ public class VueTextuelle extends Vue {
 
     /**
      * Constructeur de la classe VueTextuelle.
-     * @param planification correspondant à la planification associée à cette instance de la vue textuelle
+     * @param planification correspondant ï¿½ la planification associï¿½e ï¿½ cette instance de la vue textuelle
      */
+   
     public VueTextuelle(Planification planification) {
         super(planification);
         livraisonsGroup = new Group();
@@ -76,7 +77,7 @@ public class VueTextuelle extends Vue {
 
 
     /**
-     * Méthode de remplissage du tableau en cas d'affichage du plan.
+     * Mï¿½thode de remplissage du tableau en cas d'affichage du plan.
      */
     @Override
     void dessinerPlan() {
@@ -95,7 +96,7 @@ public class VueTextuelle extends Vue {
     }
 
     /**
-     * Méthode de remplissage du tableau en cas d'affichage d'une demande de livraisons.
+     * Mï¿½thode de remplissage du tableau en cas d'affichage d'une demande de livraisons.
      */
     @Override
     void dessinerDemandeDeLivraisons() {
@@ -114,7 +115,7 @@ public class VueTextuelle extends Vue {
             tableDemandeLivraison.setItems(dataLivraison);
             livraisonsGroup.getChildren().add(tableDemandeLivraison);
 
-            //Ecoute les clics de souris sur les lignes du tableau pour rï¿½cupï¿½rer l'ID de la livraison
+            //Ecoute les clics de souris sur les lignes du tableau pour recuperer l'ID de la livraison
             tableDemandeLivraison.setOnMouseClicked(event -> {
                 vueGraph.resetCouleurs();
                 try {
@@ -128,7 +129,7 @@ public class VueTextuelle extends Vue {
     }
 
     /**
-     * Méthode de remplissage du tableau en cas d'affichage des tournées.
+     * Mï¿½thode de remplissage du tableau en cas d'affichage des tournï¿½es.
      */
     @Override
     void dessinerTournees() {
@@ -175,7 +176,7 @@ public class VueTextuelle extends Vue {
             tableTournee.setItems(dataTournee);
             tourneesGroup.getChildren().add(tableTournee);
 
-            //Ecoute les clics de souris sur les lignes du tableau pour rÃ©cupÃ©rer l'ID de la livraison
+            //Ecoute les clics de souris sur les lignes du tableau pour recuperer l'ID de la livraison
             tableTournee.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -187,36 +188,46 @@ public class VueTextuelle extends Vue {
     }
 
     /**
-     * Méthode d'ajout d'une zone de dialogue.
-     * @param newText correspondant au text à ajouter
-     * @param error correspondant à la possibilité d'avoir une erreur
-     */
-    public void addZoneDialogue(String newText, boolean error) {
-        Text text = new Text(newText + '\n');
-        if (error) {
-            text.setFill(Color.RED);
-        }
-        zoneDialogue.getChildren().addAll(text);
+    * MÃ©thode d'affichage d'une message Ã  l'utilisateur
+    *@param newText correspond au message Ã  afficher
+    *@param color la couleur du message
+    */
+    public void addZoneDialogue(String newText, int color){
+    	Text text = new Text(newText+'\n');
+    	switch (color){
+    		case 0:
+    			text.setFill(Color.BLACK);
+    		break;
+    		case 1:
+    			text.setFill(Color.RED);
+        	break;
+    		case 2:
+    			text.setFill(Color.ORANGE);
+        	break;
+        	default:
+        		text.setFill(Color.BLACK);
+        	break;
+    	}
+    	zoneDialogue.getChildren().addAll(text);
     }
-
-    /**
-     * Méthode de reinitialisation de la zone de dialogue.
+   /**
+     * Mï¿½thode de reinitialisation de la zone de dialogue.
      */
     public void clearZoneDialogue() {
         zoneDialogue.getChildren().clear();
     }
 
     /**
-     * Méthode d'affectation de la vue graphique.
-     * @param vueGraph correspondant à la vue graphique choisie
+     * Mï¿½thode d'affectation de la vue graphique.
+     * @param vueGraph correspondant ï¿½ la vue graphique choisie
      */
     public void setVueGraph(VueGraphique vueGraph) {
         this.vueGraph = vueGraph;
     }
 
     /**
-     * Méthode de selection d'une rue pour affichage de son nom.
-     * @param nomDeLaRue correspondant au nom de la rue selectionnée par l'utilisateur
+     * Mï¿½thode de selection d'une rue pour affichage de son nom.
+     * @param nomDeLaRue correspondant au nom de la rue selectionnï¿½e par l'utilisateur
      */
     public void rueSelectionnee(String nomDeLaRue) {
         labelNomDeLaRue.setText(nomDeLaRue);
