@@ -1,14 +1,20 @@
 package Controleur;
 
 import Model.Metier.Livraison;
-import Model.Metier.Tournee;
 
+/**
+ * Classe EtatSuppressionLivraison
+ * @author H4104
+ * @see Controleur.EtatDefaut
+ * @see Controleur.Controleur
+ * @see Model.Metier.Livraison
+ */
 public class EtatSupressionLivraison extends EtatDefaut {
-    private Livraison livraisonPrec;
     private Livraison livraison;
-    private Livraison livraisonSuiv;
-    private Tournee tournee;
 
+    /**
+     * Initialisation de l'etat
+     */
     @Override
     public void init() {
     	message = "Selectionnez une intersection a supprimer. " + 
@@ -17,6 +23,10 @@ public class EtatSupressionLivraison extends EtatDefaut {
         Controleur.interfaceGUI.activerBoutonAnnuler();
     }
 
+    /**
+     * Actions liees a la selection d'une livraison
+     * @return true si la livraison est effectivement selectionnee, false sinon.
+     */
     @Override
     public boolean livraisonSelectionne(Livraison livraison) {
         if (this.livraison == null) {
@@ -32,12 +42,18 @@ public class EtatSupressionLivraison extends EtatDefaut {
         } else return false;
     }
 
+    /**
+     * Actions liees a la deselection d'une livraison
+     */
     @Override
     public void livraisonDeselectionnee(Livraison livraison) {
         Controleur.interfaceGUI.desactiverBoutonValider();
         this.livraison = null;
     }
 
+    /**
+     * Declenchement des actions liees au clic sur le bouton Valider
+     */
     @Override
     public void boutonValider(ListeCommandes listeCommandes) {
         CommandeSuppression com = new CommandeSuppression(Controleur.planification.getTournees(), livraison);
@@ -48,6 +64,9 @@ public class EtatSupressionLivraison extends EtatDefaut {
         Controleur.setEtatCourant(Controleur.etatTourneesCalculees);
     }
 
+    /**
+     * Declenchement des actions liees au clic sur le bouton Annuler
+     */
     @Override
     public void boutonAnnuler() {
         Controleur.vueGraphique.annulerModification();

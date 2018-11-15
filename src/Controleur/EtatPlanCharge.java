@@ -2,13 +2,22 @@ package Controleur;
 
 import java.io.File;
 
+/**
+ * Classe EtatPlanCharge
+ * @author H4104
+ * @see Controleur.EtatDefaut
+ * @see Controleur.Controleur
+ */
 public class EtatPlanCharge extends EtatDefaut{
 
+	/**
+     * Initialisation de l'etat
+     */
     @Override
     public void init(){
     	message = "Cliquez sur le bouton Charger livraisons pour charger le fichier xml" + 
     			'\n' + "de demande de livraison." + 
-    			'\n' + "Vous pouvez également définir le nombre de livreurs.";
+    			'\n' + "Vous pouvez egalement definir le nombre de livreurs.";
         Controleur.interfaceGUI.activerBoutonChargerPlan();
         Controleur.interfaceGUI.activerBoutonChargerDemandeLivraison();
         Controleur.interfaceGUI.desactiverBoutonCalculerTournees();
@@ -17,6 +26,10 @@ public class EtatPlanCharge extends EtatDefaut{
         Controleur.interfaceGUI.desactiverBoutonDeplacerLivraison();
     }
 
+    /**
+     * Declenchement des actions liees au clic sur le bouton Charger un plan
+     * @param fichierXML le fichier xml contenant le plan
+     */
 	@Override
 	public void boutonChargerPlan(File fichier){
 		if (Controleur.planification.chargerPlan(fichier)){
@@ -30,6 +43,10 @@ public class EtatPlanCharge extends EtatDefaut{
 		}
 	}
 
+	/**
+     * Declenchement des actions liees au clic sur le bouton Charger livraisons
+     * @param fichierXML le fichier xml contenant la demande de livraison
+     */
 	@Override
 	public void boutonChargerDemandeLivraison(File fichierXML){
 		if (Controleur.planification.chargerDemandesDeLivraisons(fichierXML)){
