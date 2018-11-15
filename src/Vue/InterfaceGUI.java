@@ -59,7 +59,8 @@ public class InterfaceGUI extends Application {
         borderPane.setRight(vueTextuelle);
         borderPane.setCenterShape(true);
 
-        Scene scene = new Scene(borderPane, 1300, 700);
+        Scene scene = new Scene(borderPane, 1300, 1100);
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -78,6 +79,7 @@ public class InterfaceGUI extends Application {
         saisieDureeLivraison = new TextField();
         saisieLivreurs = new TextField();
         saisieDureeLivraison.setPromptText("Duree livraison: 0(min)");
+
         saisieLivreurs.setPromptText("Nombre de Livreurs: 3");
 
 
@@ -112,7 +114,6 @@ public class InterfaceGUI extends Application {
         boutonValider.setOnAction(event -> {
             int duree = 0;
             if (!"".equals(saisieDureeLivraison.getText())) duree = Integer.parseInt(saisieDureeLivraison.getText());
-            duree = duree * 60;
             Controleur.saisieDuree(duree);
             Controleur.boutonValider();
         });

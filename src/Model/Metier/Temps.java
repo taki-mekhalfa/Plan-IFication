@@ -60,6 +60,7 @@ public class Temps implements Comparable{
             res+=":"+minutes;
         }
         return res;
+
     }
 
     public SimpleStringProperty PropertytoString() {

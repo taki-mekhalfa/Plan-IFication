@@ -2,12 +2,22 @@ package Controleur;
 
 import Model.Metier.Livraison;
 
+/**
+ * Classe EtatDeplacementLivraison
+ * @author H4104
+ * @see Controleur.EtatDefaut
+ * @see Model.Metier.Livraison
+ * @see Controleur.Controleur
+ */
 public class EtatDeplacementLivraison extends EtatDefaut {
 
     Livraison livraisonADeplacer;
     Livraison livraison1;
     Livraison livraison2;
 
+    /**
+     * Initialisation de l'etat
+     */
     @Override
     public void init(){
     	message = "Selectionnez une intersection a deplacer ainsi que les points de livraison" + 
@@ -19,6 +29,10 @@ public class EtatDeplacementLivraison extends EtatDefaut {
         Controleur.interfaceGUI.activerBoutonAnnuler();
     }
 
+    /**
+     * Actions liees a la selection d'une livraison
+     * @return true si la livraison est effectivement selectionnee, false sinon.
+     */
     @Override
     public boolean livraisonSelectionne(Livraison livraison) {
         if (livraisonADeplacer == null) {
@@ -45,6 +59,9 @@ public class EtatDeplacementLivraison extends EtatDefaut {
         return true;
     }
 
+    /**
+     * Actions liees a la deselection d'une livraison
+     */
     @Override
     public void livraisonDeselectionnee(Livraison livraison){
         if (livraison.equals(livraisonADeplacer)){
@@ -63,6 +80,9 @@ public class EtatDeplacementLivraison extends EtatDefaut {
         Controleur.interfaceGUI.desactiverBoutonValider();
     }
 
+    /**
+     * Declenchement des actions liees au clic sur le bouton Valider
+     */
     @Override
     public void boutonValider(ListeCommandes listeCommandes) {
     	CommandeDeplacement com = new CommandeDeplacement(Controleur.planification.getTournees(), livraisonADeplacer, livraison1);
@@ -73,6 +93,9 @@ public class EtatDeplacementLivraison extends EtatDefaut {
         Controleur.setEtatCourant(Controleur.etatTourneesCalculees);
     }
 
+    /**
+     * Declenchement des actions liees au clic sur le bouton Annuler
+     */
     @Override
     public void boutonAnnuler() {
         Controleur.vueGraphique.annulerModification();
