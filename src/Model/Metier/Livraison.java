@@ -6,13 +6,13 @@ import javafx.beans.property.SimpleStringProperty;
 public class Livraison {
 
     private SimpleStringProperty idNoeud;
-    private final SimpleIntegerProperty duree;
+    private SimpleStringProperty duree;
     private SimpleStringProperty heureDeLivraison;
 
 
     public Livraison(String idNoeud, int duree) {
         this.idNoeud = new SimpleStringProperty(idNoeud);
-        this.duree = new SimpleIntegerProperty(duree);
+        this.duree = new SimpleStringProperty(Integer.toString(duree));
         heureDeLivraison = null;
     }
 
@@ -27,17 +27,22 @@ public class Livraison {
     }
 
     public int getDuree() {
-        return duree.get();
+        return Integer.parseInt(duree.get());
     }
 
     public SimpleStringProperty getNoeudProperty() {
         return idNoeud;
     }
 
-    public SimpleIntegerProperty getDureeProperty() {
-        return duree;
+    public SimpleStringProperty getDureeProperty() {
+        if (duree.get().equals("")) return duree;
+        return new SimpleStringProperty(Integer.toString(Integer.parseInt(duree.get()) / 60));
+
     }
 
+    public void setDureeProperty(SimpleStringProperty d){
+        duree = d;
+    }
     public SimpleStringProperty getHeureDeLivraisonProperty() {
         return heureDeLivraison;
     }

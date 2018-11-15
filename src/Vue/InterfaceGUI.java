@@ -60,6 +60,7 @@ public class InterfaceGUI extends Application {
         borderPane.setCenterShape(true);
 
         Scene scene = new Scene(borderPane, 1300, 1100);
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -77,7 +78,8 @@ public class InterfaceGUI extends Application {
         boutonRedo = new Button("Redo");
         saisieDureeLivraison = new TextField();
         saisieLivreurs = new TextField();
-        saisieDureeLivraison.setPromptText("Duree livraison: 0");
+        saisieDureeLivraison.setPromptText("Duree livraison: 0(min)");
+
         saisieLivreurs.setPromptText("Nombre de Livreurs: 3");
 
 
