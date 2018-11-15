@@ -5,7 +5,7 @@ public class EtatInit extends EtatDefaut{
 	
 	@Override
     public void init(){
-		message = "Cliquez sur le bouton Charger un plan pour charger le fichier xml de plan." + '\n' + "Vous pouvez Ã©galement dÃ©finir le nombre de livreurs.";
+		message = "Cliquez sur le bouton Charger un plan pour charger le fichier xml de plan." + '\n' + "Vous pouvez également définir le nombre de livreurs.";
         Controleur.interfaceGUI.activerBoutonChargerPlan();
         Controleur.interfaceGUI.desactiverBoutonChargerDemandeLivraison();
         Controleur.interfaceGUI.desactiverBoutonCalculerTournees();

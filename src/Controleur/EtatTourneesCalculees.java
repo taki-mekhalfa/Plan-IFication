@@ -115,17 +115,8 @@ public class EtatTourneesCalculees extends EtatDefaut {
 
     @Override
     public void boutonCalculerTournees(int nombreLivreurs){
-        int nbLivraisons = Controleur.planification.getDemandeLivraisons().getPointsDeLivraisons().size();
-        if (nombreLivreurs > 0){
-            Controleur.planification.calculerTournees(nombreLivreurs);
-            Controleur.setEtatCourant(Controleur.etatTourneesCalculees);
-            Controleur.listeCommandes.init();
-            if (nombreLivreurs > nbLivraisons){
-                Controleur.messageAlerteNbLivreur();
-            }
-        }
-        else{
-            Controleur.messageAlerteNbLivreurNul();
-        }
+        Controleur.planification.calculerTournees(nombreLivreurs);
+        Controleur.listeCommandes.init();
+        Controleur.setEtatCourant(Controleur.etatTourneesCalculees);
     }
 }

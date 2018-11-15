@@ -7,13 +7,11 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
-import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -31,9 +29,6 @@ public class VueGraphique extends Vue {
     private List<CercleLivraison> cerclesLivraisonsSelectionnes = new LinkedList<>();
     private CercleIntersection cercleIntersection;
     private VueTextuelle vueTextuelle;
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    private double ratio = 0.8;
-
 
     public VueGraphique(Planification planification) {
         super(planification);
@@ -58,8 +53,8 @@ public class VueGraphique extends Vue {
         rootGroup.scaleXProperty().bind(slider.valueProperty());
         rootGroup.scaleYProperty().bind(slider.valueProperty());
         scrollPane.setContent(new Group(rootGroup));
-        scrollPane.setPrefViewportHeight(screenSize.getHeight()*ratio);
-        scrollPane.setPrefViewportWidth(screenSize.getHeight()*ratio);
+        scrollPane.setPrefViewportHeight(600);
+        scrollPane.setPrefViewportWidth(600);
         scrollPane.setFocusTraversable(false);
         borderPane.setCenter(scrollPane);
         borderPane.setBottom(slider);
@@ -71,7 +66,8 @@ public class VueGraphique extends Vue {
 
         //-------------------------------------------------------------------------
         livraisonsGroup.setOnMouseClicked(event -> {
-            CercleLivraison cercleLivraison = (CercleLivraison)((Node) event.getTarget()).getParent();            if (cercleLivraison.isSelectionne()) {
+            CercleLivraison cercleLivraison = (CercleLivraison) event.getTarget();
+            if (cercleLivraison.isSelectionne()) {
                 cerclesLivraisonsSelectionnes.remove(cercleLivraison);
                 Controleur.livraisonDeselectionnee(cercleLivraison.getLivraison());
                 cercleLivraison.setSelectionne(false);
@@ -163,16 +159,8 @@ public class VueGraphique extends Vue {
             for (Tournee tournee : tournees) {
                 Color color = getColor(indexTournee);
                 List<Chemin> chemins = tournee.getChemins();
-                int nb = 1;
                 for (Chemin chemin : chemins) {
                     Noeud premierNoeud = NoeudFactory.getNoeudParId(chemin.getDepart());
-                    for(Node node : livraisonsGroup.getChildren()){
-                        CercleLivraison cercleLivraison= (CercleLivraison) node;
-                        if(!cercleLivraison.getLivraison().getNoeud().equals(demandeLivraisons.getEntrepot()) && cercleLivraison.getLivraison().getNoeud().equals(premierNoeud.getId())){
-                            cercleLivraison.setOrdre(nb);
-                            nb++;
-                        }
-                    }
                     LineModifiee line = new LineModifiee();
                     line.setStartX(trX(premierNoeud.getLongitude()));
                     line.setStartY(trY(premierNoeud.getLatitude()));
@@ -224,12 +212,12 @@ public class VueGraphique extends Vue {
     }
 
     private double trX(double longitude) {
-        double echelleHor = screenSize.getHeight()*ratio / (maxLongitude - minLongitude);
+        double echelleHor = 600 / (maxLongitude - minLongitude);
         return echelleHor * (longitude - minLongitude);
     }
 
     private double trY(double latitude) {
-        double echelleVer = screenSize.getHeight()*ratio / (maxLatitude - minLatitude);
+        double echelleVer = 600 / (maxLatitude - minLatitude);
         return echelleVer * (maxLatitude - latitude);
     }
 

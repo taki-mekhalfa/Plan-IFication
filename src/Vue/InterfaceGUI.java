@@ -77,7 +77,7 @@ public class InterfaceGUI extends Application {
         boutonRedo = new Button("Redo");
         saisieDureeLivraison = new TextField();
         saisieLivreurs = new TextField();
-        saisieDureeLivraison.setPromptText("Duree livraison: 0(min)");
+        saisieDureeLivraison.setPromptText("Duree livraison: 0");
         saisieLivreurs.setPromptText("Nombre de Livreurs: 3");
 
 
@@ -112,7 +112,6 @@ public class InterfaceGUI extends Application {
         boutonValider.setOnAction(event -> {
             int duree = 0;
             if (!"".equals(saisieDureeLivraison.getText())) duree = Integer.parseInt(saisieDureeLivraison.getText());
-            duree = duree * 60;
             Controleur.saisieDuree(duree);
             Controleur.boutonValider();
         });
