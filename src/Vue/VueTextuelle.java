@@ -170,14 +170,24 @@ public class VueTextuelle extends Vue {
         }
     }
 
-    public void addZoneDialogue(String newText, boolean error) {
-        Text text = new Text(newText + '\n');
-        if (error) {
-            text.setFill(Color.RED);
-        }
-        zoneDialogue.getChildren().addAll(text);
+    public void addZoneDialogue(String newText, int color){
+    	Text text = new Text(newText+'\n');
+    	switch (color){
+    		case 0:
+    			text.setFill(Color.BLACK);
+    		break;
+    		case 1:
+    			text.setFill(Color.RED);
+        	break;
+    		case 2:
+    			text.setFill(Color.ORANGE);
+        	break;
+        	default:
+        		text.setFill(Color.BLACK);
+        	break;
+    	}
+    	zoneDialogue.getChildren().addAll(text);
     }
-
     public void clearZoneDialogue() {
         zoneDialogue.getChildren().clear();
     }
