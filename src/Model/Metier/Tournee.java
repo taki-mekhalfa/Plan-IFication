@@ -14,11 +14,22 @@ public class Tournee {
     private Map<Livraison, Temps> heuresDeLivraison;
 
 
+    /** constructeur
+     * @param chemins liste de chemins
+     * @param heuresDeLivraison map de horaire de livraison
+     */
     public Tournee(List<Chemin> chemins, Map<Livraison, Temps> heuresDeLivraison) {
         this.chemins = chemins;
         this.heuresDeLivraison = heuresDeLivraison;
     }
 
+    /**
+     * ajouter une livraison dans un plan
+     * @param livraison livraison a ajouter
+     * @param livraison1 premiere livraison selectionnee
+     * @param livraison2 seconde livraison selectionnee
+     * @param plan plan actuel
+     */
     public void ajouterLivraison(Livraison livraison, Livraison livraison1, Livraison livraison2, Plan plan) {
         Livraison livraisonPrecedente,livraisonSuivante;
         int idx1 = chercherChemin(livraison1.getNoeud());
@@ -70,22 +81,43 @@ public class Tournee {
         return chemins.indexOf(dummyChemin);
     }
 
+    /**
+     * recuperer la liste de chemins
+     * @return liste de chemins
+     */
     public List<Chemin> getChemins() {
         return chemins;
     }
 
+    /**
+     * setter liste de chemins
+     * @param c liste de chemins
+     */
     public void setChemins(List<Chemin> c) {
         chemins = c;
     }
 
+    /**
+     * recuperer les horaires de livraisons
+     * @return horaire de livraisons
+     */
     public Map<Livraison, Temps> getHeuresDeLivraison() {
         return heuresDeLivraison;
     }
 
+    /**
+     * setter horaires de livraisons
+     * @param h horaires de livraisons
+     */
     public void setHeuresDeLivraison(Map<Livraison, Temps> h) {
     	heuresDeLivraison = h;
     }
 
+    /**
+     * supprimer une livraison dans un plan
+     * @param livraison livraison a supprimer
+     * @param plan plan actuel
+     */
     public void supprimerLivraison(Livraison livraison, Plan plan) {
         int idxLivraison = chercherChemin(livraison.getNoeud());
         Livraison livraisonPrecedente = chercherLivraison(chemins.get(idxLivraison - 1));
@@ -108,6 +140,10 @@ public class Tournee {
         }
     }
 
+    /**return true si une tournee contient une livraison
+     * @param livraison une livraison
+     * @return true si une tournee contient une livraison
+     */
     public boolean contientLivraison(Livraison livraison){
         return heuresDeLivraison.containsKey(livraison);
     }
@@ -120,6 +156,11 @@ public class Tournee {
                 '}';
     }
 
+    /**return true si deux livraison sont consecutives
+     * @param livraison1 livraison1
+     * @param livraison2 livraison2
+     * @return true si deux livraison sont consecutives
+     */
     public boolean consecutives(Livraison livraison1, Livraison livraison2){
         int idx1 = chercherChemin(livraison1.getNoeud());
         int idx2 = chercherChemin(livraison2.getNoeud());
