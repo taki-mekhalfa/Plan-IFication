@@ -7,12 +7,27 @@ import Model.Metier.Tournee;
 
 import java.util.*;
 
+/**
+ * Classe de fonctionnement du TSP.
+ * @author H4104
+ * @see Model.Calcules.TSP
+ */
 public abstract class TemplateTSP implements TSP {
     private List<Livraison> meilleureSolution;
     private double coutMeilleureSolution;
     private List<Livraison> listeLivraisons;
     private int tempsLimite;
 
+    /**
+     * Méthode d'obtention des tournées.
+     * @param listeLivraisons correspondant à la liste de livraisons à effectuer
+     * @param plusCourtsChemins correspondant à une map de livraisons associées à des map de livraisons et de chemins, représenant les trajets à effectuer
+     * @param tempsLimite correspondant à la durée maximale pour le fonctionnement de l'algorithme sous forme entière
+     * @param topDepart correspondant à l'heure de départ de la tournée de type Temps
+     * @return Tournee correspondant à la tournée ainsi calculée
+     * @see Model.Metier.Livraison
+     * @see Model.Metier.Temps
+     */
     @Override
     public Tournee getTournee(List<Livraison> listeLivraisons, Map<Livraison, Map<Livraison, Chemin>> plusCourtsChemins, int tempsLimite, Temps topDepart) {
 
@@ -50,6 +65,10 @@ public abstract class TemplateTSP implements TSP {
         return new Tournee(listeChemins, heuresDeLivraison);
     }
 
+    /**
+     * Méthode d'obtention du cout de la meilleur solution.
+     * @return coutMeilleurSolution correspondant à ce résultat sous forme d'un double
+     */
     private double getCoutMeilleureSolution() {
         return coutMeilleureSolution;
     }
@@ -59,7 +78,17 @@ public abstract class TemplateTSP implements TSP {
 
     protected abstract Iterator<Livraison> iterator(Livraison livraisonCourante, List<Livraison> nonVus, Map<Livraison, Map<Livraison, Chemin>> plusCourtsChemins);
 
-
+    /**
+     * Méthode branchAndBound pour parcourir le graphique et determiner le trajets à effectuer.
+     * @param livraisonCourante correspondat à la livraison courante de l'algorithme
+     * @param nonVus correspondant àla liste des livraisons qu'il reste à effectuer
+     * @param vus correspondant à la liste des livraisons déjà effectuée
+     * @param coutVus correspondant au coût total courant de toutes les livraisons effectuées
+     * @param cout correspondant à la map de livraisons associées aux map de livraisons et chemins représentant les trajets
+     * @param tpsDebut correspondant à l'heure de départ de l'algorithme
+     * @param tpsLimite correspondant au temps maximum autorisé pour le fonctionnement de l'algorithme sous forme entière
+     * @see Model.Metier.Livraison
+     */
     private void branchAndBound(Livraison livraisonCourante, List<Livraison> nonVus, List<Livraison> vus, double coutVus, Map<Livraison, Map<Livraison, Chemin>> cout, long tpsDebut, int tpsLimite) {
         if (nonVus.size() == 0) { // tous les sommets ont ete visites
             coutVus += cout.get(livraisonCourante).get(listeLivraisons.get(0)).getCout() / 4.17;

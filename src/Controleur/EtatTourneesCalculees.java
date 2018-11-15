@@ -2,21 +2,13 @@ package Controleur;
 
 import java.io.File;
 
-/**
- * Classe EtatTourneesCalculees
- * @author H4104
- * @see Controleur.EtatDefaut
- * @see Controleur.Controleur
- */
 public class EtatTourneesCalculees extends EtatDefaut {
 
-	/**
-     * Initialisation de l'etat
-     */
     @Override
     public void init(){
     	message = "Tournees calculees." + 
-    			'\n' + "Vous pouvez modifier le resultat en cliquant sur les boutons de modification (Ajouter, supprimer et deplacer)";
+    			'\n' + "Vous pouvez modifier le resultat en cliquant sur les boutons" + 
+    			'\n' + "de modification (Ajouter, supprimer et deplacer)";
         Controleur.interfaceGUI.activerBoutonChargerPlan();
         Controleur.interfaceGUI.activerBoutonChargerDemandeLivraison();
         Controleur.interfaceGUI.activerBoutonCalculerTournees();
@@ -29,10 +21,6 @@ public class EtatTourneesCalculees extends EtatDefaut {
         Controleur.interfaceGUI.desactiveSaisieDureeLivraison();
     }
 
-    /**
-     * Declenchement des actions liees au clic sur le bouton Charger un plan
-     * @param fichierXML le fichier xml contenant le plan
-     */
     @Override
     public void boutonChargerPlan(File fichier) {
         if (Controleur.planification.chargerPlan(fichier)){
@@ -56,10 +44,6 @@ public class EtatTourneesCalculees extends EtatDefaut {
         
     }
 
-    /**
-     * Declenchement des actions liees au clic sur le bouton Charger livraisons
-     * @param fichierXML le fichier xml contenant la demande de livraison
-     */
     @Override
     public void boutonChargerDemandeLivraison(File fichierXML) {
         if (Controleur.planification.chargerDemandesDeLivraisons(fichierXML)){
@@ -78,9 +62,6 @@ public class EtatTourneesCalculees extends EtatDefaut {
         }
     }
 
-    /**
-     * Declenchement des actions liees au clic sur le bouton Supprimer livraison
-     */
     @Override
     public void boutonSuprimmerLivraison() {
         Controleur.interfaceGUI.desactiverBoutonCalculerTournees();
@@ -93,9 +74,6 @@ public class EtatTourneesCalculees extends EtatDefaut {
         Controleur.setEtatCourant(Controleur.etatSupressionLivraison);
     }
 
-    /**
-     * Declenchement des actions liees au clic sur le bouton Ajouter livraison
-     */
     @Override
     public void boutonAjouterLivraison() {
         Controleur.interfaceGUI.desactiverBoutonCalculerTournees();
@@ -108,9 +86,6 @@ public class EtatTourneesCalculees extends EtatDefaut {
         Controleur.setEtatCourant(Controleur.etatAjoutLivraison);
     }
 
-    /**
-     * Declenchement des actions liees au clic sur le bouton Deplacer livraison
-     */
     @Override
     public void boutonDeplacerLivraison(){
         Controleur.interfaceGUI.desactiverBoutonCalculerTournees();
@@ -123,34 +98,21 @@ public class EtatTourneesCalculees extends EtatDefaut {
         Controleur.setEtatCourant(Controleur.etatDeplacementLivraison);
     }
     
-    /**
-     * Declenchement des actions liees au clic sur le bouton undo
-     */
     @Override
     public void undo(ListeCommandes l){
     	l.undo();
     }
     
-    /**
-     * Declenchement des actions liees au clic sur le bouton redo
-     */
     @Override
     public void redo(ListeCommandes l){
     	l.redo();
     }
 
-    /**
-     * Declenchement des actions liees a la saisie du nombre de livreurs
-     */
     @Override
     public void saisieNombreLivreurs(){
         Controleur.interfaceGUI.activerBoutonCalculerTournees();
     }
 
-    /**
-     * Declenchement des actions liees au clic sur le bouton calculer tournees
-     * @param nombreLivreurs le nombre de livreurs pour le calcul
-     */
     @Override
     public void boutonCalculerTournees(int nombreLivreurs){
         int nbLivraisons = Controleur.planification.getDemandeLivraisons().getPointsDeLivraisons().size();

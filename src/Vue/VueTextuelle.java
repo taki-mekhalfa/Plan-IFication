@@ -24,6 +24,10 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+/**
+ * Classe de gestion pour l'affichage des informations sous forme �crite.
+ * @author H4104
+ */
 public class VueTextuelle extends Vue {
 
     private VueGraphique vueGraph;
@@ -42,10 +46,14 @@ public class VueTextuelle extends Vue {
     private TableColumn<Livraison, String> horraireCol = new TableColumn<>("Heure de Livraison");
     private TableColumn<Livraison, String> dureeLivraisonCol = new TableColumn<>("Duree");
 
-    private TextFlow zoneDialogue = new TextFlow(new Text("Cliquez sur le bouton Charger un plan pour charger le fichier xml de plan." + '\n' + "Vous pouvez egalement définir le nombre de livreurs."));
+    private TextFlow zoneDialogue = new TextFlow(new Text("Cliquez sur le bouton Charger un plan pour charger le fichier xml de plan." + '\n' + "Vous pouvez également définir le nombre de livreurs."));
 
+    /**
+     * Constructeur de la classe VueTextuelle.
+     * @param planification correspondant � la planification associ�e � cette instance de la vue textuelle
+     */
+   
     public VueTextuelle(Planification planification) {
-
         super(planification);
         livraisonsGroup = new Group();
         tourneesGroup = new Group();
@@ -68,6 +76,9 @@ public class VueTextuelle extends Vue {
     }
 
 
+    /**
+     * M�thode de remplissage du tableau en cas d'affichage du plan.
+     */
     @Override
     void dessinerPlan() {
 
@@ -84,6 +95,9 @@ public class VueTextuelle extends Vue {
         livraisonsGroup.getChildren().add(tableDemandeLivraison);
     }
 
+    /**
+     * M�thode de remplissage du tableau en cas d'affichage d'une demande de livraisons.
+     */
     @Override
     void dessinerDemandeDeLivraisons() {
         livraisonsGroup.getChildren().clear();
@@ -114,6 +128,9 @@ public class VueTextuelle extends Vue {
         }
     }
 
+    /**
+     * M�thode de remplissage du tableau en cas d'affichage des tourn�es.
+     */
     @Override
     void dessinerTournees() {
         livraisonsGroup.getChildren().clear();
@@ -170,6 +187,11 @@ public class VueTextuelle extends Vue {
         }
     }
 
+    /**
+    * Méthode d'affichage d'une message à l'utilisateur
+    *@param newText correspond au message à afficher
+    *@param color la couleur du message
+    */
     public void addZoneDialogue(String newText, int color){
     	Text text = new Text(newText+'\n');
     	switch (color){
@@ -188,14 +210,25 @@ public class VueTextuelle extends Vue {
     	}
     	zoneDialogue.getChildren().addAll(text);
     }
+   /**
+     * M�thode de reinitialisation de la zone de dialogue.
+     */
     public void clearZoneDialogue() {
         zoneDialogue.getChildren().clear();
     }
 
+    /**
+     * M�thode d'affectation de la vue graphique.
+     * @param vueGraph correspondant � la vue graphique choisie
+     */
     public void setVueGraph(VueGraphique vueGraph) {
         this.vueGraph = vueGraph;
     }
 
+    /**
+     * M�thode de selection d'une rue pour affichage de son nom.
+     * @param nomDeLaRue correspondant au nom de la rue selectionn�e par l'utilisateur
+     */
     public void rueSelectionnee(String nomDeLaRue) {
         labelNomDeLaRue.setText(nomDeLaRue);
     }

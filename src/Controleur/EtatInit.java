@@ -1,20 +1,11 @@
 package Controleur;
 import java.io.File;
 
-/**
- * Classe EtatInit
- * @author H4104
- * @see Controleur.EtatDefaut
- * @see Controleur.Controleur
- */
 public class EtatInit extends EtatDefaut{
 	
-	/**
-     * Initialisation de l'etat
-     */
 	@Override
     public void init(){
-		message = "Cliquez sur le bouton Charger un plan pour charger le fichier xml de plan." + '\n' + "Vous pouvez egalement definir le nombre de livreurs.";
+		message = "Cliquez sur le bouton Charger un plan pour charger le fichier xml de plan." + '\n' + "Vous pouvez également définir le nombre de livreurs.";
         Controleur.interfaceGUI.activerBoutonChargerPlan();
         Controleur.interfaceGUI.desactiverBoutonChargerDemandeLivraison();
         Controleur.interfaceGUI.desactiverBoutonCalculerTournees();
@@ -26,10 +17,6 @@ public class EtatInit extends EtatDefaut{
         Controleur.planification.MAJAffichage();
     }
 	
-	/**
-     * Declenchement des actions liees au clic sur le bouton Charger un plan selon l'etat courant
-     * @param fichierXML le fichier xml contenant le plan
-     */
     @Override
 	public void boutonChargerPlan(File fichier){
 		if (Controleur.planification.chargerPlan(fichier)){

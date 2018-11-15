@@ -14,8 +14,13 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+/**
+ * Classe de gestion pour la communication au sein de l'application. 
+ * @author H4104
+ * @see Controleur.Controleur
+ * @see Model.Planification 
+ */
 public class InterfaceGUI extends Application {
-
 
     private Button boutonChargerPlan;
     private Button boutonChargerDemandeLivraison;
@@ -32,11 +37,20 @@ public class InterfaceGUI extends Application {
     private TextField saisieDureeLivraison;
     private Stage primaryStage;
     
-
+    /**
+     * M�thode Main pour le fonctionnement de l'appliation.
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * M�thode de lancement de l'affichage.
+     * @param primaryStage correspondant � l'�tat de d�part
+     * @see Vue.VueGraphique
+     * @see Vue.VueTextuelle
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -52,18 +66,21 @@ public class InterfaceGUI extends Application {
         BorderPane borderPane = new BorderPane();
         createMenuBar();
         
-        
-
         borderPane.setTop(menuBar);
         borderPane.setCenter(vueGraphique);
         borderPane.setRight(vueTextuelle);
         borderPane.setCenterShape(true);
 
+
         Scene scene = new Scene(borderPane, 1300, 1100);
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
+    /**
+     * M�thode de cr�ation de la bar de menu.
+     */
     private void createMenuBar() {
         boutonChargerPlan = new Button("Charger un plan");
         boutonChargerDemandeLivraison = new Button("Charger livraisons");
@@ -79,7 +96,6 @@ public class InterfaceGUI extends Application {
         saisieLivreurs = new TextField();
         saisieDureeLivraison.setPromptText("Duree livraison: 0(min)");
         saisieLivreurs.setPromptText("Nombre de Livreurs: 3");
-
 
         menuBar = new ToolBar(boutonChargerPlan, boutonChargerDemandeLivraison, boutonCalculerTournees,
                 saisieLivreurs, boutonAjouterLivraison, saisieDureeLivraison,
@@ -149,103 +165,179 @@ public class InterfaceGUI extends Application {
 
     }
 
+    /**
+     * M�thode de choix de fichier par l'utilisateur.
+     * @return File correspondant au fichier choisit
+     */
     private File choisirFichier() {
         FileChooser fileChooser = new FileChooser();
         return fileChooser.showOpenDialog(primaryStage);
     }
 
+    /**
+     * M�thode d'activation du bouton de chargement d'un plan.
+     */
     public void activerBoutonChargerPlan() {
         boutonChargerPlan.setDisable(false);
     }
 
+    /**
+     * M�thode d'activation du bouton de chargement d'une demande de livraisons.
+     */
     public void activerBoutonChargerDemandeLivraison() {
         boutonChargerDemandeLivraison.setDisable(false);
     }
 
+    /**
+     * M�thode d'activation du bouton de calcul des tourn�es.
+     */
     public void activerBoutonCalculerTournees() {
         boutonCalculerTournees.setDisable(false);
     }
 
+    /**
+     * M�thode d'activation du bouton de suppression d'une livraison.
+     */
     public void activerBoutonSuprimmerLivraison() {
         boutonSuprimmerLivraison.setDisable(false);
     }
 
+    /**
+     * M�thode d'activation du bouton d'ajout de livraison.
+     */
     public void activerBoutonAjouterLivraison() {
         boutonAjouterLivraison.setDisable(false);
     }
 
+    /**
+     * M�thode d'activation du bouton de retour en arri�re.
+     */
     public void activerBoutonAnnuler() {
         boutonAnnuler.setDisable(false);
     }
 
+    /**
+     * M�thode d'activation du bouton de validation.
+     */
     public void activerBoutonValider() {
         boutonValider.setDisable(false);
     }
 
+    /**
+     * M�thode d'activation du bouton d'annulation de la derni�re action.
+     */
     public void activerBoutonUndo() {
         boutonUndo.setDisable(false);
     }
 
+    /**
+     * M�thode d'activation du bouton de restauration de la derni�re action annul�e.
+     */
     public void activerBoutonRedo() {
         boutonRedo.setDisable(false);
     }
 
+    /**
+     * M�thode d'activation du bouton de choix du nombre de livreurs.
+     */
     public void activerSaisieLivreurs() {
         saisieLivreurs.setDisable(false);
     }
 
+    /**
+     * M�thode d'activation du bouton de saisie de la dur�e de livraison.
+     */
     public void activeSaisieDureeLivraison() {
         saisieDureeLivraison.setDisable(false);
     }
 
+    /**
+     * M�thode d'activation du bouton de d�placement d'une livraison.
+     */
     public void activerBoutonDeplacerLivraison() {
         boutonDeplacerLivraison.setDisable(false);
     }
 
+    /**
+     * M�thode de desactivation du bouton de calcul des tourn�es.
+     */
     public void desactiverBoutonCalculerTournees() {
         boutonCalculerTournees.setDisable(true);
     }
 
+    /**
+     * M�thode de desactivation du bouton de chargement d'une demande de livraisons.
+     */
     public void desactiverBoutonChargerDemandeLivraison() {
         boutonChargerDemandeLivraison.setDisable(true);
     }
 
+    /**
+     * M�thode de desactivation du bouton de chargement d'un plan.
+     */
     public void desactiverBoutonChargerPlan() {
         boutonChargerPlan.setDisable(true);
     }
 
+    /**
+     * M�thode de desactivation du bouton de suppression d'une livraison.
+     */
     public void desactiverBoutonSuprimmerLivraison() {
         boutonSuprimmerLivraison.setDisable(true);
     }
 
+    /**
+     * M�thode de desactivation du bouton de validation.
+     */
     public void desactiverBoutonValider() {
         boutonValider.setDisable(true);
     }
 
+    /**
+     * M�thode de desactivation du bouton d'annulation de l'action en cours.
+     */
     public void desactiverBoutonAnnuler() {
         boutonAnnuler.setDisable(true);
     }
 
+    /**
+     * M�thode de desactivation du bouton d'ajout de livraison.
+     */
     public void desactiverBoutonAjouterLivraison() {
         boutonAjouterLivraison.setDisable(true);
     }
 
+    /**
+     * M�thode de desactivation du bouton de deplacement d'une livraison.
+     */
     public void desactiverBoutonDeplacerLivraison() {
         boutonDeplacerLivraison.setDisable(true);
     }
 
+    /**
+     * M�thode de desactivation du bouton d'annulation de la derni�re action.
+     */
     public void desactiverBoutonUndo() {
         boutonUndo.setDisable(true);
     }
 
+    /**
+     * M�thode de desactivation du bouton de restauration de la derni�re action annul�e.
+     */
     public void desactiverBoutonRedo() {
         boutonRedo.setDisable(true);
     }
 
+    /**
+     * M�thode de desactivation du bouton de choix du nombre de livreurs.
+     */
     public void desactiverSaisieLivreurs() {
         saisieLivreurs.setDisable(true);
     }
 
+    /**
+     * M�thode de desactivation du bouton de saisie de la dur�e de livraison.
+     */
     public void desactiveSaisieDureeLivraison() {
         saisieDureeLivraison.setDisable(true);
     }

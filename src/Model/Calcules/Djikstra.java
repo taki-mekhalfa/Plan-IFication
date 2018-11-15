@@ -6,6 +6,12 @@ import Model.Metier.Plan;
 
 import java.util.*;
 
+/**
+ * Classe de fonctionnement de l'algorithme Djikstra
+ * @author H4104
+ * @see Model.Metier.Livraison
+ * @see Model.Calcules.PCC
+ */
 public class Djikstra implements PCC {
 
     private String idSource;
@@ -16,7 +22,13 @@ public class Djikstra implements PCC {
     private Map<String, MetaDonne> metaDonnes;
     private Map<Livraison, Chemin> resultat;
 
-
+    /**
+     * Méthode d'obtention des plus courts chemins.
+     * @param idSource correspondant à l'élément de départ pour le lancement de l'algorithme
+     * @param pointsDestination correspondant à la liste des livraisons encore à effectuer
+     * @param plan correspondant au plan que l'on considère
+     * @return resultat correspondant à une map de livraisons et de chemins associés
+     */
     @Override
     public Map<Livraison, Chemin> getPlusCourtsChemins(String idSource, List<Livraison> pointsDestination, Plan plan) {
         nonEvalues = new HashSet<>();
@@ -31,6 +43,9 @@ public class Djikstra implements PCC {
         return resultat;
     }
 
+    /**
+     * Méthode d'évaluation de la liste des livraisons à effectuer.
+     */
     private void evaluer() {
         while (!pointsDestination.isEmpty()) {
             String lePlusProche = getPlusProche();
@@ -57,6 +72,11 @@ public class Djikstra implements PCC {
         }
     }
 
+    /**
+     * Méthode de traitement dans le cadre de l'algorithme.
+     * @param source correspondant au point de départv de l'algorithme pour cette étape du traitement
+     * @param successeur correspondaant au successeur à évaluer lors de cette étape
+     */
     private void traiter(String source, String successeur) {
         nonEvalues.add(successeur);
 
@@ -74,6 +94,10 @@ public class Djikstra implements PCC {
         }
     }
 
+    /**
+     * Méthode d'obtention du noeud le plus proche de l'élément courant.
+     * @return lePlusProche correspondant à l'identifiant du prochain noeud à traiter par ordre de proximité.
+     */
     private String getPlusProche() {
         String lePlusProche = null;
         double minDist = Double.POSITIVE_INFINITY;
@@ -88,6 +112,9 @@ public class Djikstra implements PCC {
         return lePlusProche;
     }
 
+    /**
+     * Méthode d'initialisation de l'algorithme
+     */
     private void initialiser() {
         nonEvalues.add(idSource);
 
@@ -97,10 +124,18 @@ public class Djikstra implements PCC {
         metaDonnes.put(idSource, metaDonnesSource);
     }
 
+    /**
+     * Classe MetaDonne contenant la distance et la liste des predecesseurs
+     * @author H4104
+     */
     private class MetaDonne {
         double distance = Double.POSITIVE_INFINITY;
         List<String> predecesseurs;
 
+        /**
+         * Méthode de conversion de la métadonnée en string
+         * @return MetaDonne correspondant à la métadonnée et à ses composants sous forme d'un string
+         */
         @Override
         public String toString() {
             return "MetaDonne{" +

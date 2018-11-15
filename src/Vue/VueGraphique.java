@@ -18,7 +18,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-
+/**
+ * Classe de gestion de l'affichage sur la carte des tournées et livraisons.
+ * @author H4104
+ * @see Vue.VueTextuelle
+ */
 public class VueGraphique extends Vue {
     private double minLongitude;
     private double maxLongitude;
@@ -34,7 +38,10 @@ public class VueGraphique extends Vue {
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private double ratio = 0.8;
 
-
+    /**
+     * Constructeur de la classe VueGraphique.
+     * @param planification correspondant à la classe de planification à laquelle on fait référence
+     */
     public VueGraphique(Planification planification) {
         super(planification);
         initCouleurs();
@@ -64,10 +71,6 @@ public class VueGraphique extends Vue {
         borderPane.setCenter(scrollPane);
         borderPane.setBottom(slider);
         this.getChildren().add(borderPane);
-
-
-
-
 
         //-------------------------------------------------------------------------
         livraisonsGroup.setOnMouseClicked(event -> {
@@ -109,7 +112,9 @@ public class VueGraphique extends Vue {
         });
     }
 
-
+    /**
+     * Méthode d'affichage du plan.
+     */
     @Override
     void dessinerPlan() {
         tourneesGroup.getChildren().clear();
@@ -133,6 +138,9 @@ public class VueGraphique extends Vue {
         }
     }
 
+    /**
+     * Méthode d'affichage de la demande de livraisons.
+     */
     @Override
     void dessinerDemandeDeLivraisons() {
         livraisonsGroup.getChildren().clear();
@@ -155,6 +163,9 @@ public class VueGraphique extends Vue {
 
     }
 
+    /**
+     * Méthode d'affichage des tournées calculées.
+     */
     @Override
     void dessinerTournees() {
         tourneesGroup.getChildren().clear();
@@ -198,7 +209,10 @@ public class VueGraphique extends Vue {
 
     }
 
-    //Met en Orange le point selectionnÃ©
+    /**
+     * Méthode d'indication visuelle pour le noeud selectionné qui sera en orange.
+     * @param idNoeud correspondant à l'identifiant du noeud selectionné
+     */
     void couleurPointFocus(String idNoeud) {
         for (int i = 0; i < livraisonsGroup.getChildren().size(); i++) {
             CercleLivraison cercle = (CercleLivraison) livraisonsGroup.getChildren().get(i);
@@ -209,7 +223,9 @@ public class VueGraphique extends Vue {
         }
     }
 
-    //Reset tous les points de livraison en bleu sauf l'entrepot (rouge)
+    /**
+     * Méthode pour reinitialiser les couleurs prises en compte pour mettre du bleu sauf pour l'entrepôt en rouge..
+     */
     void resetCouleurs() {
         for (int i = 0; i < livraisonsGroup.getChildren().size(); i++) {
             CercleLivraison cercle = (CercleLivraison) livraisonsGroup.getChildren().get(i);
@@ -223,16 +239,29 @@ public class VueGraphique extends Vue {
         }
     }
 
+    /**
+     * Méthode d'adaptation des echelles en Y.
+     * @param longitude correspondant à la valeur initiale en longitude
+     * @return echelleHor correspondant à la valeur finale par rapport à la taille de l'écran
+     */
     private double trX(double longitude) {
         double echelleHor = screenSize.getHeight()*ratio / (maxLongitude - minLongitude);
         return echelleHor * (longitude - minLongitude);
     }
 
+    /**
+     * Méthode d'adaptation des echelles en X.
+     * @param latitude correspondant à la valeur initiale en latitude
+     * @return echelleVer correspondant à la valeur finale par rapport à la taille de l'écran
+     */
     private double trY(double latitude) {
         double echelleVer = screenSize.getHeight()*ratio / (maxLatitude - minLatitude);
         return echelleVer * (maxLatitude - latitude);
     }
 
+    /**
+     * Méthode de calcul des limites de l'affichage pour le plan.
+     */
     private void calculerCoins() {
         minLongitude = Double.POSITIVE_INFINITY;
         maxLongitude = Double.NEGATIVE_INFINITY;
@@ -247,6 +276,9 @@ public class VueGraphique extends Vue {
         }
     }
 
+    /**
+     * Méthode d'initialisation des couleurs.
+     */
     private void initCouleurs() {
         colors = new LinkedList<>();
         colors.add(Color.BROWN);
@@ -261,6 +293,11 @@ public class VueGraphique extends Vue {
         colors.add(Color.CORNFLOWERBLUE);
     }
 
+    /**
+     * Méthode d'affectation des couleurs avec conservations des valeurs dans une liste.
+     * @param n correspondant au code associé à l'élément concerné
+     * @return Color correspondant à la couleur qui sera utilisé
+     */
     private Color getColor(int n) {
         if (n < colors.size()) {
             return colors.get(n);
@@ -271,6 +308,9 @@ public class VueGraphique extends Vue {
         return newColor;
     }
 
+    /**
+     * Méthode d'annulation des modifications.
+     */
     public void annulerModification() {
         for (CercleLivraison cercleLivraison : cerclesLivraisonsSelectionnes) cercleLivraison.setSelectionne(false);
         if (cercleIntersection != null) cercleIntersection.setSelectionne(false);
@@ -278,6 +318,10 @@ public class VueGraphique extends Vue {
         cerclesLivraisonsSelectionnes.clear();
     }
 
+    /**
+     * Méthode d'affectation de la vue textuelle associée à la vue graphique.
+     * @param vueTextuelle correspondant à la vue textuelle choisie
+     */
     public void setVueTextuelle(VueTextuelle vueTextuelle) {
         this.vueTextuelle = vueTextuelle;
     }
