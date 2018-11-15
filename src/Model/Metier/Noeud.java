@@ -5,20 +5,38 @@ public class Noeud {
     private final double longitude;
     private final double latitude;
 
+    /**
+     * constructeur
+     * @param id id d'un noeud
+     * @param latitude latitude
+     * @param longitude longitude
+     */
     public Noeud(String id, double latitude, double longitude) {
         this.id = id;
         this.longitude = longitude;
         this.latitude = latitude;
     }
 
+    /**
+     * getter id
+     * @return id
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * getter longitude
+     * @return longitude
+     */
     public double getLongitude() {
         return longitude;
     }
 
+    /**
+     * getter latitude
+     * @return latitude
+     */
     public double getLatitude() {
         return latitude;
     }

@@ -7,6 +7,12 @@ public class Temps implements Comparable{
     private int heures, minutes, secondes;
     private int value;
 
+    /**
+     * constructeur
+     * @param heures heures
+     * @param minutes minutes
+     * @param secondes secondes
+     */
     public Temps(int heures, int minutes, int secondes) {
         this.heures = heures;
         this.minutes = minutes;
@@ -15,6 +21,12 @@ public class Temps implements Comparable{
         value = heures * 3600 + minutes * 60 + secondes;
     }
 
+    /**
+     * ajouter des secondes a partir du temps de debut
+     * @param debut temps de debut
+     * @param secondesAajouter secondes a ajouter
+     * @return temps temps actuel
+     */
     public static Temps addConvert(Temps debut, double secondesAajouter) {
         int h, m, s;
 
@@ -26,22 +38,42 @@ public class Temps implements Comparable{
         return new Temps(h, m, s);
     }
 
+    /**
+     * getter heures
+     * @return heures
+     */
     public int getHeures() {
         return heures;
     }
 
+    /**
+     * getter minutes
+     * @return minutes
+     */
     public int getMinutes() {
         return minutes;
     }
 
+    /**
+     * getter secondes
+     * @return secondes
+     */
     public int getSecondes() {
         return secondes;
     }
 
+    /**
+     * convertir le temps en secondes
+     * @return secondes
+     */
     public int getValue() {
         return value;
     }
 
+    /**
+     * getter horaire propriete
+     * @return horaire
+     */
     public SimpleStringProperty getHorraireProperty() {
         return horraire;
     }
@@ -62,6 +94,9 @@ public class Temps implements Comparable{
         return res;
     }
 
+    /**
+     * @return
+     */
     public SimpleStringProperty PropertytoString() {
         return new SimpleStringProperty(toString());
     }
