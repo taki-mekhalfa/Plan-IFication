@@ -35,7 +35,7 @@ public class Calculateur {
                 grapheCompletPlusCourtsChemins.put(livraison,plusCourtsChemins);
             }
 
-            int TEMPS_LIMITE = 10000;
+            int TEMPS_LIMITE = 0;
             Tournee tournee = new TSPDeBase().getTournee(cluster, grapheCompletPlusCourtsChemins, TEMPS_LIMITE, demandeLivraisons.getHeureDeDepart());
 
             lesTournees.add(tournee);

@@ -6,6 +6,9 @@ public class EtatTourneesCalculees extends EtatDefaut {
 
     @Override
     public void init(){
+    	message = "Tournees calculees." + 
+    			'\n' + "Vous pouvez modifier le resultat en cliquant sur les boutons" + 
+    			'\n' + "de modification (Ajouter, supprimer et deplacer)";
         Controleur.interfaceGUI.activerBoutonChargerPlan();
         Controleur.interfaceGUI.activerBoutonChargerDemandeLivraison();
         Controleur.interfaceGUI.activerBoutonCalculerTournees();
@@ -43,14 +46,20 @@ public class EtatTourneesCalculees extends EtatDefaut {
 
     @Override
     public void boutonChargerDemandeLivraison(File fichierXML) {
-        Controleur.planification.chargerDemandesDeLivraisons(fichierXML);
-        Controleur.interfaceGUI.desactiverBoutonAjouterLivraison();
-        Controleur.interfaceGUI.desactiverBoutonDeplacerLivraison();
-        Controleur.interfaceGUI.desactiverBoutonSuprimmerLivraison();
-        Controleur.interfaceGUI.desactiverBoutonUndo();
-        Controleur.interfaceGUI.desactiverBoutonRedo();
-        Controleur.listeCommandes.init();
-        Controleur.setEtatCourant(Controleur.etatPlanEtDemandeLivraisonCharges);
+        if (Controleur.planification.chargerDemandesDeLivraisons(fichierXML)){
+        	Controleur.interfaceGUI.desactiverBoutonAjouterLivraison();
+	        Controleur.interfaceGUI.desactiverBoutonDeplacerLivraison();
+	        Controleur.interfaceGUI.desactiverBoutonSuprimmerLivraison();
+	        Controleur.interfaceGUI.desactiverBoutonUndo();
+	        Controleur.interfaceGUI.desactiverBoutonRedo();
+	        Controleur.listeCommandes.init();
+	        Controleur.setEtatCourant(Controleur.etatPlanEtDemandeLivraisonCharges);
+        }
+        else{
+        	Controleur.planification.supprimerDemandesLivraisons();
+			Controleur.planification.MAJAffichage();
+        	Controleur.setEtatCourant(Controleur.etatPlanCharge);
+        }
     }
 
     @Override
@@ -106,8 +115,17 @@ public class EtatTourneesCalculees extends EtatDefaut {
 
     @Override
     public void boutonCalculerTournees(int nombreLivreurs){
-        Controleur.planification.calculerTournees(nombreLivreurs);
-        Controleur.listeCommandes.init();
-        Controleur.setEtatCourant(Controleur.etatTourneesCalculees);
+        int nbLivraisons = Controleur.planification.getDemandeLivraisons().getPointsDeLivraisons().size();
+        if (nombreLivreurs > 0){
+            Controleur.planification.calculerTournees(nombreLivreurs);
+            Controleur.setEtatCourant(Controleur.etatTourneesCalculees);
+            Controleur.listeCommandes.init();
+            if (nombreLivreurs > nbLivraisons){
+                Controleur.messageAlerteNbLivreur();
+            }
+        }
+        else{
+            Controleur.messageAlerteNbLivreurNul();
+        }
     }
 }

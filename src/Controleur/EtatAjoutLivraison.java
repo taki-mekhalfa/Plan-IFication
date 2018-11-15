@@ -10,6 +10,10 @@ public class EtatAjoutLivraison extends EtatDefaut {
 
     @Override
     public void init() {
+    	message = "Selectionnez une intersection a ajouter ainsi que les points de livraison" + 
+    			'\n' + "precedant et suivant la nouvelle livraison." + 
+    			'\n' + "Vous pouvez modifier la duree de la livraison (par defaut nulle)" + 
+    			'\n' + "Une fois la selection effectuee, cliquez sur Valider ou Annuler.";
         this.livraison1 = null;
         this.livraison2 = null;
         this.idNoeud = null;

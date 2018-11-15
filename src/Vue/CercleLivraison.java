@@ -18,9 +18,9 @@ public class CercleLivraison extends Group {
     private Circle shield;
     private Livraison livraison;
 
-    
+
     public CercleLivraison(double centerX, double centerY, double radius, Livraison livraison) {
-    	this.livraison = livraison;
+        this.livraison = livraison;
         this.cercle = new Circle(centerX, centerY, radius);
         this.cercle.setFill(defaultColor);
         this.ordre = new Text("");
@@ -33,34 +33,34 @@ public class CercleLivraison extends Group {
     }
 
     public void setCouleur(Color color) {
-    	this.cercle.setFill(color);
+        this.cercle.setFill(color);
     }
 
-    
+
     public Livraison getLivraison() {
         return livraison;
     }
-    
-    
+
+
     public boolean isSelectionne() {
         return selectionne;
     }
-    
+
     public void setOrdre(int nb){
-    	ordre.setText(Integer.toString(nb));
-    	ordre.setBoundsType(TextBoundsType.VISUAL);
-    	ordre.setLayoutY(this.cercle.getCenterY()+3.5);
+        ordre.setText(Integer.toString(nb));
+        ordre.setBoundsType(TextBoundsType.VISUAL);
+        ordre.setLayoutY(this.cercle.getCenterY()+3.5);
         if(nb<10){
-        	ordre.setLayoutX(this.cercle.getCenterX()-3.5);
+            ordre.setLayoutX(this.cercle.getCenterX()-3.5);
         } else {
-        	ordre.setLayoutX(this.cercle.getCenterX()-7);
+            ordre.setLayoutX(this.cercle.getCenterX()-7);
         }
         ordre.setStroke(Color.WHITE);
-        
+
     }
 
     public void setSelectionne(boolean selectionne) {
-    	this.cercle.setFill(selectionne ? Color.ORANGE : defaultColor);
+        this.cercle.setFill(selectionne ? Color.ORANGE : defaultColor);
         this.selectionne = selectionne;
     }
 

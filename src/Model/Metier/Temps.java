@@ -48,19 +48,18 @@ public class Temps implements Comparable{
 
     @Override
     public String toString() {
-    	String res;
-    	if(heures<10){
-    		res = "0"+heures;
-    	}else{
-    		res =""+heures;
-    	}
-    	if(minutes<10){
-    		res+=":"+"0"+minutes;
-    	}else{
-    		res+=":"+minutes;
-    	}
+        String res;
+        if(heures<10){
+            res = "0"+heures;
+        }else{
+            res =""+heures;
+        }
+        if(minutes<10){
+            res+=":"+"0"+minutes;
+        }else{
+            res+=":"+minutes;
+        }
         return res;
-    	//return heures + ":" + minutes;
     }
 
     public SimpleStringProperty PropertytoString() {
