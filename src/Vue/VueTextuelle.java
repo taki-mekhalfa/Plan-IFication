@@ -13,7 +13,6 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -25,6 +24,10 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+/**
+ * Classe de gestion pour l'affichage des informations sous forme écrite.
+ * @author H4104
+ */
 public class VueTextuelle extends Vue {
 
     private VueGraphique vueGraph;
@@ -33,22 +36,23 @@ public class VueTextuelle extends Vue {
     private Label labelNomDeLaRue;
     private ObservableList<Livraison> dataLivraison = FXCollections.observableArrayList();
     private ObservableList<Livraison> dataTournee = FXCollections.observableArrayList();
-    
+
     private TableView<Livraison> tableDemandeLivraison = new TableView<>();
     private TableColumn<Livraison, String> idCol = new TableColumn<>("ID Livraison");
     private TableColumn<Livraison, String> dureeCol = new TableColumn<>("Duree");
-
 
     private TableView<Livraison> tableTournee = new TableView<>();
     private TableColumn<Livraison, String> livraisonCol = new TableColumn<>("ID Livraison");
     private TableColumn<Livraison, String> horraireCol = new TableColumn<>("Heure de Livraison");
     private TableColumn<Livraison, String> dureeLivraisonCol = new TableColumn<>("Duree");
 
+    private TextFlow zoneDialogue = new TextFlow(new Text("Cliquez sur le bouton Charger un plan pour charger le fichier xml de plan." + '\n' + "Vous pouvez Ã©galement dÃ©finir le nombre de livreurs."));
 
-    private TextFlow zoneDialogue = new TextFlow(new Text("Cliquez sur le bonton Charger un plan pour charger le fichier xml de plan." + '\n' + "Vous pouvez egalement definir le nombre de livreurs."));
-    
+    /**
+     * Constructeur de la classe VueTextuelle.
+     * @param planification correspondant à la planification associée à cette instance de la vue textuelle
+     */
     public VueTextuelle(Planification planification) {
-
         super(planification);
         livraisonsGroup = new Group();
         tourneesGroup = new Group();
@@ -60,7 +64,6 @@ public class VueTextuelle extends Vue {
 
         zoneDialogue.setMaxWidth(400);
         vBox.getChildren().addAll(labelNomDeLaRue, tourneesGroup, livraisonsGroup, zoneDialogue);
-
         vBox.setSpacing(10);
         vBox.setPadding(new Insets(10, 10, 0, 0));
         tableTournee.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -70,9 +73,11 @@ public class VueTextuelle extends Vue {
         tableDemandeLivraison.setPlaceholder(new Label("Demande de livraisons non chargee"));
         this.getChildren().add(vBox);
     }
-    
 
 
+    /**
+     * Méthode de remplissage du tableau en cas d'affichage du plan.
+     */
     @Override
     void dessinerPlan() {
 
@@ -84,12 +89,14 @@ public class VueTextuelle extends Vue {
         tableDemandeLivraison.setEditable(true);
         idCol.setCellValueFactory(cellData -> cellData.getValue().getNoeudProperty());
         dureeCol.setCellValueFactory(cellData -> cellData.getValue().getDureeProperty());
-
         tableDemandeLivraison.getColumns().setAll(idCol, dureeCol);
         tableDemandeLivraison.setItems(dataLivraison);
         livraisonsGroup.getChildren().add(tableDemandeLivraison);
     }
 
+    /**
+     * Méthode de remplissage du tableau en cas d'affichage d'une demande de livraisons.
+     */
     @Override
     void dessinerDemandeDeLivraisons() {
         livraisonsGroup.getChildren().clear();
@@ -117,10 +124,12 @@ public class VueTextuelle extends Vue {
                 }
 
             });
-
         }
     }
 
+    /**
+     * Méthode de remplissage du tableau en cas d'affichage des tournées.
+     */
     @Override
     void dessinerTournees() {
         livraisonsGroup.getChildren().clear();
@@ -174,10 +183,14 @@ public class VueTextuelle extends Vue {
                     vueGraph.couleurPointFocus(tableTournee.getSelectionModel().getSelectedItem().getNoeud());
                 }
             });
-
         }
     }
 
+    /**
+     * Méthode d'ajout d'une zone de dialogue.
+     * @param newText correspondant au text à ajouter
+     * @param error correspondant à la possibilité d'avoir une erreur
+     */
     public void addZoneDialogue(String newText, boolean error) {
         Text text = new Text(newText + '\n');
         if (error) {
@@ -186,15 +199,25 @@ public class VueTextuelle extends Vue {
         zoneDialogue.getChildren().addAll(text);
     }
 
+    /**
+     * Méthode de reinitialisation de la zone de dialogue.
+     */
     public void clearZoneDialogue() {
         zoneDialogue.getChildren().clear();
-
     }
 
+    /**
+     * Méthode d'affectation de la vue graphique.
+     * @param vueGraph correspondant à la vue graphique choisie
+     */
     public void setVueGraph(VueGraphique vueGraph) {
         this.vueGraph = vueGraph;
     }
 
+    /**
+     * Méthode de selection d'une rue pour affichage de son nom.
+     * @param nomDeLaRue correspondant au nom de la rue selectionnée par l'utilisateur
+     */
     public void rueSelectionnee(String nomDeLaRue) {
         labelNomDeLaRue.setText(nomDeLaRue);
     }

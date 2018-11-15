@@ -14,8 +14,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
+/**
+ * Classe permettant la gestion des fichiers XML liés aux demandes de livraisons.
+ * @author H104
+ * @see Model.XMLHelper.DemandeLivraisonsXMLHelper
+ */
 public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelper {
 
+	/**
+	 * Méthode d'obtention des demandes de livraisons.
+	 * @param fichierXML correspondant au fichier XML contenant les demandes de livraisons
+	 * @return demandeLivraisons correspondant à la serie de demandes de livraisons analysée
+	 */
     @Override
     public DemandeLivraisons getDemandeLivraisons(File fichierXML) {
         DemandeLivraisons demandeLivraisons = null;
@@ -29,11 +39,22 @@ public class DemandeLivraisonsXMLHelperDom4J implements DemandeLivraisonsXMLHelp
         return demandeLivraisons;
     }
 
+    /**
+     * Méthode de lecture du fichier XML.
+     * @param fichierXML correspondant à un fichier XML à lire
+     * @return document correspondant au fichier XML analysé et passé en ce format
+     * @throws DocumentException
+     */
     private Document readXMLFile(File fichierXML) throws DocumentException {
         SAXReader saxReader = new SAXReader();
         return saxReader.read(fichierXML);
     }
 
+    /**
+     * Méthode d'extraction des demandes de livraisons à partir du document.
+     * @param document correspondant aux éléments du fichier XML extraits
+     * @return demandeLivraison correspondant au document fournis mais organiser dans le format de données choisis.
+     */
     private DemandeLivraisons extraireDemande(Document document) throws DocumentException {
         Element root = document.getRootElement();
         if(root.getQualifiedName()!= "demandeDeLivraisons"){

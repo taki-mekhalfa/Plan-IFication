@@ -4,11 +4,6 @@ import Model.Metier.Livraison;
 
 import java.io.File;
 
-/**
- * Interface pour la classe EtatDefaut
- * @author H4104
- *
- */
 public interface Etat {
 	
     void init();

@@ -14,8 +14,13 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+/**
+ * Classe de gestion pour la communication au sein de l'application. 
+ * @author H4104
+ * @see Controleur.Controleur
+ * @see Model.Planification 
+ */
 public class InterfaceGUI extends Application {
-
 
     private Button boutonChargerPlan;
     private Button boutonChargerDemandeLivraison;
@@ -32,11 +37,20 @@ public class InterfaceGUI extends Application {
     private TextField saisieDureeLivraison;
     private Stage primaryStage;
     
-
+    /**
+     * Méthode Main pour le fonctionnement de l'appliation.
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Méthode de lancement de l'affichage.
+     * @param primaryStage correspondant à l'état de départ
+     * @see Vue.VueGraphique
+     * @see Vue.VueTextuelle
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -52,19 +66,19 @@ public class InterfaceGUI extends Application {
         BorderPane borderPane = new BorderPane();
         createMenuBar();
         
-        
-
         borderPane.setTop(menuBar);
         borderPane.setCenter(vueGraphique);
         borderPane.setRight(vueTextuelle);
         borderPane.setCenterShape(true);
 
-        Scene scene = new Scene(borderPane, 1300, 1100);
-
+        Scene scene = new Scene(borderPane, 1300, 700);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
+    /**
+     * Méthode de création de la bar de menu.
+     */
     private void createMenuBar() {
         boutonChargerPlan = new Button("Charger un plan");
         boutonChargerDemandeLivraison = new Button("Charger livraisons");
@@ -79,9 +93,7 @@ public class InterfaceGUI extends Application {
         saisieDureeLivraison = new TextField();
         saisieLivreurs = new TextField();
         saisieDureeLivraison.setPromptText("Duree livraison: 0(min)");
-
         saisieLivreurs.setPromptText("Nombre de Livreurs: 3");
-
 
         menuBar = new ToolBar(boutonChargerPlan, boutonChargerDemandeLivraison, boutonCalculerTournees,
                 saisieLivreurs, boutonAjouterLivraison, saisieDureeLivraison,
@@ -114,6 +126,7 @@ public class InterfaceGUI extends Application {
         boutonValider.setOnAction(event -> {
             int duree = 0;
             if (!"".equals(saisieDureeLivraison.getText())) duree = Integer.parseInt(saisieDureeLivraison.getText());
+            duree = duree * 60;
             Controleur.saisieDuree(duree);
             Controleur.boutonValider();
         });
@@ -150,103 +163,179 @@ public class InterfaceGUI extends Application {
 
     }
 
+    /**
+     * Méthode de choix de fichier par l'utilisateur.
+     * @return File correspondant au fichier choisit
+     */
     private File choisirFichier() {
         FileChooser fileChooser = new FileChooser();
         return fileChooser.showOpenDialog(primaryStage);
     }
 
+    /**
+     * Méthode d'activation du bouton de chargement d'un plan.
+     */
     public void activerBoutonChargerPlan() {
         boutonChargerPlan.setDisable(false);
     }
 
+    /**
+     * Méthode d'activation du bouton de chargement d'une demande de livraisons.
+     */
     public void activerBoutonChargerDemandeLivraison() {
         boutonChargerDemandeLivraison.setDisable(false);
     }
 
+    /**
+     * Méthode d'activation du bouton de calcul des tournées.
+     */
     public void activerBoutonCalculerTournees() {
         boutonCalculerTournees.setDisable(false);
     }
 
+    /**
+     * Méthode d'activation du bouton de suppression d'une livraison.
+     */
     public void activerBoutonSuprimmerLivraison() {
         boutonSuprimmerLivraison.setDisable(false);
     }
 
+    /**
+     * Méthode d'activation du bouton d'ajout de livraison.
+     */
     public void activerBoutonAjouterLivraison() {
         boutonAjouterLivraison.setDisable(false);
     }
 
+    /**
+     * Méthode d'activation du bouton de retour en arrière.
+     */
     public void activerBoutonAnnuler() {
         boutonAnnuler.setDisable(false);
     }
 
+    /**
+     * Méthode d'activation du bouton de validation.
+     */
     public void activerBoutonValider() {
         boutonValider.setDisable(false);
     }
 
+    /**
+     * Méthode d'activation du bouton d'annulation de la dernière action.
+     */
     public void activerBoutonUndo() {
         boutonUndo.setDisable(false);
     }
 
+    /**
+     * Méthode d'activation du bouton de restauration de la dernière action annulée.
+     */
     public void activerBoutonRedo() {
         boutonRedo.setDisable(false);
     }
 
+    /**
+     * Méthode d'activation du bouton de choix du nombre de livreurs.
+     */
     public void activerSaisieLivreurs() {
         saisieLivreurs.setDisable(false);
     }
 
+    /**
+     * Méthode d'activation du bouton de saisie de la durée de livraison.
+     */
     public void activeSaisieDureeLivraison() {
         saisieDureeLivraison.setDisable(false);
     }
 
+    /**
+     * Méthode d'activation du bouton de déplacement d'une livraison.
+     */
     public void activerBoutonDeplacerLivraison() {
         boutonDeplacerLivraison.setDisable(false);
     }
 
+    /**
+     * Méthode de desactivation du bouton de calcul des tournées.
+     */
     public void desactiverBoutonCalculerTournees() {
         boutonCalculerTournees.setDisable(true);
     }
 
+    /**
+     * Méthode de desactivation du bouton de chargement d'une demande de livraisons.
+     */
     public void desactiverBoutonChargerDemandeLivraison() {
         boutonChargerDemandeLivraison.setDisable(true);
     }
 
+    /**
+     * Méthode de desactivation du bouton de chargement d'un plan.
+     */
     public void desactiverBoutonChargerPlan() {
         boutonChargerPlan.setDisable(true);
     }
 
+    /**
+     * Méthode de desactivation du bouton de suppression d'une livraison.
+     */
     public void desactiverBoutonSuprimmerLivraison() {
         boutonSuprimmerLivraison.setDisable(true);
     }
 
+    /**
+     * Méthode de desactivation du bouton de validation.
+     */
     public void desactiverBoutonValider() {
         boutonValider.setDisable(true);
     }
 
+    /**
+     * Méthode de desactivation du bouton d'annulation de l'action en cours.
+     */
     public void desactiverBoutonAnnuler() {
         boutonAnnuler.setDisable(true);
     }
 
+    /**
+     * Méthode de desactivation du bouton d'ajout de livraison.
+     */
     public void desactiverBoutonAjouterLivraison() {
         boutonAjouterLivraison.setDisable(true);
     }
 
+    /**
+     * Méthode de desactivation du bouton de deplacement d'une livraison.
+     */
     public void desactiverBoutonDeplacerLivraison() {
         boutonDeplacerLivraison.setDisable(true);
     }
 
+    /**
+     * Méthode de desactivation du bouton d'annulation de la dernière action.
+     */
     public void desactiverBoutonUndo() {
         boutonUndo.setDisable(true);
     }
 
+    /**
+     * Méthode de desactivation du bouton de restauration de la dernière action annulée.
+     */
     public void desactiverBoutonRedo() {
         boutonRedo.setDisable(true);
     }
 
+    /**
+     * Méthode de desactivation du bouton de choix du nombre de livreurs.
+     */
     public void desactiverSaisieLivreurs() {
         saisieLivreurs.setDisable(true);
     }
 
+    /**
+     * Méthode de desactivation du bouton de saisie de la durée de livraison.
+     */
     public void desactiveSaisieDureeLivraison() {
         saisieDureeLivraison.setDisable(true);
     }

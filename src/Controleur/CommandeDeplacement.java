@@ -11,16 +11,6 @@ import Model.Metier.Livraison;
 import Model.Metier.Temps;
 import Model.Metier.Tournee;
 
-/**
- * Classe permettant le retour en arrière après une opération de deplacement de point de livraison
- * @author H4104
- * @see Controleur.Commande
- * @see Model.Metier.Livraison
- * @see Model.Metier.Tournee
- * @see Model.Metier.Temps
- * @see Model.Metier.Chemin
- * @see Controleur.Controleur
- */
 public class CommandeDeplacement implements Commande{
 	private Livraison livraisonDeplacee;
 	
@@ -38,12 +28,7 @@ public class CommandeDeplacement implements Commande{
 	private List<Chemin> sauvegardeCheminsMoinsApres;	
 	
 	
-	/**
-	 * Constructeur de la classe CommandeDeplacement, sauvegarde de l'etat avant le deplacement
-	 * @param t Liste des tournees existantes
-	 * @param livDep Livraison deplacee
-	 * @param liv1 Livraison precedant la livraison deplacee
-	 */
+	
 	public CommandeDeplacement(List<Tournee> t, Livraison livDep, Livraison liv1){
 		livraisonDeplacee = livDep;
 		for(Tournee tourn : t){
@@ -77,9 +62,6 @@ public class CommandeDeplacement implements Commande{
 		}
 	}
 	
-	/**
-	 * Sauvegarde de l'etat apres le deplacement
-	 */
 	public void sauvegardesApres(){
 		sauvegardeLivraisonsPlusApres = new HashMap<>();
 		for(Entry<Livraison, Temps> paire : tourneePlus.getHeuresDeLivraison().entrySet()){
@@ -100,9 +82,6 @@ public class CommandeDeplacement implements Commande{
 		}
 	}
 	
-	/**
-	 * Restoration du deplacement de la livraison
-	 */
 	public void redoCommande(){
 		//Controleur.vueGraphique.getDemandeLivraisons().getPointsDeLivraisons().add(livraisonDeplacee);
 		tourneePlus.setHeuresDeLivraison(sauvegardeLivraisonsPlusApres);
@@ -112,9 +91,6 @@ public class CommandeDeplacement implements Commande{
 		Controleur.planification.MAJAffichage();
 	}
 	
-	/**
-	 * Annulation du deplacement de la livraison
-	 */
 	public void undoCommande(){
 		//Controleur.vueGraphique.getDemandeLivraisons().getPointsDeLivraisons().remove(livraisonDeplacee);
 		tourneePlus.setHeuresDeLivraison(sauvegardeLivraisonsPlusAvant);
