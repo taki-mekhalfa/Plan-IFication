@@ -61,7 +61,7 @@ public abstract class Vue extends Parent implements Observer {
             break;
             case "tournees": {
                 tournees = planification.getTournees();
-                dessinerTournees();
+                dessinerTournees(-1);
             }
         }
     }
@@ -80,9 +80,10 @@ public abstract class Vue extends Parent implements Observer {
 
     /**
      * Méthode Abstraire pour dessiner les tournées.
+     * @param idTournee : L'id de la tournee selectionnee
      * @see Vue.VueGraphique
      */
-    abstract void dessinerTournees();
+    abstract void dessinerTournees(int idTournee);
 
 }
 

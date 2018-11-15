@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Classe de gestion de l'affichage sur la carte des tournÃ©es et livraisons.
+ * Classe de gestion de l'affichage sur la carte des tournées et livraisons.
  * @author H4104
  * @see Vue.VueTextuelle
  */
@@ -40,7 +40,7 @@ public class VueGraphique extends Vue {
 
     /**
      * Constructeur de la classe VueGraphique.
-     * @param planification correspondant Ã  la classe de planification Ã  laquelle on fait rÃ©fÃ©rence
+     * @param planification correspondant à la classe de planification à laquelle on fait référence
      */
     public VueGraphique(Planification planification) {
         super(planification);
@@ -74,7 +74,8 @@ public class VueGraphique extends Vue {
 
         //-------------------------------------------------------------------------
         livraisonsGroup.setOnMouseClicked(event -> {
-            CercleLivraison cercleLivraison = (CercleLivraison)((Node) event.getTarget()).getParent();            if (cercleLivraison.isSelectionne()) {
+            CercleLivraison cercleLivraison = (CercleLivraison)((Node) event.getTarget()).getParent();
+            if (cercleLivraison.isSelectionne()) {
                 cerclesLivraisonsSelectionnes.remove(cercleLivraison);
                 Controleur.livraisonDeselectionnee(cercleLivraison.getLivraison());
                 cercleLivraison.setSelectionne(false);
@@ -113,7 +114,7 @@ public class VueGraphique extends Vue {
     }
 
     /**
-     * MÃ©thode d'affichage du plan.
+     * Méthode d'affichage du plan.
      */
     @Override
     void dessinerPlan() {
@@ -139,7 +140,7 @@ public class VueGraphique extends Vue {
     }
 
     /**
-     * MÃ©thode d'affichage de la demande de livraisons.
+     * Méthode d'affichage de la demande de livraisons.
      */
     @Override
     void dessinerDemandeDeLivraisons() {
@@ -164,10 +165,11 @@ public class VueGraphique extends Vue {
     }
 
     /**
-     * MÃ©thode d'affichage des tournÃ©es calculÃ©es.
+     * Méthode d'affichage des tournées calculées.
      */
     @Override
-    void dessinerTournees() {
+    void dessinerTournees(int idTournee) {
+    	Color colorSelection = Color.BLACK;
         tourneesGroup.getChildren().clear();
         if (tournees != null) {
             int indexTournee = 0;
@@ -175,8 +177,45 @@ public class VueGraphique extends Vue {
                 Color color = getColor(indexTournee);
                 List<Chemin> chemins = tournee.getChemins();
                 int nb = 1;
+                if (indexTournee != idTournee){
+	                for (Chemin chemin : chemins) {
+	                		Noeud premierNoeud = NoeudFactory.getNoeudParId(chemin.getDepart());
+		                    for(Node node : livraisonsGroup.getChildren()){
+		                        CercleLivraison cercleLivraison= (CercleLivraison) node;
+		                        if(!cercleLivraison.getLivraison().getNoeud().equals(demandeLivraisons.getEntrepot()) && cercleLivraison.getLivraison().getNoeud().equals(premierNoeud.getId())){
+		                            cercleLivraison.setOrdre(nb);
+		                            nb++;
+		                        }
+		                    }
+		                    LineModifiee line = new LineModifiee();
+		                    line.setStartX(trX(premierNoeud.getLongitude()));
+		                    line.setStartY(trY(premierNoeud.getLatitude()));
+		                    for (String idNoeud : chemin.getChemin().subList(1, chemin.getChemin().size())) {
+		                        Noeud noeud = NoeudFactory.getNoeudParId(idNoeud);
+		                        line.setEndX(trX(noeud.getLongitude()));
+		                        line.setEndY(trY(noeud.getLatitude()));
+		                        line.setDefaultColor(color);
+		                        line.setNomDeLaRue(planification.getNomDeLaRue(premierNoeud.getId(), noeud.getId()));
+		                        line.setStrokeWidth(4);
+		                        tourneesGroup.getChildren().add(line);
+		                        line = new LineModifiee();
+		                        premierNoeud = noeud;
+		                        line.setStartX(trX(noeud.getLongitude()));
+		                        line.setStartY(trY(noeud.getLatitude()));
+		                    }
+		                }
+                	}
+                	else if (idTournee != -1){
+	            		colorSelection = color;
+	            	}
+                indexTournee = indexTournee + 1;
+            }
+            if (idTournee != -1){
+            	Tournee tournee = tournees.get(idTournee);
+            	List<Chemin>chemins = tournee.getChemins();
+                int nb = 1;
                 for (Chemin chemin : chemins) {
-                    Noeud premierNoeud = NoeudFactory.getNoeudParId(chemin.getDepart());
+            		Noeud premierNoeud = NoeudFactory.getNoeudParId(chemin.getDepart());
                     for(Node node : livraisonsGroup.getChildren()){
                         CercleLivraison cercleLivraison= (CercleLivraison) node;
                         if(!cercleLivraison.getLivraison().getNoeud().equals(demandeLivraisons.getEntrepot()) && cercleLivraison.getLivraison().getNoeud().equals(premierNoeud.getId())){
@@ -191,9 +230,9 @@ public class VueGraphique extends Vue {
                         Noeud noeud = NoeudFactory.getNoeudParId(idNoeud);
                         line.setEndX(trX(noeud.getLongitude()));
                         line.setEndY(trY(noeud.getLatitude()));
-                        line.setDefaultColor(color);
+                        line.setDefaultColor(colorSelection);//line.setDefaultColor(Color.ORANGE);
                         line.setNomDeLaRue(planification.getNomDeLaRue(premierNoeud.getId(), noeud.getId()));
-                        line.setStrokeWidth(4);
+                        line.setStrokeWidth(6);
                         tourneesGroup.getChildren().add(line);
                         line = new LineModifiee();
                         premierNoeud = noeud;
@@ -201,30 +240,32 @@ public class VueGraphique extends Vue {
                         line.setStartY(trY(noeud.getLatitude()));
                     }
                 }
-                indexTournee = indexTournee + 1;
             }
-
-
         }
-
     }
 
     /**
-     * MÃ©thode d'indication visuelle pour le noeud selectionnÃ© qui sera en orange.
-     * @param idNoeud correspondant Ã  l'identifiant du noeud selectionnÃ©
+     * Méthode d'indication visuelle pour le noeud selectionné qui sera en orange.
+     * @param idNoeud correspondant à l'identifiant du noeud selectionné
      */
     void couleurPointFocus(String idNoeud) {
-        for (int i = 0; i < livraisonsGroup.getChildren().size(); i++) {
-            CercleLivraison cercle = (CercleLivraison) livraisonsGroup.getChildren().get(i);
-            if (cercle.getLivraison().getNoeud().equals(idNoeud)) {
-                cercle.setCouleur(Color.AQUA);
-                break;
-            }
-        }
+    	if (idNoeud.startsWith("Livreur :")){
+    		int idLivraison = Integer.parseInt(idNoeud.substring(9))-1;
+    		dessinerTournees(idLivraison);
+    	}
+    	else{
+    		for (int i = 0; i < livraisonsGroup.getChildren().size(); i++) {
+	            CercleLivraison cercle = (CercleLivraison) livraisonsGroup.getChildren().get(i);
+	            if (cercle.getLivraison().getNoeud().equals(idNoeud)) {
+	                cercle.setCouleur(Color.AQUA);
+	                break;
+	            }
+	        }
+    	}
     }
 
     /**
-     * MÃ©thode pour reinitialiser les couleurs prises en compte pour mettre du bleu sauf pour l'entrepÃ´t en rouge..
+     * Méthode pour reinitialiser les couleurs prises en compte pour mettre du bleu sauf pour l'entrepôt en rouge..
      */
     void resetCouleurs() {
         for (int i = 0; i < livraisonsGroup.getChildren().size(); i++) {
@@ -240,9 +281,9 @@ public class VueGraphique extends Vue {
     }
 
     /**
-     * MÃ©thode d'adaptation des echelles en Y.
-     * @param longitude correspondant Ã  la valeur initiale en longitude
-     * @return echelleHor correspondant Ã  la valeur finale par rapport Ã  la taille de l'Ã©cran
+     * Méthode d'adaptation des echelles en Y.
+     * @param longitude correspondant à la valeur initiale en longitude
+     * @return echelleHor correspondant à la valeur finale par rapport à la taille de l'écran
      */
     private double trX(double longitude) {
         double echelleHor = screenSize.getHeight()*ratio / (maxLongitude - minLongitude);
@@ -250,9 +291,9 @@ public class VueGraphique extends Vue {
     }
 
     /**
-     * MÃ©thode d'adaptation des echelles en X.
-     * @param latitude correspondant Ã  la valeur initiale en latitude
-     * @return echelleVer correspondant Ã  la valeur finale par rapport Ã  la taille de l'Ã©cran
+     * Méthode d'adaptation des echelles en X.
+     * @param latitude correspondant à la valeur initiale en latitude
+     * @return echelleVer correspondant à la valeur finale par rapport à la taille de l'écran
      */
     private double trY(double latitude) {
         double echelleVer = screenSize.getHeight()*ratio / (maxLatitude - minLatitude);
@@ -260,7 +301,7 @@ public class VueGraphique extends Vue {
     }
 
     /**
-     * MÃ©thode de calcul des limites de l'affichage pour le plan.
+     * Méthode de calcul des limites de l'affichage pour le plan.
      */
     private void calculerCoins() {
         minLongitude = Double.POSITIVE_INFINITY;
@@ -277,7 +318,7 @@ public class VueGraphique extends Vue {
     }
 
     /**
-     * MÃ©thode d'initialisation des couleurs.
+     * Méthode d'initialisation des couleurs.
      */
     private void initCouleurs() {
         colors = new LinkedList<>();
@@ -294,9 +335,9 @@ public class VueGraphique extends Vue {
     }
 
     /**
-     * MÃ©thode d'affectation des couleurs avec conservations des valeurs dans une liste.
-     * @param n correspondant au code associÃ© Ã  l'Ã©lÃ©ment concernÃ©
-     * @return Color correspondant Ã  la couleur qui sera utilisÃ©
+     * Méthode d'affectation des couleurs avec conservations des valeurs dans une liste.
+     * @param n correspondant au code associé à l'élément concerné
+     * @return Color correspondant à la couleur qui sera utilisé
      */
     private Color getColor(int n) {
         if (n < colors.size()) {
@@ -309,7 +350,7 @@ public class VueGraphique extends Vue {
     }
 
     /**
-     * MÃ©thode d'annulation des modifications.
+     * Méthode d'annulation des modifications.
      */
     public void annulerModification() {
         for (CercleLivraison cercleLivraison : cerclesLivraisonsSelectionnes) cercleLivraison.setSelectionne(false);
@@ -319,8 +360,8 @@ public class VueGraphique extends Vue {
     }
 
     /**
-     * MÃ©thode d'affectation de la vue textuelle associÃ©e Ã  la vue graphique.
-     * @param vueTextuelle correspondant Ã  la vue textuelle choisie
+     * Méthode d'affectation de la vue textuelle associée à la vue graphique.
+     * @param vueTextuelle correspondant à la vue textuelle choisie
      */
     public void setVueTextuelle(VueTextuelle vueTextuelle) {
         this.vueTextuelle = vueTextuelle;

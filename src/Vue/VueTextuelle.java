@@ -48,11 +48,11 @@ public class VueTextuelle extends Vue {
 
     private TextFlow zoneDialogue = new TextFlow(new Text("Cliquez sur le bouton Charger un plan pour charger le fichier xml de plan." + '\n' + "Vous pouvez egalement definir le nombre de livreurs.\n"));
 
+    private int idLivraisonSelectionnee;
     /**
      * Constructeur de la classe VueTextuelle.
      * @param planification correspondant � la planification associ�e � cette instance de la vue textuelle
      */
-   
     public VueTextuelle(Planification planification) {
         super(planification);
         livraisonsGroup = new Group();
@@ -120,6 +120,7 @@ public class VueTextuelle extends Vue {
                 vueGraph.resetCouleurs();
                 try {
                     vueGraph.couleurPointFocus(tableDemandeLivraison.getSelectionModel().getSelectedItem().getNoeud());
+                    
                 } catch (NullPointerException e) {
 
                 }
@@ -132,7 +133,7 @@ public class VueTextuelle extends Vue {
      * M�thode de remplissage du tableau en cas d'affichage des tourn�es.
      */
     @Override
-    void dessinerTournees() {
+    void dessinerTournees(int idTournee) {
         livraisonsGroup.getChildren().clear();
         tourneesGroup.getChildren().clear();
         dataTournee.clear();

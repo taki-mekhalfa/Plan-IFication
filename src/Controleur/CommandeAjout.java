@@ -34,7 +34,7 @@ public class CommandeAjout implements Commande{
 	 * @param t Liste des tournees existantes
 	 * @param liv1 Livraison precedant la livraison ajoutee
 	 */
-	public CommandeAjout(List<Tournee> t, Livraison liv1){
+	public CommandeAjout(List<Tournee> t, Livraison liv1, boolean entrepot){
 		for(Tournee tourn : t){
 			if(tourn.contientLivraison(liv1)){
 				tournee = tourn;

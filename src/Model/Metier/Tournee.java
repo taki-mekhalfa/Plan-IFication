@@ -29,7 +29,7 @@ public class Tournee {
      * Méthode d'ajout de livraison à la tournée.
      * @param livraison correspondant à la livraison à ajouter à la tournée 
      * @param livraison1 correspondant à la livraison précédant la livraison que l'on veut ajouter
-     * @param livraison2 correspondant à la livraison précédant la livraison que l'on veut ajouter
+     * @param livraison2 correspondant à la livraison suivant la livraison que l'on veut ajouter
      * @param plan correspondant au plan associé à la tournée en cours
      */
     public void ajouterLivraison(Livraison livraison, Livraison livraison1, Livraison livraison2, Plan plan) {

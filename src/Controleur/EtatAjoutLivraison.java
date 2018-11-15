@@ -92,12 +92,21 @@ public class EtatAjoutLivraison extends EtatDefaut {
      */
     @Override
     public void boutonValider(ListeCommandes listeCommandes) {
-        CommandeAjout com = new CommandeAjout(Controleur.planification.getTournees(), livraison1);
+    	System.out.println(Controleur.planification.getTournees());
+    	System.out.println(livraison1);
+    	CommandeAjout com;
+    	if (!Controleur.planification.isEntrepot(livraison1)){
+    		com = new CommandeAjout(Controleur.planification.getTournees(), livraison1, false);
+    	}
+    	else{
+    		com = new CommandeAjout(Controleur.planification.getTournees(), livraison2, true);
+    	}
     	listeCommandes.add(com);
     	Livraison livAjoute = Controleur.planification.ajouterPointDeLivraison(idNoeud, duree, livraison1, livraison2);
     	Controleur.vueGraphique.annulerModification();
         com.sauvegardesApres(livAjoute);
         Controleur.setEtatCourant(Controleur.etatTourneesCalculees);
+        
     }
 
     /**
