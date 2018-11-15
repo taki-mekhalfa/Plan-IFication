@@ -30,7 +30,6 @@ public class VueGraphique extends Vue {
     private CercleIntersection cercleIntersection;
     private VueTextuelle vueTextuelle;
 
-
     public VueGraphique(Planification planification) {
         super(planification);
         initCouleurs();
@@ -54,9 +53,8 @@ public class VueGraphique extends Vue {
         rootGroup.scaleXProperty().bind(slider.valueProperty());
         rootGroup.scaleYProperty().bind(slider.valueProperty());
         scrollPane.setContent(new Group(rootGroup));
-        scrollPane.setPrefViewportHeight(screenSize.getHeight()*ratio);
-        scrollPane.setPrefViewportWidth(screenSize.getHeight()*ratio);
-
+        scrollPane.setPrefViewportHeight(600);
+        scrollPane.setPrefViewportWidth(600);
         scrollPane.setFocusTraversable(false);
         borderPane.setCenter(scrollPane);
         borderPane.setBottom(slider);
@@ -68,9 +66,8 @@ public class VueGraphique extends Vue {
 
         //-------------------------------------------------------------------------
         livraisonsGroup.setOnMouseClicked(event -> {
-
-            CercleLivraison cercleLivraison = (CercleLivraison)((Node) event.getTarget()).getParent();            
-          if (cercleLivraison.isSelectionne()) {
+            CercleLivraison cercleLivraison = (CercleLivraison) event.getTarget();
+            if (cercleLivraison.isSelectionne()) {
                 cerclesLivraisonsSelectionnes.remove(cercleLivraison);
                 Controleur.livraisonDeselectionnee(cercleLivraison.getLivraison());
                 cercleLivraison.setSelectionne(false);
@@ -164,14 +161,6 @@ public class VueGraphique extends Vue {
                 List<Chemin> chemins = tournee.getChemins();
                 for (Chemin chemin : chemins) {
                     Noeud premierNoeud = NoeudFactory.getNoeudParId(chemin.getDepart());
-                    for(Node node : livraisonsGroup.getChildren()){
-                        CercleLivraison cercleLivraison= (CercleLivraison) node;
-                        if(!cercleLivraison.getLivraison().getNoeud().equals(demandeLivraisons.getEntrepot()) && cercleLivraison.getLivraison().getNoeud().equals(premierNoeud.getId())){
-                            cercleLivraison.setOrdre(nb);
-                            nb++;
-                        }
-                    }
-
                     LineModifiee line = new LineModifiee();
                     line.setStartX(trX(premierNoeud.getLongitude()));
                     line.setStartY(trY(premierNoeud.getLatitude()));
