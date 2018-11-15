@@ -11,8 +11,16 @@ import Model.Metier.Livraison;
 import Model.Metier.Temps;
 import Model.Metier.Tournee;
 
-import Vue.Vue;
-
+/**
+ * Classe permettant le retour en arrière après une opération de suppression de point de livraison
+ * @author H4104
+ * @see Controleur.Commande
+ * @see Model.Metier.Livraison
+ * @see Model.Metier.Tournee
+ * @see Model.Metier.Temps
+ * @see Model.Metier.Chemin
+ * @see Controleur.Controleur
+ */
 public class CommandeSuppression implements Commande{
 	private Livraison livraison;
 	private Tournee tournee;
@@ -21,6 +29,11 @@ public class CommandeSuppression implements Commande{
 	private Map<Livraison, Temps> sauvegardeLivraisonsApres;
 	private List<Chemin> sauvegardeCheminsApres;
 	
+	/**
+	 * Constructeur de la classe CommandeSuppression, sauvegarde de l'etat avant la suppression
+	 * @param t Liste des tournees existantes
+	 * @param liv1 Livraison supprimee
+	 */
 	public CommandeSuppression(List<Tournee> t, Livraison liv){
 		livraison = liv;
 		for(Tournee tourn : t){
@@ -39,6 +52,9 @@ public class CommandeSuppression implements Commande{
 		}
 	}
 	
+	/**
+	 * Sauvegarde de l'etat apres la suppression
+	 */
 	public void sauvegardesApres(){
 		sauvegardeLivraisonsApres = new HashMap<>();
 		for(Entry<Livraison, Temps> paire : tournee.getHeuresDeLivraison().entrySet()){
@@ -50,6 +66,9 @@ public class CommandeSuppression implements Commande{
 		}
 	}
 	
+	/**
+	 * Annulation de la suppression de la livraison
+	 */
 	public void redoCommande(){
 		Controleur.vueGraphique.getDemandeLivraisons().getPointsDeLivraisons().remove(livraison);
 		tournee.setHeuresDeLivraison(sauvegardeLivraisonsApres);
@@ -57,6 +76,9 @@ public class CommandeSuppression implements Commande{
 		Controleur.planification.MAJAffichage();
 	}
 	
+	/**
+	 * Annulation de la suppression de la livraison
+	 */
 	public void undoCommande(){
 		Controleur.vueGraphique.getDemandeLivraisons().getPointsDeLivraisons().add(livraison);
 		tournee.setHeuresDeLivraison(sauvegardeLivraisonsAvant);
