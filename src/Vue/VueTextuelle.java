@@ -46,7 +46,7 @@ public class VueTextuelle extends Vue {
     private TableColumn<Livraison, String> horraireCol = new TableColumn<>("Heure de Livraison");
     private TableColumn<Livraison, String> dureeLivraisonCol = new TableColumn<>("Duree");
 
-    private TextFlow zoneDialogue = new TextFlow(new Text("Cliquez sur le bouton Charger un plan pour charger le fichier xml de plan." + '\n' + "Vous pouvez également définir le nombre de livreurs."));
+    private TextFlow zoneDialogue = new TextFlow(new Text("Cliquez sur le bouton Charger un plan pour charger le fichier xml de plan." + '\n' + "Vous pouvez egalement definir le nombre de livreurs.\n"));
 
     /**
      * Constructeur de la classe VueTextuelle.
