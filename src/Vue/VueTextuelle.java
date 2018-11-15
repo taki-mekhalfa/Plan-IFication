@@ -41,7 +41,7 @@ public class VueTextuelle extends Vue {
     private TableColumn<Livraison, String> livraisonCol = new TableColumn<>("ID Livraison");
     private TableColumn<Livraison, String> horraireCol = new TableColumn<>("Heure de Livraison");
 
-    private TextFlow zoneDialogue = new TextFlow(new Text("Cliquez sur le bonton Charger un plan pour charger le fichier xml de plan." + '\n' + "Vous pouvez �galement d�finir le nombre de livreurs."));
+    private TextFlow zoneDialogue = new TextFlow(new Text("Cliquez sur le bonton Charger un plan pour charger le fichier xml de plan." + '\n' + "Vous pouvez egalement definir le nombre de livreurs."));
     
     public VueTextuelle(Planification planification) {
 
@@ -98,7 +98,7 @@ public class VueTextuelle extends Vue {
 	        tableDemandeLivraison.setItems(dataLivraison);
 	        livraisonsGroup.getChildren().add(tableDemandeLivraison);
 	
-	        //Ecoute les clics de souris sur les lignes du tableau pour r�cup�rer l'ID de la livraison
+	        //Ecoute les clics de souris sur les lignes du tableau pour rï¿½cupï¿½rer l'ID de la livraison
 	        tableDemandeLivraison.setOnMouseClicked(event -> {
 	            vueGraph.resetCouleurs();
 	            try{
@@ -153,7 +153,7 @@ public class VueTextuelle extends Vue {
 	        tableTournee.setItems(dataTournee);
 	        tourneesGroup.getChildren().add(tableTournee);
 	
-	        //Ecoute les clics de souris sur les lignes du tableau pour récupérer l'ID de la livraison
+	        //Ecoute les clics de souris sur les lignes du tableau pour rÃ©cupÃ©rer l'ID de la livraison
 	        tableTournee.setOnMouseClicked(new EventHandler<MouseEvent>() {
 	            @Override
 	            public void handle(MouseEvent event) {
