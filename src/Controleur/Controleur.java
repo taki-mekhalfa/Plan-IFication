@@ -183,7 +183,6 @@ public class Controleur {
         etatCourant.saisieDuree(duree);
     }
     
-
     /**
      * Message d'erreur pour le fichier XML du plan
      */

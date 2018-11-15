@@ -37,7 +37,6 @@ public class Livraison {
     public SimpleStringProperty getDureeProperty() {
         if (duree.get().equals("")) return duree;
         return new SimpleStringProperty(Integer.toString(Integer.parseInt(duree.get()) / 60));
-
     }
 
     public void setDureeProperty(SimpleStringProperty d){
