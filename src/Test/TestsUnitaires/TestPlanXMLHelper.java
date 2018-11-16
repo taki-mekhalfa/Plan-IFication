@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 
-import org.junit.Test;
+import org.junit.*;
 
 import Model.Metier.Plan;
 import Model.XMLHelpers.*;
@@ -31,59 +31,79 @@ public class TestPlanXMLHelper {
 	private static File fichierPlanTronconNullPointerExecption=new File(cheminPlanTronconNullPointerExecption);
 	private static File fichierPlanTronconNull=new File(cheminPlanTronconNull);
 	private static File fichierPlanTronconNumberFormatExecption=new File(cheminPlanTronconNumberFormatExecption);
+	@BeforeClass
+	public static void beforeClass() {
+		System.out.println("----------------------------------------------");
+		System.out.println("--------------Test Plan XMLHelper-------------");
+		System.out.println("----------------------------------------------");
+	}
+	@After
+	public void after() {
+		System.out.println("Test reussi");
+		System.out.println("----------------------------------------------");
+	}
+	@AfterClass
+	public static void clean() {
+		pl=null;
+	}
 	
 	@Test
 	public void testChargerFichier(){
-		Plan planTest=pl.getPlan(fichierPetitPlan);
-		assertNotEquals(planTest,null);
-		System.out.println("testChargerFichier");
+		System.out.println("test Charger Bon Fichier:");
+		pl.getPlan(fichierPetitPlan);
+		System.out.println("C'est un Bon Fichier:");
+		
 	}
 	@Test
 	public void testFichierNotFound(){
-		Plan planTest=pl.getPlan(fichierPetitPlanNotFound);
-		assertEquals(planTest,null);
-		System.out.println("testFichierNotFound");
+		System.out.println("test Fichier Not Found:");
+		pl.getPlan(fichierPetitPlanNotFound);
+		
 	}
 	@Test
 	public void testFichierNoeudNullPointerException(){
-		Plan planTest=pl.getPlan(fichierPlanNoeudNullPointerException);
-		//assertEquals(planTest,null);
-		System.out.println("testFichierNoeudNullPointerException");
+		System.out.println("test Fichier Noeud NullPointerException:");
+		pl.getPlan(fichierPlanNoeudNullPointerException);
+		
 	}
 	@Test
 	public void testFichierNoeudNumberFormatException(){
-		Plan planTest=pl.getPlan(fichierPlanNoeudNumberFormatException);
-		//assertEquals(planTest,null);
-		System.out.println("testFichierNoeudNumberFormatException");
+		System.out.println("test Fichier Noeud NumberFormatException:");
+		pl.getPlan(fichierPlanNoeudNumberFormatException);
+		
 	}
 	@Test
 	public void testFichierBaliseFausse(){
-		Plan planTest=pl.getPlan(fichierPlanBaliseFausse);
-		assertEquals(planTest,null);
-		System.out.println("testFichierBaliseFausse");
+		System.out.println("test Fichier Balise Fausse:");
+		pl.getPlan(fichierPlanBaliseFausse);
+		
 	}
 	@Test
 	public void testFichierTronconManqueAttribut(){
-		Plan planTest=pl.getPlan(fichierPlanTronconManqueAttribut);
-		assertEquals(planTest,null);
-		System.out.println("testFichierTronconManqueAttribut");
+		System.out.println("test Fichier Troncon Manque Attribut:");
+		pl.getPlan(fichierPlanTronconManqueAttribut);
+		
 	}
 	@Test
 	public void testFichierTronconNullPointerExecption(){
-		Plan planTest=pl.getPlan(fichierPlanTronconNullPointerExecption);
-		//assertEquals(planTest,null);
-		System.out.println("testFichierTronconNullPointerExecption");
+		System.out.println("test Fichier Troncon NullPointerExecption:");
+		pl.getPlan(fichierPlanTronconNullPointerExecption);
+		
 	}
 	@Test
 	public void testFichierTronconNull(){
-		Plan planTest=pl.getPlan(fichierPlanTronconNull);
-		//assertEquals(planTest,null);
-		System.out.println("testFichierTronconNull");
+		System.out.println("test Fichier Troncon Null:");
+		pl.getPlan(fichierPlanTronconNull);
+		
 	}
 	@Test
 	public void testFichierTronconNumberFormatExecption(){
-		Plan planTest=pl.getPlan(fichierPlanTronconNumberFormatExecption);
-		assertEquals(planTest,null);
-		System.out.println("testFichierTronconNumberFormatExecption");
+		System.out.println("test Fichier Troncon NumberFormatExecption:");
+		pl.getPlan(fichierPlanTronconNumberFormatExecption);
+		
 	}
+	@AfterClass
+	public static void afterClass(){
+		System.out.println("");
+	} 
 }

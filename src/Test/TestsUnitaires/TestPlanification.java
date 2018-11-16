@@ -16,7 +16,12 @@ public class TestPlanification {
 	private final static String cheminPetitDl="./Documents/fichiersXML2018/dl-petit-6.xml";
 	private static Planification planification;
 	private static int nombreLivreurs=3;
-	
+	@BeforeClass
+	public static void beforeClass() {
+		System.out.println("----------------------------------------------");
+		System.out.println("--------------Test Planification--------------");
+		System.out.println("----------------------------------------------");
+	}
 	@Before
 	public void charger() {
 		planification=new Planification();
@@ -25,100 +30,93 @@ public class TestPlanification {
 		planification.chargerPlan(fichierPetitPlan);
 		planification.chargerDemandesDeLivraisons(fichierPetitDl);
 		planification.calculerTournees(nombreLivreurs);
-		//System.out.println("charger");
+	}
+	@After
+	public void after() {
+		System.out.println("Test reussi");
+		System.out.println("----------------------------------------------");
 	}
 	@Test
-	public void testCalculerTournee(){
+	public void testCalculerTournees(){
+		System.out.println("test Calculer Tournees:");
 		planification.calculerTournees(nombreLivreurs);
-		System.out.println("testCalculerTournee");
+		System.out.println(planification.getTournees());
+		
 	}
 	@Test
 	public void testIsEntrepot(){
+		System.out.println("test IsEntrepot:");
 		Livraison test=planification.getDemandeLivraisons().getPointsDeLivraisons().get(0);
-		planification.isEntrepot(test);
-		System.out.println("testIsEntrepot");
+		System.out.println(planification.isEntrepot(test));
+		
 	}
 	@Test
 	public void testAjouterPointDeLivraison(){
+		System.out.println("test Ajouter Point DeLivraison:");
 		String idPointLivraison=planification.getPlan().getNoeuds().get(2);
 		int duree=60;
 		Livraison livraison1=(Livraison)planification.getTournees().get(1).getHeuresDeLivraison().keySet().toArray()[1];
 		Livraison livraison2=(Livraison)planification.getTournees().get(1).getHeuresDeLivraison().keySet().toArray()[2];
 		assertNotEquals(livraison2,null);
-		planification.ajouterPointDeLivraison(idPointLivraison, duree, livraison1, livraison2);
-		System.out.println("testAjouterPointDeLivraison");
-		//System.out.println("sadsdf:"+planification.livraisonsConsecutives(livraison1, livraison2));
+		System.out.println(planification.ajouterPointDeLivraison(idPointLivraison, duree, livraison1, livraison2));
 	}
 	@Test
 	public void testSupprimerPointDeLivraison(){
+		System.out.println("test Supprimer Point DeLivraison:");
 		assertNotEquals(planification.getPlan(),null);
 		List<Livraison> listeLivraisons=planification.getDemandeLivraisons().getPointsDeLivraisons();
 		Livraison livraisonSupprime=listeLivraisons.get(2);
-		planification.supprimerPointDeLivraison(livraisonSupprime);
-		System.out.println("testSupprimerPointDeLivraison");
-		
+		System.out.println("livraisonSupprime:"+livraisonSupprime.toString());
 	}
 	@Test
 	public void testDeplacerLivraison(){
+		System.out.println("test Deplacer Livraison:");
 		Livraison livraisonADeplacer=planification.getDemandeLivraisons().getPointsDeLivraisons().get(3);
-		System.out.println(planification.getTournees().size());
 		Tournee tourneeChoisie1=planification.getTournees().get(0);
 		planification.getTournees().get(1);
 		int size=tourneeChoisie1.getHeuresDeLivraison().size();
-		System.out.println("size="+size);
 		Livraison livraison1=(Livraison)tourneeChoisie1.getHeuresDeLivraison().keySet().toArray()[0];
 		Livraison livraison2=(Livraison)tourneeChoisie1.getHeuresDeLivraison().keySet().toArray()[2];
 		planification.deplacerLivraison(livraisonADeplacer, livraison1, livraison2);
-		System.out.println("testDeplacerLivraison");
+		System.out.println("livraison a deplacer:"+livraisonADeplacer.toString());
 	}
 	@Test
 	public void testLivraisonsConsecutives(){
+		System.out.println("test Livraisons Consecutives");
 		Livraison livraison1=planification.getDemandeLivraisons().getPointsDeLivraisons().get(1);
 		Livraison livraison2=planification.getDemandeLivraisons().getPointsDeLivraisons().get(2);	
-		Livraison livraison3=planification.getDemandeLivraisons().getPointsDeLivraisons().get(3);	
-		boolean drapeauConsecutives1=planification.livraisonsConsecutives(livraison1, livraison2);
-		boolean drapeauConsecutives2=planification.livraisonsConsecutives(livraison1, livraison3);
-		boolean drapeauConsecutives3=planification.livraisonsConsecutives(livraison2, livraison2);
-		System.out.println(drapeauConsecutives1);
-		System.out.println(drapeauConsecutives2);
-		System.out.println(drapeauConsecutives3);
-		System.out.println("testLivraisonsConsecutives");
-	}
-	@Test
-	public void testMAJAffichage(){
-		planification.MAJAffichage();
-		System.out.println("testMAJAffichage");
+		System.out.println("Livraisons Consecutives:"+planification.livraisonsConsecutives(livraison1, livraison2));
 	}
 	@Test
 	public void testGetNomDeLaRue(){
+		System.out.println("test Get Nom De La Rue");
 		String idOrigine=planification.getPlan().getNoeuds().get(0);
 		String idDestination=planification.getPlan().getSuccesseurs(idOrigine).get(0).getDestination();
-		planification.getNomDeLaRue(idOrigine, idDestination);
-		
+		System.out.println(planification.getNomDeLaRue(idOrigine, idDestination));	
+	}
+	@Test
+	public void testGetNomDeLaRueNotFound(){
+		System.out.println("test Get Nom De La Rue Not Found");
 		String idOrigineRueNotFound=planification.getPlan().getNoeuds().get(0);
 		String idDestinationRueNotFound="5678";
-		planification.getNomDeLaRue(idOrigineRueNotFound, idDestinationRueNotFound);
-		System.out.println("testGetNomDeLaRue");
+		System.out.println(planification.getNomDeLaRue(idOrigineRueNotFound, idDestinationRueNotFound));	
 	}
 	@Test
 	public void testSupprimerDemandesLivraisons(){
+		System.out.println("test Supprimer Demandes Livraisons");
 		planification.supprimerDemandesLivraisons();
-		System.out.println("testSupprimerDemandesLivraisons");
+		System.out.println("DemandeLivraisons:"+planification.getDemandeLivraisons());
 	}
 	@Test
 	public void testSupprimerPlan(){
+		System.out.println("test Supprimer Plan");
 		planification.supprimerPlan();
-		System.out.println("testSupprimerPlan");
-	}
-	@Test
-	public void testGetTournees(){
-		planification.getTournees();
-		System.out.println("testGetTournees");
+		System.out.println("Plan:"+planification.getPlan());
 	}
 	@AfterClass
 	public static void clean() {
 		planification=null;
-		System.out.println("clean");
+		System.out.println(""); 
 	}
 
 }

@@ -3,10 +3,10 @@ package Test.TestsUnitaires;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
 import Model.Planification;
 import Model.Metier.Chemin;
@@ -24,17 +24,37 @@ public class TestChemin {
 		planification.chargerDemandesDeLivraisons(fichierDl);
 		int nombreLivreurs=3;
 		planification.calculerTournees(nombreLivreurs);
+		System.out.println("----------------------------------------------");
+		System.out.println("---------------Test Chemin--------------------");
+		System.out.println("----------------------------------------------");
+	}
+	@After
+	public void after() {
+		System.out.println("Test reussi");
+		System.out.println("----------------------------------------------");
+	}
+	
+	@Test
+	public void testConstucteurChemin() {
+		System.out.println("testConstucteurChemin:");
+		List<String> listeChemin=new ArrayList<String>();
+		listeChemin.add("123");
+		listeChemin.add("234");
+		Chemin cheminATester=new Chemin(listeChemin,200);
+		assertFalse(cheminATester.equals(null));
+		System.out.println("arrivee de ce chemin:"+cheminATester.getArrivee());	
 	}
 	@Test
-	public void testChemin() {
-		System.out.println("testChemin:");
-		Chemin cheminATester=planification.getTournees().get(0).getChemins().get(1);
-		System.out.println("arrive:"+cheminATester.getArrivee());
+	public void testToString() {
+		System.out.println("testToStringChemin:");
+		List<String> listeChemin=new ArrayList<String>();
+		listeChemin.add("123");
+		listeChemin.add("234");
+		Chemin cheminATester=new Chemin(listeChemin,200);
 		System.out.println(cheminATester.toString());
-		List<String> listeChemins=cheminATester.getChemin();
-		assertFalse(listeChemins.equals(null));
-		assertFalse(cheminATester.equals(null));
-		assertTrue(cheminATester.equals(cheminATester));
-		System.out.println("");
 	}
+	@AfterClass
+	public static void afterClass(){
+		System.out.println("");
+	} 
 }

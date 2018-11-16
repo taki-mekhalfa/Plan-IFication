@@ -1,6 +1,8 @@
 package Test.TestsUnitaires;
 
 import java.io.File;
+
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -20,12 +22,21 @@ public class TestTournee {
 		planification.chargerDemandesDeLivraisons(fichierDl);
 		int nombreLivreurs=3;
 		planification.calculerTournees(nombreLivreurs);
+		System.out.println("----------------------------------------------");
+		System.out.println("-----------------Test Tournee-----------------");
+		System.out.println("----------------------------------------------");
 	}
 	@Test
 	public void testTournee() {
 		System.out.println("testTournee:");
 		Tournee tourneeATester=planification.getTournees().get(1);
+		System.out.println("tournee a tester:");
 		System.out.println(tourneeATester.toString());
-		System.out.println("");
+		System.out.println("Test reussi");
 	}
+	@AfterClass
+	public static void afterClass(){
+		System.out.println("----------------------------------------------");
+		System.out.println("");
+	} 
 }

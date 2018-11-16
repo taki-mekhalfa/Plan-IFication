@@ -14,7 +14,6 @@ public class TestModelCalcul {
 	private static DemandeLivraisons dl;
 	private static Planification planification;
 	private static Calculateur calculateur;
-	private static Djikstra dPlan=new Djikstra();
 	@BeforeClass
 	public static void initialiser() {
 		File fichierPlan=new File(cheminPlan);
@@ -24,24 +23,24 @@ public class TestModelCalcul {
 		planification.chargerDemandesDeLivraisons(fichierDl);
 		plan=planification.getPlan();
 		dl=planification.getDemandeLivraisons();
+		System.out.println("----------------------------------------------");
+		System.out.println("--------------Test Model Calcul---------------");
+		System.out.println("----------------------------------------------");
 	}
 	@Test
-	public void TestDijkstrasPlan(){
-		String idSource=dl.getEntrepot();
-		List<Livraison> pointsDestination=dl.getPointsDeLivraisons();
-		dPlan.getPlusCourtsChemins(idSource, pointsDestination, plan);
-	}
-	@Test
-	public void TestCalculateur(){
+	public void TestCalcul(){
+		System.out.println("Test Calcul");
 		calculateur=new Calculateur(plan);
 		int nombreLivreurs=3;
-		calculateur.getTournees(dl, nombreLivreurs);
+		System.out.println("tournee 1:\n"+calculateur.getTournees(dl, nombreLivreurs).get(0));
+		System.out.println("Test reussi");
 	}
 	@AfterClass
 	public static void clean() {
 		planification=null;
 		plan=null;
 		dl=null;
+		System.out.println("----------------------------------------------");
+		System.out.println("");
 	}
-
 }

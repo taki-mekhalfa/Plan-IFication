@@ -3,8 +3,7 @@ package Test.TestsUnitaires;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
 import Model.Planification;
 import Model.Metier.Noeud;
@@ -24,20 +23,30 @@ public class TestNoeud {
 		planification.chargerDemandesDeLivraisons(fichierDl);
 		int nombreLivreurs=3;
 		planification.calculerTournees(nombreLivreurs);
+		System.out.println("----------------------------------------------");
+		System.out.println("--------------------Test Noeud----------------");
+		System.out.println("----------------------------------------------");
 	}
 	@Test
 	public void testNoeud() {
+		System.out.println("----------------------------------------------");
 		System.out.println("testNoeud:");
-		String idNoeudATester=planification.getPlan().getNoeuds().get(2);
-		Noeud noeudATester=NoeudFactory.getNoeudParId(idNoeudATester);
-		String idNoeudAComparer=planification.getPlan().getNoeuds().get(3);
-		Noeud noeudAComparer=NoeudFactory.getNoeudParId(idNoeudAComparer);
-		System.out.println(noeudATester.toString());
-		System.out.println("id de ce noeud:"+noeudATester.getId());
-		System.out.println("hashcode de ce noeud:"+noeudATester.hashCode());
-		assertTrue(noeudATester.equals(noeudATester));
-		assertFalse(noeudATester.equals(noeudAComparer));
-		assertFalse(noeudATester.equals(null));
-		System.out.println("");
+		String idNoeud1=planification.getPlan().getNoeuds().get(2);
+		Noeud noeud1=NoeudFactory.getNoeudParId(idNoeud1);
+		String idNoeud2=planification.getPlan().getNoeuds().get(3);
+		Noeud noeud2=NoeudFactory.getNoeudParId(idNoeud2);
+		System.out.println("noeud1:"+noeud1.toString());
+		System.out.println("noeud2:"+noeud2.toString());
+		System.out.println("noeud1 est egale a noeud1£º"+noeud1.equals(noeud1));
+		System.out.println("noeud1 est egale a noeud2£º"+noeud1.equals(noeud2));
+		System.out.println("noeud1 est egale a null£º"+noeud1.equals(null));
+		System.out.println("Test reussi");
 	}
+	@AfterClass
+	public static void afterClass(){
+		System.out.println("----------------------------------------------");
+		System.out.println("");
+	} 
+	
+	
 }
