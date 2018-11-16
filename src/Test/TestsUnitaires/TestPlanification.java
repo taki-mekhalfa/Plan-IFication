@@ -66,6 +66,7 @@ public class TestPlanification {
 		assertNotEquals(planification.getPlan(),null);
 		List<Livraison> listeLivraisons=planification.getDemandeLivraisons().getPointsDeLivraisons();
 		Livraison livraisonSupprime=listeLivraisons.get(2);
+		planification.supprimerPointDeLivraison(livraisonSupprime);
 		System.out.println("livraisonSupprime:"+livraisonSupprime.toString());
 	}
 	@Test
