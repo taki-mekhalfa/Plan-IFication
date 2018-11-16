@@ -14,12 +14,12 @@ import Model.Metier.Tournee;
 /**
  * Classe permettant le retour en arrière après une opération d'ajout de point de livraison
  * @author H4104
- * @see Controleur.Commande
+ * @see Commande
  * @see Model.Metier.Livraison
  * @see Model.Metier.Tournee
  * @see Model.Metier.Temps
  * @see Model.Metier.Chemin
- * @see Controleur.Controleur
+ * @see Controleur
  */
 public class CommandeAjout implements Commande{
 	private Livraison livraisonAjoutee;

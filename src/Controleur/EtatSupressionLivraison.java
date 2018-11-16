@@ -5,8 +5,8 @@ import Model.Metier.Livraison;
 /**
  * Classe EtatSuppressionLivraison
  * @author H4104
- * @see Controleur.EtatDefaut
- * @see Controleur.Controleur
+ * @see EtatDefaut
+ * @see Controleur
  * @see Model.Metier.Livraison
  */
 public class EtatSupressionLivraison extends EtatDefaut {
@@ -25,6 +25,7 @@ public class EtatSupressionLivraison extends EtatDefaut {
 
     /**
      * Actions liees a la selection d'une livraison
+     * @param livraison la livraison selectionnee
      * @return true si la livraison est effectivement selectionnee, false sinon.
      */
     @Override

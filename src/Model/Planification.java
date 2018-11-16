@@ -46,6 +46,7 @@ public class Planification extends Observable {
      * Méthode pour le chargement des demandes de livraisons.
      * @see Model.XMLHelpers.DemandeLivraisonsXMLHelperDom4J
      * @param fichierXML contenant les demandes de livraisons que l'on veut charger
+     * @return booleen indiquant true pour la reussite de l'operation et false pour l'echec
      */
     public boolean chargerDemandesDeLivraisons(File fichierXML) {
         demandeLivraisons = new DemandeLivraisonsXMLHelperDom4J().getDemandeLivraisons(fichierXML);
@@ -215,8 +216,8 @@ public class Planification extends Observable {
 
     /**
      * Méthode de test pour savoir si deux livraisons sont consécutives.
-     * @param livraison1
-     * @param livraison2
+     * @param livraison1 premiere livraison
+     * @param livraison2 deuxieme livraison
      * @return boolean correspondant à la réponse voulue
      * @see Model.Metier.Tournee
      */
@@ -232,8 +233,7 @@ public class Planification extends Observable {
      * Méthode d'obtention du nom de la rue.
      * @param idOrigine correspondant au noeud dont la rue recherchée part
      * @param idDestination correspondant au noeud où la rue voulue arrive
-     * @see Model.Metier.Troncon
-     * @return
+     * @return nom de la rue
      */
     public String getNomDeLaRue(String idOrigine, String idDestination) {
         List<Plan.Troncon> tronconList = plan.getSuccesseurs(idOrigine);

@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * Classe permettant la gestion des fichiers XML liés au plan.
  * @author H4104
- * @see Model.XMLHelper.PlanXMLHelper
+ * @see PlanXMLHelper
  */
 public class PlanXMLHelperDom4J implements PlanXMLHelper {
 

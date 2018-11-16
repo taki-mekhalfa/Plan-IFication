@@ -21,7 +21,7 @@ import java.util.Random;
 /**
  * Classe de gestion de l'affichage sur la carte des tournées et livraisons.
  * @author H4104
- * @see Vue.VueTextuelle
+ * @see VueTextuelle
  */
 public class VueGraphique extends Vue {
     private double minLongitude;
@@ -249,11 +249,6 @@ public class VueGraphique extends Vue {
                 cercle.setCouleur(Color.BLUE);
 
         }
-    }
-
-
-    public void lancerAnimation(Velo monVelo){
-    	tourneesGroup.getChildren().add(monVelo);
     }
     
     /**

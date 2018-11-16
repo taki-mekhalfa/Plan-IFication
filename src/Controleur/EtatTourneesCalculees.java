@@ -5,8 +5,8 @@ import java.io.File;
 /**
  * Classe EtatTourneesCalculees
  * @author H4104
- * @see Controleur.EtatDefaut
- * @see Controleur.Controleur
+ * @see EtatDefaut
+ * @see Controleur
  */
 public class EtatTourneesCalculees extends EtatDefaut {
 
@@ -32,7 +32,7 @@ public class EtatTourneesCalculees extends EtatDefaut {
 
     /**
      * Declenchement des actions liees au clic sur le bouton Charger un plan
-     * @param fichierXML le fichier xml contenant le plan
+     * @param fichier le fichier xml contenant le plan
      */
     @Override
     public void boutonChargerPlan(File fichier) {

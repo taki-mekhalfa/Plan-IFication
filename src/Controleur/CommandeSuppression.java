@@ -14,12 +14,12 @@ import Model.Metier.Tournee;
 /**
  * Classe permettant le retour en arrière après une opération de suppression de point de livraison
  * @author H4104
- * @see Controleur.Commande
+ * @see Commande
  * @see Model.Metier.Livraison
  * @see Model.Metier.Tournee
  * @see Model.Metier.Temps
  * @see Model.Metier.Chemin
- * @see Controleur.Controleur
+ * @see Controleur
  */
 public class CommandeSuppression implements Commande{
 	private Livraison livraison;
@@ -32,7 +32,7 @@ public class CommandeSuppression implements Commande{
 	/**
 	 * Constructeur de la classe CommandeSuppression, sauvegarde de l'etat avant la suppression
 	 * @param t Liste des tournees existantes
-	 * @param liv1 Livraison supprimee
+	 * @param liv Livraison supprimee
 	 */
 	public CommandeSuppression(List<Tournee> t, Livraison liv){
 		livraison = liv;

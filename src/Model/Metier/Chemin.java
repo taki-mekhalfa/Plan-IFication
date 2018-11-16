@@ -26,7 +26,7 @@ public class Chemin {
 
     /**
      * Méthode d'obtention de la liste de noeuds.
-     * @return List<String> correspondant à la liste de noeuds du chemins
+     * @return chemin correspondant à la liste de noeuds du chemins
      */
     public List<String> getChemin() {
         return chemin;
@@ -58,7 +58,7 @@ public class Chemin {
 
     /**
      * Méthode de conversion en string du chemin.
-     * @retour Chemin correspondant à un string contenant le descriptif du chemin
+     * @return Chemin correspondant à un string contenant le descriptif du chemin
      */
     @Override
     public String toString() {

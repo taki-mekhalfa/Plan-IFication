@@ -14,12 +14,12 @@ import Model.Metier.Tournee;
 /**
  * Classe permettant le retour en arrière après une opération de deplacement de point de livraison
  * @author H4104
- * @see Controleur.Commande
+ * @see Commande
  * @see Model.Metier.Livraison
  * @see Model.Metier.Tournee
  * @see Model.Metier.Temps
  * @see Model.Metier.Chemin
- * @see Controleur.Controleur
+ * @see Controleur
  */
 public class CommandeDeplacement implements Commande{
 	private Livraison livraisonDeplacee;

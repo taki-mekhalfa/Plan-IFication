@@ -23,7 +23,7 @@ public class Plan {
     /**
      * Méthode d'obtention des successeurs associés à un noeud précis.
      * @param idNoeud correspondant  à l'identifiant du noeud selectionné
-     * @return List<Troncon> correspondant à cette liste de successeurs
+     * @return liste de troncons correspondant à cette liste de successeurs
      */
     public List<Troncon> getSuccesseurs(String idNoeud) {
         return plan.get(idNoeud);
@@ -31,7 +31,7 @@ public class Plan {
 
     /**
      * Méthode d'obtention des noeuds du plan.
-     * @return List<String> correspondant à cette série de noeuds
+     * @return ensemble des noeuds du plan
      */
     public List<String> getNoeuds() {
         return new ArrayList<>(plan.keySet());
@@ -54,7 +54,7 @@ public class Plan {
     /**
      * Méthode d'obtention de la distance associée à une rue
      * @param idSource correspondant à l'identifiant du noeud d'origine de la rue
-     * @param idDes correspondant à l'identifiant du noeud de destination de la rue
+     * @param idDestination correspondant à l'identifiant du noeud de destination de la rue
      * @return double correspondant à la distance associée à la rue recherchée
      */
     public double getDistance(String idSource, String idDestination) {
@@ -68,7 +68,7 @@ public class Plan {
 
     /**
      * Méthode de conversion du plan sous forme de string.
-     * @String correspondant à la description du plan sous forme d'une simple string
+     * @return chaine de caracteres correspondant à la description du plan sous forme d'une simple string
      */
     @Override
     public String toString() {
@@ -135,7 +135,7 @@ public class Plan {
 
         /**
          * Méthode de conversion du tronçon sous forme de string.
-         * @String correspondant à la description du tronçon sous forme d'une simple string
+         * @return chaine de caracteres correspondant à la description du tronçon sous forme d'une simple string
          */
         @Override
         public String toString() {

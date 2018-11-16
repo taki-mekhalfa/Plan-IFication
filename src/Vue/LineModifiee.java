@@ -48,7 +48,7 @@ public class LineModifiee extends Line {
 
     /**
      * Méthode d'affectation du nom de la rue associée à l'objet.
-     * @param nomDeLaRue correspondant au nom de rue choisit
+     * @param nomDeLaRue correspondant au nom de rue choisie
      */
     public void setNomDeLaRue(String nomDeLaRue) {
         this.nomDeLaRue = nomDeLaRue;
@@ -56,7 +56,7 @@ public class LineModifiee extends Line {
 
     /**
      * Méthode d'affectation de la couleur.
-     * @param color correspondant à la couleur choisit dans un type Color
+     * @param color correspondant à la couleur choisie dans un type Color
      */
     public void setDefaultColor(Color color) {
         setStroke(color);
@@ -71,7 +71,7 @@ public class LineModifiee extends Line {
 
     /**
      * Méthode d'obtention du nom de la rue associée à l'objet.
-     * @retour nomDeLaRue correspondant au nom de rue choisit
+     * @return nomDeLaRue correspondant au nom de rue choisi
      */
     public String getNomDeLaRue() {
         return nomDeLaRue;

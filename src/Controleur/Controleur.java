@@ -16,15 +16,15 @@ import java.io.File;
  * @see Model.Metier.Tournee
  * @see Model.Metier.Temps
  * @see Model.Metier.Chemin
- * @see Controleur.EtatInit
- * @see Controleur.EtatPlanCharge
- * @see Controleur.EtatPlanEtDemandeLivraisonCharges
- * @see Controleur.EtatTourneesCalculees
- * @see Controleur.EtatSupressionLivraison
- * @see Controleur.EtatAjoutLivraison
- * @see Controleur.EtatDeplacementLivraison
- * @see Controleur.ListeCommandes
- * @see Controleur.Etat
+ * @see EtatInit
+ * @see EtatPlanCharge
+ * @see EtatPlanEtDemandeLivraisonCharges
+ * @see EtatTourneesCalculees
+ * @see EtatSupressionLivraison
+ * @see EtatAjoutLivraison
+ * @see EtatDeplacementLivraison
+ * @see ListeCommandes
+ * @see Etat
  * @see Vue.InterfaceGUI
  * @see Vue.VueGraphique
  * @see Vue.VueTextuelle
@@ -127,6 +127,7 @@ public class Controleur {
 
     /**
      * Declenchement des actions liees a la selection d'une livraison selon l'etat courant
+     * @param livraison la livraison selectionnee
      * @return true si la livraison est effectivement selectionnee, false sinon.
      */
     public static boolean livraisonSelectionne(Livraison livraison) {
@@ -135,6 +136,7 @@ public class Controleur {
 
     /**
      * Declenchement des actions liees a la selection d'un noeud selon l'etat courant
+     * @param idNoeud l'id du noeud selectionne
      * @return true si le noeud est effectivement selectionnee, false sinon.
      */
     public static boolean noeudSelectionne(String idNoeud) {
@@ -143,6 +145,7 @@ public class Controleur {
 
     /**
      * Declenchement des actions liees a la deselection d'un noeud selon l'etat courant
+     * @param idNoeud l'id du noeud deselectionne
      */
     public static void noeudDeselectionne(String idNoeud) {
         etatCourant.noeudDeselectionne(idNoeud);
@@ -150,6 +153,7 @@ public class Controleur {
 
     /**
      * Declenchement des actions liees a la deselection d'une livraison selon l'etat courant
+     * @param livraison la livraison deselectionnee
      */
     public static void livraisonDeselectionnee(Livraison livraison) {
         etatCourant.livraisonDeselectionnee(livraison);
@@ -178,6 +182,7 @@ public class Controleur {
 
     /**
      * Declenchement des actions liees a la saisie de la duree d'une livraison selon l'etat courant
+     * @param duree la duree saisie
      */
     public static void saisieDuree(int duree){
         etatCourant.saisieDuree(duree);

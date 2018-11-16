@@ -205,9 +205,7 @@ public class VueTextuelle extends Vue {
                                     String ent = demandeLivraisons.getEntrepot();
                                     Noeud entrepot = NoeudFactory.getNoeudParId(ent);                                
                                     xPos = vueGraph.trX(entrepot.getLongitude());
-                                    yPos = vueGraph.trY(entrepot.getLatitude());                                
-                                    Velo livreurAnim = new Velo(xPos,yPos);
-                                    vueGraph.lancerAnimation(livreurAnim);   
+                                    yPos = vueGraph.trY(entrepot.getLatitude());                                  
                                     for(int i=0; i<tournee.getChemins().size();i++){
                                     	
                                     	Chemin chemin = tournee.getChemins().get(i);
@@ -220,11 +218,9 @@ public class VueTextuelle extends Vue {
                                         	    	  Noeud noeud = NoeudFactory.getNoeudParId(idNoeud);                                        
                                         	    	  xSuiv = vueGraph.trX(noeud.getLongitude());
                                         	    	  ySuiv = vueGraph.trY(noeud.getLatitude());                                        
-                                        	    	  livreurAnim.avancerVelo(xSuiv, ySuiv);
                                         	    	  
                                         }                                                                  
                                     }
-                                    livreurAnim.avancerVelo(xPos, yPos);
                             }
                     }
                 }
@@ -233,8 +229,8 @@ public class VueTextuelle extends Vue {
     }
 
     /**
-    * Méthode d'affichage d'une message à l'utilisateur
-    *@param newText correspond au message à afficher
+    * Methode d'affichage d'une message a l'utilisateur
+    *@param newText correspond au message a afficher
     *@param color la couleur du message
     */
     public void addZoneDialogue(String newText, int color){
@@ -256,7 +252,7 @@ public class VueTextuelle extends Vue {
     	zoneDialogue.getChildren().addAll(text);
     }
    /**
-     * M�thode de reinitialisation de la zone de dialogue.
+     * Methode de reinitialisation de la zone de dialogue.
      */
     public void clearZoneDialogue() {
         zoneDialogue.getChildren().clear();
@@ -264,7 +260,7 @@ public class VueTextuelle extends Vue {
 
     /**
      * M�thode d'affectation de la vue graphique.
-     * @param vueGraph correspondant � la vue graphique choisie
+     * @param vueGraph correspondant a la vue graphique choisie
      */
     public void setVueGraph(VueGraphique vueGraph) {
         this.vueGraph = vueGraph;

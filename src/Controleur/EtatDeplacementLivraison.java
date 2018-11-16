@@ -5,9 +5,9 @@ import Model.Metier.Livraison;
 /**
  * Classe EtatDeplacementLivraison
  * @author H4104
- * @see Controleur.EtatDefaut
+ * @see EtatDefaut
  * @see Model.Metier.Livraison
- * @see Controleur.Controleur
+ * @see Controleur
  */
 public class EtatDeplacementLivraison extends EtatDefaut {
 

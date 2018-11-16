@@ -5,8 +5,8 @@ import java.util.LinkedList;
 /**
  * Classe ListeCommandes, qui gere les undo redo
  * @author H4104
- * @see Controleur.Commande
- * @see Controleur.Controleur
+ * @see Commande
+ * @see Controleur
  */
 public class ListeCommandes {
     private LinkedList<Commande> listeCommandes;
@@ -22,6 +22,7 @@ public class ListeCommandes {
 
     /**
      * Ajout d'une commande a la liste
+     * @param c la commande a ajouter a la liste
      */
     public void add(Commande c) {
         commandeEnCours = commandeEnCours + 1;

@@ -5,8 +5,8 @@ import java.io.File;
 /**
  * Classe EtatPlanEtDemandeLivraisonCharges
  * @author H4104
- * @see Controleur.EtatDefaut
- * @see Controleur.Controleur
+ * @see EtatDefaut
+ * @see Controleur
  */
 public class EtatPlanEtDemandeLivraisonCharges extends EtatDefaut{
 
@@ -26,7 +26,7 @@ public class EtatPlanEtDemandeLivraisonCharges extends EtatDefaut{
 	
 	/**
      * Declenchement des actions liees au clic sur le bouton Charger un plan
-     * @param fichierXML le fichier xml contenant le plan
+     * @param fichier le fichier xml contenant le plan
      */
 	@Override
 	public void boutonChargerPlan(File fichier){
