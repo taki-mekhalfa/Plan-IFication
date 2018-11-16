@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<reseau>
+<noeud id="25175791" latitude="45.75406" longitude="4.857418"/>
+<noeud id="2129259178" latitude="45.750404" longitude="4.8744674"/>
+<noeud id="26086130" latitude="45.75871" longitude="4.8704023"/>
+<noeud id="2129259176" latitude="45.75171" longitude="4.8718166"/>
+<noeud id="479185301" latitude="45.750896" longitude="4.859119"/>
+<noeud id="25611760" latitude="45.754536" longitude="4.866525"/>
+<noeud id="25303831" latitude="45.74979" longitude="4.87572"/>
+<noeud id="479185303" latitude="45.751904" longitude="4.857877"/>
+<noeud id="25303832" latitude="45.749344" longitude="4.876714"/>
+
+<troncon destination="25175778" longueur="69.979805" nomRue="Rue Danton" origine="25175791"/>
+<troncon destination="25175779" longueur="136.00636" nomRue="Rue de l'Abondance" origine="25175790"/>
+</reseau>
