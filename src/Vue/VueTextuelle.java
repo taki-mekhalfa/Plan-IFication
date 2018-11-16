@@ -193,7 +193,6 @@ public class VueTextuelle extends Vue {
                             if (tableTournee.getSelectionModel().getSelectedItem().getNoeud().substring(3, 10).equals("LIVREUR")) {
                                     String str = tableTournee.getSelectionModel().getSelectedItem().getNoeud();
                                     String index = str.substring(13, str.length());
-                                    System.out.println(index);
                                     int k = Integer.parseInt(index);
                                     
                                     Tournee tournee = l.get(k-1);
@@ -218,13 +217,11 @@ public class VueTextuelle extends Vue {
                                         	int w =j;
                                         	
                                         	    	  String idNoeud = trajet.get(w);
-                                        	    	  System.out.println(idNoeud);
                                         	    	  Noeud noeud = NoeudFactory.getNoeudParId(idNoeud);                                        
                                         	    	  xSuiv = vueGraph.trX(noeud.getLongitude());
                                         	    	  ySuiv = vueGraph.trY(noeud.getLatitude());                                        
                                         	    	  livreurAnim.avancerVelo(xSuiv, ySuiv);
-                                        	    	  System.out.println(xSuiv+ " "+ySuiv);
-                                        
+                                        	    	  
                                         }                                                                  
                                     }
                                     livreurAnim.avancerVelo(xPos, yPos);

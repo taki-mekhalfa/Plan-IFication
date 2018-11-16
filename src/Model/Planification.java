@@ -109,17 +109,18 @@ public class Planification extends Observable {
      * @see Model.Metier.Tournee
      */
     public void deplacerLivraison(Livraison livraisonADeplacer, Livraison livraison1, Livraison livraison2){
-        boolean supprimee = false;
+    	boolean supprimee = false;
         boolean ajoutee = false;
         for (Tournee tournee : tournees){
-            if (tournee.consecutives(livraison1,livraison2)) {
-                tournee.ajouterLivraison(livraisonADeplacer, livraison1, livraison2, plan);
-                ajoutee = true;
-            }
-            else if (tournee.contientLivraison(livraisonADeplacer)) {
+        	if (tournee.contientLivraison(livraisonADeplacer)){
                 tournee.supprimerLivraison(livraisonADeplacer,plan);
                 supprimee = true;
             }
+        	if (tournee.consecutives(livraison1,livraison2)) {
+        			tournee.ajouterLivraison(livraisonADeplacer, livraison1, livraison2, plan);
+                    ajoutee = true;
+            }
+            
 
             if (supprimee && ajoutee) break;
         }
