@@ -6,13 +6,9 @@ import java.io.File;
 
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import Model.Planification;
 import Model.Metier.DemandeLivraisons;
-import Model.Metier.Plan;
 import Model.XMLHelpers.*;
 
 public class TestDlXMLHelper {
@@ -20,34 +16,69 @@ public class TestDlXMLHelper {
 	private static DemandeLivraisonsXMLHelperDom4J dl=new DemandeLivraisonsXMLHelperDom4J();
 	private final static String cheminPetitDl="./Documents/fichiersXML2018/dl-petit-6.xml";
 	private final static String cheminPetitDlNotFound="./Documents/fichiersXML2018/dl-petit-666.xml";
-	private final static String cheminDlMalConstruit="./Documents/fichiersXML2018/petitDlMalConstruit.xml";
-	private final static String cheminDlMalConstruit2="./Documents/fichiersXML2018/petitDlMalConstruit2.xml";
-	private final static String cheminDlMalConstruit3="./Documents/fichiersXML2018/petitDlMalConstruit3.xml";
-	private static File fichierPetitDlNotFound=new File(cheminPetitDlNotFound);
-	private static File fichierDlMalConstruit=new File(cheminDlMalConstruit);
-	private static File fichierDlMalConstruit2=new File(cheminDlMalConstruit2);
-	private static File fichierDlMalConstruit3=new File(cheminDlMalConstruit3);
+	private final static String cheminDlBaliseFausse="./Documents/fichiersXML2018/petitDlBaliseFausse.xml";
+	private final static String cheminDlEntrepotManqueAttribut="./Documents/fichiersXML2018/petitDlEntrepotManqueAttribut.xml";
+	private final static String cheminDlLivraisonNumberFormatException="./Documents/fichiersXML2018/petitDlLivraisonNumberFormatException.xml";
+	private final static String cheminDlLivraisonNullPointerException="./Documents/fichiersXML2018/petitDlLivraisonNullPointerException.xml";
+	private final static String cheminDlEntrepotPatternSyntaxException="./Documents/fichiersXML2018/petitDlEntrepotPatternSyntaxException.xml";
+	private final static String cheminDlTempsNumberFormatException="./Documents/fichiersXML2018/petitDlTempsNumberFormatException.xml";
+	
+	private static File fichier;
 	@Test
-	public void testChargerFichierNotFound(){
-		DemandeLivraisons dlTest=dl.getDemandeLivraisons(fichierPetitDlNotFound);
-		assertEquals(dlTest,null);
+	public void testChargerFichierDl(){
+		fichier=new File(cheminPetitDl);
+		DemandeLivraisons dlTest=dl.getDemandeLivraisons(fichier);
+		assertNotEquals(dlTest,null);
+		System.out.println("testChargerFichierDl");
 	}
 	@Test
-	public void testChargerFichierMalConstruit(){
-		DemandeLivraisons dlTest=dl.getDemandeLivraisons(fichierDlMalConstruit);
+	public void testFichierDlNotFound(){
+		fichier=new File(cheminPetitDlNotFound);
+		DemandeLivraisons dlTest=dl.getDemandeLivraisons(fichier);
 		assertEquals(dlTest,null);
-		System.out.println("testChargerFichierMalConstruit");
+		System.out.println("testFichierDlNotFound");
 	}
 	@Test
-	public void testChargerFichierMalConstruit2(){
-		DemandeLivraisons dlTest=dl.getDemandeLivraisons(fichierDlMalConstruit2);
+	public void testFichierDlBaliseFausse(){
+		fichier=new File(cheminDlBaliseFausse);
+		DemandeLivraisons dlTest=dl.getDemandeLivraisons(fichier);
 		assertEquals(dlTest,null);
-		System.out.println("testChargerFichierMalConstruit2");
+		System.out.println("testFichierDlBaliseFausse");
 	}
 	@Test
-	public void testChargerFichierMalConstruit3(){
-		DemandeLivraisons dlTest=dl.getDemandeLivraisons(fichierDlMalConstruit3);
+	public void testFichierDlManqueAttribut(){
+		fichier=new File(cheminDlEntrepotManqueAttribut);
+		DemandeLivraisons dlTest=dl.getDemandeLivraisons(fichier);
 		assertEquals(dlTest,null);
-		System.out.println("testChargerFichierMalConstruit3");
+		System.out.println("testFichierDlEntrepotManqueAttribut");
+	}
+	@Test
+	public void testFichierDlLivraisonNumberFormatException(){
+		fichier=new File(cheminDlLivraisonNumberFormatException);
+		DemandeLivraisons dlTest=dl.getDemandeLivraisons(fichier);
+		assertEquals(dlTest,null);
+		System.out.println("testFichierDlLivraisonNumberFormatException");
+	}
+	/*@Test
+	public void testFichierDlLivraisonNullPointerException(){//parseInt 只有 numbreformat exception
+		fichier=new File(cheminDlLivraisonNullPointerException);
+		DemandeLivraisons dlTest=dl.getDemandeLivraisons(fichier);
+		System.out.println("testFichierDlLivraisonNullPointerException");
+	}*/
+	/*@Test
+	public void testFichierDlEntrepotPatternSyntaxException(){//pattern 只有 regex='+'
+		fichier=new File(cheminDlEntrepotPatternSyntaxException);
+		DemandeLivraisons dlTest=dl.getDemandeLivraisons(fichier);
+		System.out.println("testFichierDlEntrepotPatternSyntaxException");
+	}*/
+	@Test
+	public void testFichierDlTempsNumberFormatException(){//pattern 只有 regex='+'
+		fichier=new File(cheminDlTempsNumberFormatException);
+		DemandeLivraisons dlTest=dl.getDemandeLivraisons(fichier);
+		System.out.println("testFichierDlTempsNumberFormatException");
+	}
+	@After
+	public void clean(){
+		fichier=null;
 	}
 }
