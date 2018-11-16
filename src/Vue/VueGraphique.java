@@ -172,42 +172,51 @@ public class VueGraphique extends Vue {
         if (tournees != null) {
             int indexTournee = 0;
             for (Tournee tournee : tournees) {
-                Color color = getColor(indexTournee);
-                List<Chemin> chemins = tournee.getChemins();
-                int nb = 1;
-                for (Chemin chemin : chemins) {
-                    Noeud premierNoeud = NoeudFactory.getNoeudParId(chemin.getDepart());
-                    for(Node node : livraisonsGroup.getChildren()){
-                        CercleLivraison cercleLivraison= (CercleLivraison) node;
-                        if(!cercleLivraison.getLivraison().getNoeud().equals(demandeLivraisons.getEntrepot()) && cercleLivraison.getLivraison().getNoeud().equals(premierNoeud.getId())){
-                            cercleLivraison.setOrdre(nb);
-                            nb++;
-                        }
-                    }
-                    LineModifiee line = new LineModifiee();
-                    line.setStartX(trX(premierNoeud.getLongitude()));
-                    line.setStartY(trY(premierNoeud.getLatitude()));
-                    for (String idNoeud : chemin.getChemin().subList(1, chemin.getChemin().size())) {
-                        Noeud noeud = NoeudFactory.getNoeudParId(idNoeud);
-                        line.setEndX(trX(noeud.getLongitude()));
-                        line.setEndY(trY(noeud.getLatitude()));
-                        line.setDefaultColor(color);
-                        line.setNomDeLaRue(planification.getNomDeLaRue(premierNoeud.getId(), noeud.getId()));
-                        line.setStrokeWidth(4);
-                        tourneesGroup.getChildren().add(line);
-                        line = new LineModifiee();
-                        premierNoeud = noeud;
-                        line.setStartX(trX(noeud.getLongitude()));
-                        line.setStartY(trY(noeud.getLatitude()));
-                    }
-                }
+                Color color = getColor(indexTournee);                
+                dessinerUneTournee (tournee, color, 4);
                 indexTournee = indexTournee + 1;
             }
-
-
         }
-
     }
+    
+    void dessinerUneTournee (Tournee tournee, Color color, int width) {
+            
+              List<Chemin> chemins = tournee.getChemins();
+              int nb = 1;
+          for (Chemin chemin : chemins) {
+                  dessinerUnChemin(chemin,color,width); 
+                  Noeud premierNoeud = NoeudFactory.getNoeudParId(chemin.getDepart());
+                  for(Node node : livraisonsGroup.getChildren()){
+                      CercleLivraison cercleLivraison= (CercleLivraison) node;
+                      if(!cercleLivraison.getLivraison().getNoeud().equals(demandeLivraisons.getEntrepot()) && cercleLivraison.getLivraison().getNoeud().equals(premierNoeud.getId())){
+                          cercleLivraison.setOrdre(nb);
+                          nb++;
+                      }
+                 }
+          }            
+    }
+    
+    void dessinerUnChemin (Chemin chemin, Color color, int width) {
+            
+              Noeud premierNoeud = NoeudFactory.getNoeudParId(chemin.getDepart());
+          LineModifiee line = new LineModifiee();
+          line.setStartX(trX(premierNoeud.getLongitude()));
+          line.setStartY(trY(premierNoeud.getLatitude()));
+          for (String idNoeud : chemin.getChemin().subList(1, chemin.getChemin().size())) {
+              Noeud noeud = NoeudFactory.getNoeudParId(idNoeud);
+              line.setEndX(trX(noeud.getLongitude()));
+              line.setEndY(trY(noeud.getLatitude()));
+              line.setDefaultColor(color);
+              line.setNomDeLaRue(planification.getNomDeLaRue(premierNoeud.getId(), noeud.getId()));
+              line.setStrokeWidth(width);
+              tourneesGroup.getChildren().add(line);
+              line = new LineModifiee();
+              premierNoeud = noeud;
+              line.setStartX(trX(noeud.getLongitude()));
+              line.setStartY(trY(noeud.getLatitude()));
+          }            
+    }
+    
 
     /**
      * Méthode d'indication visuelle pour le noeud selectionné qui sera en orange.
@@ -227,6 +236,9 @@ public class VueGraphique extends Vue {
      * Méthode pour reinitialiser les couleurs prises en compte pour mettre du bleu sauf pour l'entrepôt en rouge..
      */
     void resetCouleurs() {
+    	
+    	dessinerTournees();
+    	
         for (int i = 0; i < livraisonsGroup.getChildren().size(); i++) {
             CercleLivraison cercle = (CercleLivraison) livraisonsGroup.getChildren().get(i);
 
@@ -239,12 +251,17 @@ public class VueGraphique extends Vue {
         }
     }
 
+
+    public void lancerAnimation(Velo monVelo){
+    	tourneesGroup.getChildren().add(monVelo);
+    }
+    
     /**
      * Méthode d'adaptation des echelles en Y.
      * @param longitude correspondant à la valeur initiale en longitude
      * @return echelleHor correspondant à la valeur finale par rapport à la taille de l'écran
      */
-    private double trX(double longitude) {
+    public double trX(double longitude) {
         double echelleHor = screenSize.getHeight()*ratio / (maxLongitude - minLongitude);
         return echelleHor * (longitude - minLongitude);
     }
@@ -254,7 +271,7 @@ public class VueGraphique extends Vue {
      * @param latitude correspondant à la valeur initiale en latitude
      * @return echelleVer correspondant à la valeur finale par rapport à la taille de l'écran
      */
-    private double trY(double latitude) {
+    public double trY(double latitude) {
         double echelleVer = screenSize.getHeight()*ratio / (maxLatitude - minLatitude);
         return echelleVer * (maxLatitude - latitude);
     }
@@ -298,7 +315,7 @@ public class VueGraphique extends Vue {
      * @param n correspondant au code associé à l'élément concerné
      * @return Color correspondant à la couleur qui sera utilisé
      */
-    private Color getColor(int n) {
+    public Color getColor(int n) {
         if (n < colors.size()) {
             return colors.get(n);
         }

@@ -36,7 +36,7 @@ public class LineModifiee extends Line {
     /**
      * Méthode d'initialisation de la detection d'évènements.
      */
-    private void init() {
+    public void init() {
         setOnMouseEntered(event -> {
             setStroke(Color.color(9/256.0,132/256.0,227/256.0,1));
         });
@@ -62,6 +62,12 @@ public class LineModifiee extends Line {
         setStroke(color);
         this.defaultColor = color;
     }
+    
+    
+    public Color getColor () {
+    	return defaultColor;
+    }
+
 
     /**
      * Méthode d'obtention du nom de la rue associée à l'objet.

@@ -1,6 +1,9 @@
 package Vue;
 
+import Model.Metier.Chemin;
 import Model.Metier.Livraison;
+import Model.Metier.Noeud;
+import Model.Metier.NoeudFactory;
 import Model.Metier.Temps;
 import Model.Metier.Tournee;
 import Model.Planification;
@@ -20,6 +23,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -143,8 +148,10 @@ public class VueTextuelle extends Vue {
             tableTournee.setEditable(true);
 
             int i = 1;
+            List <Tournee> l = new LinkedList();
             for (Tournee tournee : tournees) {
 
+            	l.add(tournee);
                 Map<Livraison, Temps> distribution = tournee.getHeuresDeLivraison();
                 SortedSet<Livraison> livraisonsOrdonnees = new TreeSet<>((o1, o2) -> distribution.get(o1).compareTo(distribution.get(o2)));
                 livraisonsOrdonnees.addAll(distribution.keySet());
@@ -154,7 +161,7 @@ public class VueTextuelle extends Vue {
                 dureeLivraisonCol.setCellValueFactory(cellData -> cellData.getValue().getDureeProperty());
 
                 if (tournee.getHeuresDeLivraison().size() != 1) {
-                    Livraison livreur = new Livraison("Livreur :" + i, 0);
+                    Livraison livreur = new Livraison("   LIVREUR   " + i, 0);
                     livreur.setDureeProperty(new SimpleStringProperty(""));
                     dataTournee.add(livreur);
                     i++;
@@ -182,6 +189,47 @@ public class VueTextuelle extends Vue {
                 public void handle(MouseEvent event) {
                     vueGraph.resetCouleurs();
                     vueGraph.couleurPointFocus(tableTournee.getSelectionModel().getSelectedItem().getNoeud());
+                    if(tableTournee.getSelectionModel().getSelectedItem().getNoeud().length()>10) {
+                            if (tableTournee.getSelectionModel().getSelectedItem().getNoeud().substring(3, 10).equals("LIVREUR")) {
+                                    String str = tableTournee.getSelectionModel().getSelectedItem().getNoeud();
+                                    String index = str.substring(13, str.length());
+                                    System.out.println(index);
+                                    int k = Integer.parseInt(index);
+                                    
+                                    Tournee tournee = l.get(k-1);
+                                    
+                                    Color col = vueGraph.getColor(k-1);
+                                    vueGraph.dessinerUneTournee(tournee, col, 7);
+                                    
+                                    double xPos, yPos, xSuiv, ySuiv;
+                                    
+                                    String ent = demandeLivraisons.getEntrepot();
+                                    Noeud entrepot = NoeudFactory.getNoeudParId(ent);                                
+                                    xPos = vueGraph.trX(entrepot.getLongitude());
+                                    yPos = vueGraph.trY(entrepot.getLatitude());                                
+                                    Velo livreurAnim = new Velo(xPos,yPos);
+                                    vueGraph.lancerAnimation(livreurAnim);   
+                                    for(int i=0; i<tournee.getChemins().size();i++){
+                                    	
+                                    	Chemin chemin = tournee.getChemins().get(i);
+                                    	List<String> trajet = chemin.getChemin();
+                                        
+                                        for (int j =0; j< trajet.size();j++) {
+                                        	int w =j;
+                                        	
+                                        	    	  String idNoeud = trajet.get(w);
+                                        	    	  System.out.println(idNoeud);
+                                        	    	  Noeud noeud = NoeudFactory.getNoeudParId(idNoeud);                                        
+                                        	    	  xSuiv = vueGraph.trX(noeud.getLongitude());
+                                        	    	  ySuiv = vueGraph.trY(noeud.getLatitude());                                        
+                                        	    	  livreurAnim.avancerVelo(xSuiv, ySuiv);
+                                        	    	  System.out.println(xSuiv+ " "+ySuiv);
+                                        
+                                        }                                                                  
+                                    }
+                                    livreurAnim.avancerVelo(xPos, yPos);
+                            }
+                    }
                 }
             });
         }
