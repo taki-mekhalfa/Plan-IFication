@@ -90,7 +90,10 @@ public abstract class TemplateTSP implements TSP {
      * @see Model.Metier.Livraison
      */
     private void branchAndBound(Livraison livraisonCourante, List<Livraison> nonVus, List<Livraison> vus, double coutVus, Map<Livraison, Map<Livraison, Chemin>> cout, long tpsDebut, int tpsLimite) {
-        if (nonVus.size() == 0) { // tous les sommets ont ete visites
+        if(System.currentTimeMillis() - tpsDebut > tpsLimite){
+        	return;
+        }
+    	if (nonVus.size() == 0) { // tous les sommets ont ete visites
             coutVus += cout.get(livraisonCourante).get(listeLivraisons.get(0)).getCout() / 4.17;
             if (coutVus < coutMeilleureSolution) { // on a trouve une solution meilleure que meilleureSolution
                 meilleureSolution = new LinkedList<>(vus);

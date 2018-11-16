@@ -16,7 +16,8 @@ public class EtatTourneesCalculees extends EtatDefaut {
     @Override
     public void init(){
     	message = "Tournees calculees." + 
-    			'\n' + "Vous pouvez modifier le resultat en cliquant sur les boutons de modification (Ajouter, supprimer et deplacer)";
+    			'\n' + "Vous pouvez modifier le resultat en cliquant sur les boutons de modification (Ajouter, supprimer et deplacer)" +
+    			'\n' + "Attention, si il y a plus de 10 livraisons par livreur, le calcul risque de durer quelques secondes.";
         Controleur.interfaceGUI.activerBoutonChargerPlan();
         Controleur.interfaceGUI.activerBoutonChargerDemandeLivraison();
         Controleur.interfaceGUI.activerBoutonCalculerTournees();
